@@ -115,6 +115,13 @@
 
 (global-visual-line-mode t)
 
+;; Unique names of buffers for files with identical names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "  ")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+
 ;; Start nyan-cat mode
 (nyan-mode t)
 (nyan-toggle-wavy-trail)
