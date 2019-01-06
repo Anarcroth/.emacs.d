@@ -1,65 +1,51 @@
 ;; -*- lexical-binding: t -*-
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |    Initialization     | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setq debug-on-error t)
 
-;; Minimal UI
-(scroll-bar-mode -1)
-(tool-bar-mode   -1)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
-
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-;;(require 'init-benchmarking) ;; Measure startup time
-
+;; Adjust garbage collection
 (let ((normal-gc-cons-threshold (* 20 1024 1024))
       (init-gc-cons-threshold (* 128 1024 1024)))
   (setq gc-cons-threshold init-gc-cons-threshold)
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-;; Package configs
+;; Setup repositories for pulling packages
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives '(("org"   . "http://orgmode.org/elpa/")
                          ("gnu"   . "http://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
-(elpy-enable)
-;;(require-package 'wgrep)
-;;(require-package 'diminish)
-;;(require-package 'scratch)
-;;(require-package 'command-log-mode)
 
-;; Bootstrap `use-package`
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(require 'use-package)
+;; Define custom variables
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
-(require 'magit)
-(require 'company)
-
+;; Start Emacs as a server
 (add-hook 'after-init-hook
           (lambda ()
             (require 'server)
             (unless (server-running-p)
               (server-start))))
 
-;; Which Key
-(use-package which-key
-  :ensure t
-  :init
-  (setq which-key-separator " ")
-  (setq which-key-prefix-prefix "+")
-  :config
-  (which-key-mode 1))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; | Setup how emacs looks | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Disable backup files
-(setq make-backup-files nil) ; stop creating backup~ files
-(setq auto-save-default nil) ; stop creating #autosave# files
-
-;;-----------------------+
-;; Setup how emacs looks |
-;;-----------------------+
+;; Minimal UI
+(scroll-bar-mode -1)
+(tool-bar-mode   -1)
+(tooltip-mode    -1)
+(menu-bar-mode   -1)
 
 ;; Load atom one dark theme
 (load-theme 'atom-one-dark t)
@@ -79,19 +65,19 @@
 ;; Set line highlighting
 (global-hl-line-mode 1)
 
-;; Set transperancy in emacs
-(defun toggle-transparency ()
-  (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(90 . 50) '(100 . 100)))))
-(global-set-key (kbd "C-c t") 'toggle-transparency)
+;; Set transperancy in emacs (currently not needed)
+;;(defun toggle-transparency ()
+;;  (interactive)
+;;  (let ((alpha (frame-parameter nil 'alpha)))
+;;    (set-frame-parameter
+;;     nil 'alpha
+;;     (if (eql (cond ((numberp alpha) alpha)
+;;                    ((numberp (cdr alpha)) (cdr alpha))
+;;                    ;; Also handle undocumented (<active> <inactive>) form.
+;;                    ((numberp (cadr alpha)) (cadr alpha)))
+;;              100)
+;;         '(90 . 50) '(100 . 100)))))
+;;(global-set-key (kbd "C-c t") 'toggle-transparency)
 
 ;; Set line numbers
 (global-linum-mode t)
@@ -100,27 +86,9 @@
 (require 'neotree)
 (setq neo-window-width 33)
 
-;; Set window numbering
-(setq winum-keymap
-      (let ((map (make-sparse-keymap)))
-        (define-key map (kbd "C-`") 'winum-select-window-by-number)
-        (define-key map (kbd "C-²") 'winum-select-window-by-number)
-        (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
-        (define-key map (kbd "M-1") 'winum-select-window-1)
-        (define-key map (kbd "M-2") 'winum-select-window-2)
-        (define-key map (kbd "M-3") 'winum-select-window-3)
-        (define-key map (kbd "M-4") 'winum-select-window-4)
-        (define-key map (kbd "M-5") 'winum-select-window-5)
-        (define-key map (kbd "M-6") 'winum-select-window-6)
-        (define-key map (kbd "M-7") 'winum-select-window-7)
-        (define-key map (kbd "M-8") 'winum-select-window-8)
-        map))
-(require 'winum)
-(winum-mode)
-
 (global-visual-line-mode t)
 
-;; Start nyan-cat mode...
+;; Start nyan-cat mode
 (nyan-mode t)
 (nyan-toggle-wavy-trail)
 (setq nyan-bar-length 18)
@@ -158,6 +126,30 @@
         (purple . (telephone-line-airline-position-segment))))
 (telephone-line-mode 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |  Window manipulation  | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Set window numbering
+(setq winum-keymap
+      (let ((map (make-sparse-keymap)))
+        (define-key map (kbd "C-`") 'winum-select-window-by-number)
+        (define-key map (kbd "C-²") 'winum-select-window-by-number)
+        (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
+        (define-key map (kbd "M-1") 'winum-select-window-1)
+        (define-key map (kbd "M-2") 'winum-select-window-2)
+        (define-key map (kbd "M-3") 'winum-select-window-3)
+        (define-key map (kbd "M-4") 'winum-select-window-4)
+        (define-key map (kbd "M-5") 'winum-select-window-5)
+        (define-key map (kbd "M-6") 'winum-select-window-6)
+        (define-key map (kbd "M-7") 'winum-select-window-7)
+        (define-key map (kbd "M-8") 'winum-select-window-8)
+        map))
+(require 'winum)
+(winum-mode)
+
 ;; Change window size
 (global-set-key (kbd "C-s-m") 'shrink-window-horizontally)
 (global-set-key (kbd "C-s-c") 'enlarge-window-horizontally)
@@ -165,11 +157,24 @@
 (global-set-key (kbd "C-s-q") 'enlarge-window)
 (global-set-key (kbd "C-s-g") 'balance-windows-area)
 
-;;-----------------------+
-;; Setup dev environment |
-;;-----------------------+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |   Dev environment     | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Bracket complete mode - electric pairs
+(require 'magit)
+(require 'company)
+
+;; Start Python dev environment
+(elpy-enable)
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; Bracket completion
 (electric-pair-mode 1)
 (setq electric-pair-pairs
       '((?\` . ?\`)))
@@ -179,26 +184,6 @@
 
 ;; Set company globally
 (global-company-mode t)
-
-;; Set coding styles and indents
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(c-default-style
-   (quote
-    ((other . "stroustrup")
-     (java-mode . "java")
-     (awk-mode . "awk")
-     (other . "gnu"))))
- '(js-indent-level 4)
- '(package-selected-packages
-   (quote
-    (which-key wrap-region winum vimish-fold telephone-line ox-reveal nyan-mode neotree magit js2-mode flyspell-correct elpy auctex-latexmk atom-one-dark-theme)))
- '(sh-basic-offset 2)
- '(sh-indentation 2)
- '(smie-indent-basic 2))
 
 ;; Set spellcheck
 (add-hook 'text-mode-hook 'flyspell-mode)
@@ -219,22 +204,6 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 
-;;-------------------------+
-;; Setup general utilities |
-;;-------------------------+
-
-;; Delete trailing white spaces
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Re-map backward-kill-word
-;;(global-set-key (kbd "C-q") 'backward-kill-word)
-
-;; Set eshell key
-(global-set-key [f1] 'eshell)
-
-;; Call todo list from register
-(set-register ?t '(file . "~/org/todo.org"))
-
 ;; Associate other types of files with js-mode
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 
@@ -243,8 +212,28 @@
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 (setq js2-highlight-level 3)
 
-;; save/restore opened files and windows config
-(desktop-save-mode 1) ; 0 for off
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |   General utilities   | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Disable backup files
+(setq make-backup-files nil) ; stop creating backup~ files
+(setq auto-save-default nil) ; stop creating #autosave# files
+
+(which-key-mode 1)
+(setq which-key-separator " ")
+(setq which-key-prefix-prefix "+")
+
+;; Delete trailing white spaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Set eshell key
+(global-set-key [f1] 'eshell)
+
+;; Save/Restore opened files and windows
+(desktop-save-mode 1)
 
 ;; Setup custom word wrappings
 (wrap-region-global-mode t)
@@ -302,9 +291,14 @@
 (global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
 (global-set-key [?\C-'] 'hippie-expand)
 
-;;------------------+
-;; Org agenda setup |
-;;------------------+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |      Org setup        | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Call todo list from register
+(set-register ?t '(file . "~/org/todo.org"))
 
 (global-set-key (kbd "C-c a") 'org-agenda)
 
@@ -339,9 +333,3 @@
 
 ;; Expand org files globally
 (setq org-startup-folded nil)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
