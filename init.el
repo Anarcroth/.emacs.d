@@ -77,12 +77,13 @@
 ;; Load atom one dark theme
 (load-theme 'atom-one-dark t)
 
-;; Highlight occurrences
-(require 'highlight-symbol)
-(global-set-key [(control f3)] 'highlight-symbol)
-(global-set-key [f3] 'highlight-symbol-next)
-(global-set-key [(shift f3)] 'highlight-symbol-prev)
-(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+;; Highlight occurrences under the cursor
+(require 'highlight-thing)
+(add-hook 'prog-mode-hook 'highlight-thing-mode)
+(setq highlight-thing-delay-seconds 1.0)
+(setq highlight-thing-limit-to-region-in-large-buffers-p nil
+      highlight-thing-narrow-region-lines 15
+      highlight-thing-large-buffer-limit 5000)
 
 ;; Set default font
 (add-to-list 'default-frame-alist
@@ -178,10 +179,10 @@
 (magit-mode)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
-(diff-hl-mode 1)
+;; Shows side diff changes
+(require 'diff-hl)
+(add-hook 'prog-mode-hook 'diff-hl-mode)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-
-(require 'company)
 
 ;; Start Python dev environment
 (elpy-enable)
@@ -241,6 +242,30 @@
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Ivy setup
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-virtual-abbreviate 'fullpath)
+(setq enable-recursive-minibuffers t)
+(setq counsel-mode-override-describe-bindings t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f2> f") 'counsel-describe-function)
+(global-set-key (kbd "<f2> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+(dolist (k '("C-j" "C-RET"))
+  (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
+(define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
+(define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
+(add-hook 'after-init-hook 'ivy-historian-mode)
+
 ;; Open recently opened files
 (recentf-mode 1)
 (setq recentf-max-menu-items 25
@@ -248,9 +273,9 @@
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; Disable backup files
-(setq make-backup-files -1)
-;;(setq make-backup-files nil) ; stop creating backup~ files
-(setq auto-save-default nil) ; stop creating #autosave# files
+(setq-default make-backup-files nil) ; stop creating backup~ files
+(setq-default auto-save-default nil) ; stop creating #autosave# files
+(setq-default create-lockfiles nil)
 
 (which-key-mode 1)
 (setq which-key-separator " ")
