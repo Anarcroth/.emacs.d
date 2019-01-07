@@ -7,31 +7,36 @@
 
 ;; Needed packages
 (setq package-list
-    '(auctex-latexmk
-     company
-     elpy
-     flycheck
-     flycheck-pos-tip
-     flyspell-correct
-     highlight-escape-sequences
-     js2-mode
-     magit
-     magit
-     markdown-mode
-     multiple-cursors
-     neotree
-     nyan-mode
-     ox-reveal
-     pdf-tools
-     scratch
-     telephone-line
-     vimish-fold
-     wgrep
-     which-key
-     whitespace-cleanup-mode
-     winum
-     wrap-region
-     atom-one-dark-theme))
+      '(anaconda-mode
+	atom-one-dark-theme
+	auctex-latexmk
+	counsel
+	diff-hl
+	elpy
+	flycheck
+	flycheck-pos-tip
+	flyspell-correct
+	gitconfig-mode
+	gitignore-mode
+	highlight-escape-sequences
+	highlight-thing
+	js2-mode
+	magit
+	markdown-mode
+	multiple-cursors
+	neotree
+	nyan-mode
+	ox-reveal
+	pdf-tools
+	pip-requirements
+	scratch
+	telephone-line
+	vimish-fold
+	which-key
+	whitespace-cleanup-mode
+	winum
+	wrap-region
+	ivy-historian))
 
 ;; Load all the packages
 (package-initialize)
