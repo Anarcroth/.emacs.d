@@ -30,3 +30,4 @@ site-lisp/package/
 /.historian
 /.uptimes.el
 /init.el~
+/.backups
