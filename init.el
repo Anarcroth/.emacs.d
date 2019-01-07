@@ -77,6 +77,13 @@
 ;; Load atom one dark theme
 (load-theme 'atom-one-dark t)
 
+;; Highlight occurrences
+(require 'highlight-symbol)
+(global-set-key [(control f3)] 'highlight-symbol)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [(shift f3)] 'highlight-symbol-prev)
+(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+
 ;; Set default font
 (add-to-list 'default-frame-alist
              '(font . "DejaVu Sans Mono Nerd Font:antialias=1"))
@@ -166,16 +173,29 @@
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Setup magit
 (require 'magit)
+(magit-mode)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(diff-hl-mode 1)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
 (require 'company)
 
 ;; Start Python dev environment
 (elpy-enable)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 
+;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+(setq-default grep-highlight-matches t
+	      grep-scroll-output t)
 
 ;; Bracket completion
 (electric-pair-mode 1)
@@ -220,6 +240,12 @@
 ;; |   General utilities   | ;;
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Open recently opened files
+(recentf-mode 1)
+(setq recentf-max-menu-items 25
+      recentf-exclude '("/tmp/"))
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; Disable backup files
 (setq make-backup-files -1)
