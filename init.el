@@ -273,8 +273,11 @@
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; Disable backup files
-(setq-default make-backup-files nil) ; stop creating backup~ files
-(setq-default auto-save-default nil) ; stop creating #autosave# files
+(setq backup-directory-alist `(("." . "~/.backups")))
+(setq delete-old-versions t
+  kept-new-versions 3
+  kept-old-versions 2
+  version-control t)
 (setq-default create-lockfiles nil)
 
 (which-key-mode 1)
