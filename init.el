@@ -203,6 +203,10 @@
 (setq electric-pair-pairs
       '((?\` . ?\`)))
 
+;; Bracket highlight
+(show-paren-mode 1)
+(setq show-paren-style 'mixed)
+
 ;; Vimlike code folding
 (vimish-fold-global-mode 1)
 
@@ -273,7 +277,7 @@
 (global-set-key "\C-x\ \C-r" 'recentf-open-files)
 
 ;; Disable backup files
-(setq backup-directory-alist `(("." . "~/.backups")))
+(setq backup-directory-alist '(("." . "~/.backups")))
 (setq delete-old-versions t
   kept-new-versions 3
   kept-old-versions 2
