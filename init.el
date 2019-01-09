@@ -188,6 +188,22 @@
 (elpy-enable)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+;; Set python interpreter environment
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "-i")
+
+;; Set Lisp dev environment
+(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+(setq slime-protocol-version 'ignore)
+(setq slime-net-coding-system 'utf-8-unix)
+(setq slime-complete-symbol*-fancy t)
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+(slime-setup (append '(slime-repl slime-fuzzy)))
+(define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
 
 ;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -216,10 +232,6 @@
 ;; Set spellcheck
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-;; Set python interpreter environment
-(setq python-shell-interpreter "python"
-      python-shell-interpreter-args "-i")
 
 ;; LaTeX and AUCtex setup
 (setq TeX-auto-save t)
