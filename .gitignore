@@ -31,3 +31,4 @@ site-lisp/package/
 /.uptimes.el
 /init.el~
 /.backups
+/.mc-lists.el
