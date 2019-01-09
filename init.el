@@ -97,6 +97,9 @@
 (setq sentence-end-double-space nil)
 (setq-default cursor-type '(bar . 2))
 
+;; Have color brackets on programming modes
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 ;; Set line highlighting
 (global-hl-line-mode 1)
 
@@ -193,17 +196,26 @@
       python-shell-interpreter-args "-i")
 
 ;; Set Lisp dev environment
-(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
+(require 'slime)
+;; package.el compiles the contrib subdir, but the compilation order
+;; causes problems, so we remove the .elc files there.
+(mapc #'delete-file
+      (file-expand-wildcards (concat user-emacs-directory "elpa/slime-2*/contrib/*.elc")))
+(setq inferior-lisp-program "/usr/bin/sbcl --noinform")
+(setq slime-contribs '(slime-fancy))
 (setq slime-protocol-version 'ignore)
 (setq slime-net-coding-system 'utf-8-unix)
 (setq slime-complete-symbol*-fancy t)
 (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+(add-to-list 'slime-contribs 'slime-repl)
 (slime-setup (append '(slime-repl slime-fuzzy)))
 (define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
 
 ;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
