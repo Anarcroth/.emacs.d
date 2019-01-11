@@ -239,13 +239,7 @@
 (vimish-fold-global-mode 1)
 
 ;; C/C++ environment setup
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
-(eval-after-load 'company
-  '(add-to-list 'company-backends 'company-irony))
+(require 'pop-c-cpp-dev)
 
 ;; Set company globally
 (global-company-mode t)
