@@ -238,8 +238,19 @@
 ;; Vimlike code folding
 (vimish-fold-global-mode 1)
 
+;; C/C++ environment setup
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+(eval-after-load 'company
+  '(add-to-list 'company-backends 'company-irony))
+
 ;; Set company globally
 (global-company-mode t)
+(global-set-key (kbd "M-/") 'company-complete-common-or-cycle)
+(setq company-idle-delay 0)
 
 ;; Set spellcheck
 (add-hook 'text-mode-hook 'flyspell-mode)
