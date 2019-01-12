@@ -241,6 +241,10 @@
 ;; C/C++ environment setup
 (require 'pop-c-cpp-dev)
 
+;; Compile and Recompile global keys
+(global-set-key (kbd "C-x C-m") 'compile)
+(global-set-key (kbd "C-x C-v") 'recompile)
+
 ;; Set company globally
 (global-company-mode t)
 (global-set-key (kbd "M-/") 'company-complete-common-or-cycle)
