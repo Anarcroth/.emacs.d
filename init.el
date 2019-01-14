@@ -378,10 +378,9 @@
 (global-set-key (kbd "C-s-<down>") 'move-line-down)
 
 ;; Dvorak keys mapping
-(global-set-key (kbd "C-z") ctl-x-map)
-(global-set-key (kbd "C-x C-h") help-map)
+(keyboard-translate ?\C-t ?\C-x)
+(keyboard-translate ?\C-x ?\C-t)
 (global-set-key (kbd "C-h") 'backward-kill-word)
-(global-set-key (kbd "C-t") 'previous-line)
 (global-set-key [?\C-.] 'execute-extended-command)
 (global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
 (global-set-key [?\C-'] 'hippie-expand)
