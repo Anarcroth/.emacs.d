@@ -8,9 +8,6 @@
 
 ;; Only run this if rtags is installed
 (when (require 'rtags nil :noerror)
-  ;; Start the rtags background process
-  (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-  (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
   ;; Define company and rtags keys
   (require 'company)
   (define-key c-mode-base-map (kbd "M-.")
