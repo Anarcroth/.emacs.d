@@ -398,6 +398,11 @@
 
 (setq org-agenda-files (list "~/org"))
 
+(require 'org-alert)
+(setq org-alert-notification-title "TODO")
+(org-alert-enable)
+(setq alert-default-style 'libnotify)
+
 (setq org-highest-priority ?A)
 (setq org-lowest-priority ?C)
 (setq org-default-priority ?A)
