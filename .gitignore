@@ -33,3 +33,6 @@ site-lisp/package/
 /.backups
 /.mc-lists.el
 /irony
+/alert
+/org-alert-test
+bookmarks
