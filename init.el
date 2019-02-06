@@ -62,6 +62,28 @@
 (global-set-key (kbd "C-s-q") 'enlarge-window)
 (global-set-key (kbd "C-s-g") 'balance-windows-area)
 
+(defun slide-buffer (dir)
+  "Move current buffer into window at direction DIR.
+DIR is handled as by `windmove-other-window-loc'."
+  (require 'windmove)
+  (let ((buffer (current-buffer))
+        (target (windmove-find-other-window dir)))
+    (if (null target)
+        (user-error "There is no window %s from here" dir)
+      (switch-to-prev-buffer)
+      (select-window target)
+      (switch-to-buffer buffer nil t))))
+
+(defun slide-buffer-up () (interactive) (slide-buffer 'up))
+(defun slide-buffer-down () (interactive) (slide-buffer 'down))
+(defun slide-buffer-left () (interactive) (slide-buffer 'left))
+(defun slide-buffer-right () (interactive) (slide-buffer 'right))
+
+(define-key global-map (kbd "C-s-<up>")    #'slide-buffer-up)
+(define-key global-map (kbd "C-s-<down>")  #'slide-buffer-down)
+(define-key global-map (kbd "C-s-<left>")  #'slide-buffer-left)
+(define-key global-map (kbd "C-s-<right>") #'slide-buffer-right)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; | Setup how emacs looks | ;;
@@ -374,8 +396,8 @@
   (interactive "p")
   (move-line (if (null n) 1 n)))
 
-(global-set-key (kbd "C-s-<up>") 'move-line-up)
-(global-set-key (kbd "C-s-<down>") 'move-line-down)
+(global-set-key (kbd "C-s-t") 'move-line-up)
+(global-set-key (kbd "C-s-n") 'move-line-down)
 
 ;; Dvorak keys mapping
 (keyboard-translate ?\C-t ?\C-x)
