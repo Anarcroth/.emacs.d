@@ -36,6 +36,9 @@
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Allows to scroll to end or beginning of buffer
+(setq scroll-error-top-bottom t)
+
 ;; Set window numbering
 (setq winum-keymap
       (let ((map (make-sparse-keymap)))
