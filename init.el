@@ -272,7 +272,8 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set company globally
 (global-company-mode t)
-(global-set-key (kbd "M-/") 'company-complete-common-or-cycle)
+(global-set-key (kbd "M-p") 'company-select-next)
+(global-set-key (kbd "M-n") 'company-select-previous)
 (setq company-idle-delay 0)
 
 ;; Set spellcheck
