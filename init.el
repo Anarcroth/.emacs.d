@@ -458,3 +458,39 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Expand org files globally
 (setq org-startup-folded nil)
+
+;; Pops a reminder every 3 minutes, 30 minutes before each appointment
+;; This is also refreshed when the todo.org file is saved
+(defun aj/appt-notify (until time msg)
+  "Use `alert' to for appointment notifications."
+  (if (listp msg)
+      (dolist (i (number-sequence 0 (1- (length until))))
+        (alert (nth i msg) :title "Reminder" :category 'calendar))
+    (alert msg :title "Reminder" :category 'calendar)))
+
+(defun aj/org-agenda-to-appt ()
+  "Load agenda entries into `appt'."
+  (interactive)
+  (setq appt-time-msg-list nil)
+  (org-agenda-to-appt))
+
+;; Advice the agenda refresh to update appts.
+(defadvice org-agenda-redo (after update-appts activate)
+  "Update `appt' lists from the agenda."
+  (message "Updating appointments...")
+  (aj/org-agenda-to-appt))
+
+(appt-activate t)
+(setq appt-message-warning-time 30
+      appt-display-interval 3
+      appt-display-mode-line nil
+      appt-disp-window-function #'aj/appt-notify
+      appt-delete-window-function #'ignore)
+(setq alert-default-style (cond ((eq system-type 'gnu/linux) 'libnotify)
+				(t 'message)))
+
+(defun anarcroth/after-org-save ()
+  "Used in `after-save-hook'."
+  (if (eq (current-buffer) 'todo.org)
+      (org-agenda-redo)))
+(add-hook 'after-save-hook 'anarcroth/after-org-save)
