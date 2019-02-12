@@ -73,7 +73,7 @@ DIR is handled as by `windmove-other-window-loc'."
         (target (windmove-find-other-window dir)))
     (if (null target)
         (user-error "There is no window %s from here" dir)
-      (switch-to-prev-buffer)
+      (switch-to-buffer (window-buffer target) nil t)
       (select-window target)
       (switch-to-buffer buffer nil t))))
 
@@ -82,10 +82,15 @@ DIR is handled as by `windmove-other-window-loc'."
 (defun slide-buffer-left () (interactive) (slide-buffer 'left))
 (defun slide-buffer-right () (interactive) (slide-buffer 'right))
 
-(define-key global-map (kbd "C-s-<up>")    #'slide-buffer-up)
-(define-key global-map (kbd "C-s-<down>")  #'slide-buffer-down)
-(define-key global-map (kbd "C-s-<left>")  #'slide-buffer-left)
-(define-key global-map (kbd "C-s-<right>") #'slide-buffer-right)
+(define-key global-map (kbd "C-S-<up>")    #'slide-buffer-up)
+(define-key global-map (kbd "C-S-<down>")  #'slide-buffer-down)
+(define-key global-map (kbd "C-S-<left>")  #'slide-buffer-left)
+(define-key global-map (kbd "C-S-<right>") #'slide-buffer-right)
+
+(global-set-key (kbd "S-C-h") 'windmove-left)
+(global-set-key (kbd "S-C-n") 'windmove-right)
+(global-set-key (kbd "S-C-c") 'windmove-up)
+(global-set-key (kbd "S-C-t") 'windmove-down)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
@@ -243,7 +248,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
 
 ;; Multiple cursors
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
