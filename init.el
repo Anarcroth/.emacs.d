@@ -274,6 +274,7 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 (add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
 (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+(global-set-key (kbd "C-c r e") 'eval-region)
 
 ;; Multiple cursors
 ;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
