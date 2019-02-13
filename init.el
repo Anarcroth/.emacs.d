@@ -201,6 +201,34 @@ DIR is handled as by `windmove-other-window-loc'."
         (purple . (telephone-line-airline-position-segment))))
 (telephone-line-mode 1)
 
+;; Xah's take on highlighting hex values with interactive call
+(defun xah-syntax-color-hex ()
+  (interactive)
+  "Syntax color text of the form [#ff1100] and [#abc] in current buffer.
+URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
+  (interactive)
+  (font-lock-add-keywords
+   nil
+   '(("#[[:xdigit:]]\\{3\\}"
+      (0 (put-text-property
+          (match-beginning 0)
+          (match-end 0)
+          'face (list
+		 :background
+                 (let* (
+                        (ms (match-string-no-properties 0))
+                        (r (substring ms 1 2))
+                        (g (substring ms 2 3))
+                        (b (substring ms 3 4)))
+                   (concat "#" r r g g b b))))))
+     ("#[[:xdigit:]]\\{6\\}"
+      (0 (put-text-property
+          (match-beginning 0)
+          (match-end 0)
+          'face (list
+		 :background (match-string-no-properties 0)))))))
+  (font-lock-flush))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |   Dev environment     | ;;
