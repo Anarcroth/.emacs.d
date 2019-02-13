@@ -445,6 +445,10 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
 (global-set-key [?\C-'] 'hippie-expand)
 
+(setq browse-url-generic-program
+      (executable-find "firefox"))
+(setq browse-url-browser-function 'browse-url-firefox)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |      Org setup        | ;;
