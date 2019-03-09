@@ -381,6 +381,9 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (setq which-key-separator " ")
 (setq which-key-prefix-prefix "+")
 
+;; Delete selected area by yank or overwrite
+(delete-selection-mode 1)
+
 ;; Delete trailing white spaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
