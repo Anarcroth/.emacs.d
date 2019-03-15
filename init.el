@@ -396,16 +396,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (wrap-region-add-wrapper "~" "~" nil 'markdown-mode)
 (wrap-region-add-wrapper "*" "*" nil 'markdown-mode)
 
-;; Custom welcoming screen
-(setq initial-scratch-message "
-;;███████╗███╗   ███╗ █████╗  ██████╗███████╗    ██████╗ ██╗     ███████╗
-;;██╔════╝████╗ ████║██╔══██╗██╔════╝██╔════╝    ██╔══██╗██║     ╚══███╔╝
-;;█████╗  ██╔████╔██║███████║██║     ███████╗    ██████╔╝██║       ███╔╝
-;;██╔══╝  ██║╚██╔╝██║██╔══██║██║     ╚════██║    ██╔══██╗██║      ███╔╝
-;;███████╗██║ ╚═╝ ██║██║  ██║╚██████╗███████║    ██║  ██║███████╗███████╗
-;;╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚══════╝    ╚═╝  ╚═╝╚══════╝╚══════╝
-")
-
 ;; Setup org-reveal root
 (require 'ox-reveal)
 (setq org-reveal-root "file:///home/anarcroth/reveal.js")
