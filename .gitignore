@@ -36,3 +36,4 @@ site-lisp/package/
 /alert
 /org-alert-test
 bookmarks
+/transient
