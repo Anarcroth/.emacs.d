@@ -360,12 +360,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
 (add-hook 'after-init-hook 'ivy-historian-mode)
 
-;; Open recently opened files
-(recentf-mode 1)
-(setq recentf-max-menu-items 25
-      recentf-exclude '("/tmp/"))
-(global-set-key "\C-x\ \C-r" 'recentf-open-files)
-
 ;; Disable backup files
 (setq backup-directory-alist '(("." . "~/.backups")))
 (setq delete-old-versions t
