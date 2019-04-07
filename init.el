@@ -433,6 +433,14 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
       (executable-find "firefox"))
 (setq browse-url-browser-function 'browse-url-firefox)
 
+;; Copy line
+(defun copy-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank))
+(global-set-key (kbd "C-s-d") 'copy-line)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |      Org setup        | ;;
