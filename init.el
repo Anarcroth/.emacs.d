@@ -323,6 +323,10 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
+(defun latex-count-words ()
+  (interactive)
+  (shell-command (concat "/usr/local/bin/texcount.pl"
+                         (buffer-file-name))))
 
 ;; Associate other types of files with js-mode
 (add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
