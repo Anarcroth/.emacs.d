@@ -195,7 +195,6 @@ DIR is handled as by `windmove-other-window-loc'."
         (nil    . (telephone-line-nyan-segment))))
 (setq telephone-line-rhs
       '((nil    . (telephone-line-misc-info-segment))
-        (orange . (telephone-line-atom-encoding-segment))
         (cyan   . (telephone-line-major-mode-segment))
         (purple . (telephone-line-airline-position-segment))))
 (telephone-line-mode 1)
@@ -444,6 +443,8 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
   (kill-line)
   (yank))
 (global-set-key (kbd "C-s-d") 'copy-line)
+
+(require 'sudo-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
