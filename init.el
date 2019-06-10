@@ -195,7 +195,6 @@ DIR is handled as by `windmove-other-window-loc'."
         (nil    . (telephone-line-nyan-segment))))
 (setq telephone-line-rhs
       '((nil    . (telephone-line-misc-info-segment))
-        (orange . (telephone-line-atom-encoding-segment))
         (cyan   . (telephone-line-major-mode-segment))
         (purple . (telephone-line-airline-position-segment))))
 (telephone-line-mode 1)
@@ -523,3 +522,9 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
   (if (eq (current-buffer) 'todo.org)
       (org-agenda-redo)))
 (add-hook 'after-save-hook 'anarcroth/after-org-save)
+
+;; Define org-strike-through color
+(require 'cl)   ; for delete*
+(setq org-emphasis-alist
+      (cons '("+" '(:strike-through t :foreground "#61AFEF"))
+            (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
