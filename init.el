@@ -444,6 +444,8 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
   (yank))
 (global-set-key (kbd "C-s-d") 'copy-line)
 
+(require 'sudo-save)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |      Org setup        | ;;
