@@ -23,5 +23,3 @@ This is where everything else lies. Ivy, company, keyboard remappings, hooks, ad
 **Org setup**
 
 This is the specific place for all org related things. If something is about org or any related features, it is here.
-
-my own custom Emacs setup!
