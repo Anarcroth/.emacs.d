@@ -392,6 +392,7 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (wrap-region-add-wrapper "`" "`" nil 'markdown-mode)
 (wrap-region-add-wrapper "~" "~" nil 'markdown-mode)
 (wrap-region-add-wrapper "*" "*" nil 'markdown-mode)
+(wrap-region-add-wrapper "+" "+" nil 'org-mode)
 
 ;; Setup org-reveal root
 (require 'ox-reveal)
