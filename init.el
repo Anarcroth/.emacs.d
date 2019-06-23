@@ -327,9 +327,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
   (shell-command (concat "/usr/local/bin/texcount.pl"
                          (buffer-file-name))))
 
-;; Associate other types of files with js-mode
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
-
 ;; Add js2 mode
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
