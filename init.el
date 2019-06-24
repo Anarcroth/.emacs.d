@@ -32,6 +32,224 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
+;; |   General utilities   | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Ivy setup
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-virtual-abbreviate 'fullpath)
+(setq enable-recursive-minibuffers t)
+(setq counsel-mode-override-describe-bindings t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(global-set-key (kbd "<f2> f") 'counsel-describe-function)
+(global-set-key (kbd "<f2> v") 'counsel-describe-variable)
+(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+(global-set-key (kbd "C-c g") 'counsel-git)
+(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+(dolist (k '("C-j" "C-RET"))
+  (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
+(define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
+(define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
+(add-hook 'after-init-hook 'ivy-historian-mode)
+
+;; Disable backup files
+(setq backup-directory-alist '(("." . "~/.backups")))
+(setq delete-old-versions t
+  kept-new-versions 3
+  kept-old-versions 2
+  version-control t)
+(setq-default create-lockfiles nil)
+
+(which-key-mode 1)
+(setq which-key-separator " ")
+(setq which-key-prefix-prefix "+")
+
+;; Delete selected area by yank or overwrite
+(delete-selection-mode 1)
+
+;; Delete trailing white spaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Set eshell key
+(global-set-key [f1] 'eshell)
+
+;; Save/Restore opened files and windows
+(desktop-save-mode 1)
+
+;; Setup custom word wrappings
+(wrap-region-global-mode t)
+(wrap-region-add-wrapper "`" "`" nil 'markdown-mode)
+(wrap-region-add-wrapper "~" "~" nil 'markdown-mode)
+(wrap-region-add-wrapper "*" "*" nil 'markdown-mode)
+(wrap-region-add-wrapper "+" "+" nil 'org-mode)
+
+;; Setup org-reveal root
+(require 'ox-reveal)
+(setq org-reveal-root "file:///home/anarcroth/reveal.js")
+
+;; Move lines up and down
+(defun move-line (n)
+  "Move the current line up or down by N lines."
+  (interactive "p")
+  (setq col (current-column))
+  (beginning-of-line) (setq start (point))
+  (end-of-line) (forward-char) (setq end (point))
+  (let ((line-text (delete-and-extract-region start end)))
+    (forward-line n)
+    (insert line-text)
+    ;; restore point to original column in moved line
+    (forward-line -1)
+    (forward-char col)))
+
+(defun move-line-up (n)
+  "Move the current line up by N lines."
+  (interactive "p")
+  (move-line (if (null n) -1 (- n))))
+
+(defun move-line-down (n)
+  "Move the current line down by N lines."
+  (interactive "p")
+  (move-line (if (null n) 1 n)))
+
+(global-set-key (kbd "C-s-t") 'move-line-up)
+(global-set-key (kbd "C-s-n") 'move-line-down)
+
+;; Dvorak keys mapping
+(keyboard-translate ?\C-t ?\C-x)
+(keyboard-translate ?\C-x ?\C-t)
+(global-set-key (kbd "C-h") 'backward-kill-word)
+(global-set-key [?\C-.] 'execute-extended-command)
+(global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
+(global-set-key [?\C-'] 'hippie-expand)
+
+(setq browse-url-generic-program
+      (executable-find "firefox"))
+(setq browse-url-browser-function 'browse-url-firefox)
+
+;; Copy line
+(defun copy-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank))
+(global-set-key (kbd "C-s-d") 'copy-line)
+
+;; Save files needing root privileges
+(require 'sudo-save)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |   Dev environment     | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Setup magit
+(require 'magit)
+(magit-mode)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+;; Shows side diff changes
+(require 'diff-hl)
+(add-hook 'prog-mode-hook 'diff-hl-mode)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
+;; Start Python dev environment
+(elpy-enable)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+;; Set python interpreter environment
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "-i")
+
+;; Set Lisp dev environment
+(require 'slime)
+;; package.el compiles the contrib subdir, but the compilation order
+;; causes problems, so we remove the .elc files there.
+(mapc #'delete-file
+      (file-expand-wildcards (concat user-emacs-directory "elpa/slime-2*/contrib/*.elc")))
+(setq inferior-lisp-program "/usr/bin/sbcl --noinform")
+(setq slime-contribs '(slime-fancy))
+(setq slime-protocol-version 'ignore)
+(setq slime-net-coding-system 'utf-8-unix)
+(setq slime-complete-symbol*-fancy t)
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+(add-to-list 'slime-contribs 'slime-repl)
+(slime-setup (append '(slime-repl slime-fuzzy)))
+(define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+(global-set-key (kbd "C-c r e") 'eval-region)
+
+;; Multiple cursors
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+(setq-default grep-highlight-matches t
+	      grep-scroll-output t)
+
+;; Bracket completion
+(electric-pair-mode 1)
+(setq electric-pair-pairs
+      '((?\` . ?\`)))
+
+;; Bracket highlight
+(show-paren-mode 1)
+(setq show-paren-style 'mixed)
+
+;; Vimlike code folding
+(vimish-fold-global-mode 1)
+
+;; C/C++ environment setup
+(require 'pop-c-cpp-dev)
+
+;; Compile and Recompile global keys
+(global-set-key (kbd "C-x C-m") 'compile)
+(global-set-key (kbd "C-x C-v") 'recompile)
+
+;; Set company globally
+(global-company-mode t)
+(global-set-key (kbd "M-p") 'company-select-next)
+(global-set-key (kbd "M-n") 'company-select-previous)
+(setq company-idle-delay 0)
+
+;; Set spellcheck
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+;; LaTeX and AUCtex setup
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq TeX-save-query nil)
+(setq TeX-PDF-mode t)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+(defun latex-count-words ()
+  (interactive)
+  (shell-command (concat "/usr/local/bin/texcount.pl"
+                         (buffer-file-name))))
+
+;; Add js2 mode
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+(setq js2-highlight-level 3)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
 ;; |  Window manipulation  | ;;
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -226,223 +444,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
           'face (list
 		 :background (match-string-no-properties 0)))))))
   (font-lock-flush))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; +-----------------------+ ;;
-;; |   Dev environment     | ;;
-;; +-----------------------+ ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Setup magit
-(require 'magit)
-(magit-mode)
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
-;; Shows side diff changes
-(require 'diff-hl)
-(add-hook 'prog-mode-hook 'diff-hl-mode)
-(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-
-;; Start Python dev environment
-(elpy-enable)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-;; Set python interpreter environment
-(setq python-shell-interpreter "python"
-      python-shell-interpreter-args "-i")
-
-;; Set Lisp dev environment
-(require 'slime)
-;; package.el compiles the contrib subdir, but the compilation order
-;; causes problems, so we remove the .elc files there.
-(mapc #'delete-file
-      (file-expand-wildcards (concat user-emacs-directory "elpa/slime-2*/contrib/*.elc")))
-(setq inferior-lisp-program "/usr/bin/sbcl --noinform")
-(setq slime-contribs '(slime-fancy))
-(setq slime-protocol-version 'ignore)
-(setq slime-net-coding-system 'utf-8-unix)
-(setq slime-complete-symbol*-fancy t)
-(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
-(add-to-list 'slime-contribs 'slime-repl)
-(slime-setup (append '(slime-repl slime-fuzzy)))
-(define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
-(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-(global-set-key (kbd "C-c r e") 'eval-region)
-
-;; Multiple cursors
-;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-(setq-default grep-highlight-matches t
-	      grep-scroll-output t)
-
-;; Bracket completion
-(electric-pair-mode 1)
-(setq electric-pair-pairs
-      '((?\` . ?\`)))
-
-;; Bracket highlight
-(show-paren-mode 1)
-(setq show-paren-style 'mixed)
-
-;; Vimlike code folding
-(vimish-fold-global-mode 1)
-
-;; C/C++ environment setup
-(require 'pop-c-cpp-dev)
-
-;; Compile and Recompile global keys
-(global-set-key (kbd "C-x C-m") 'compile)
-(global-set-key (kbd "C-x C-v") 'recompile)
-
-;; Set company globally
-(global-company-mode t)
-(global-set-key (kbd "M-p") 'company-select-next)
-(global-set-key (kbd "M-n") 'company-select-previous)
-(setq company-idle-delay 0)
-
-;; Set spellcheck
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-;; LaTeX and AUCtex setup
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq TeX-save-query nil)
-(setq TeX-PDF-mode t)
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(setq reftex-plug-into-AUCTeX t)
-(defun latex-count-words ()
-  (interactive)
-  (shell-command (concat "/usr/local/bin/texcount.pl"
-                         (buffer-file-name))))
-
-;; Add js2 mode
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(setq js2-highlight-level 3)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; +-----------------------+ ;;
-;; |   General utilities   | ;;
-;; +-----------------------+ ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Ivy setup
-(ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq ivy-virtual-abbreviate 'fullpath)
-(setq enable-recursive-minibuffers t)
-(setq counsel-mode-override-describe-bindings t)
-(global-set-key "\C-s" 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "<f2> f") 'counsel-describe-function)
-(global-set-key (kbd "<f2> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-(define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
-(dolist (k '("C-j" "C-RET"))
-  (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
-(define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
-(define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
-(add-hook 'after-init-hook 'ivy-historian-mode)
-
-;; Disable backup files
-(setq backup-directory-alist '(("." . "~/.backups")))
-(setq delete-old-versions t
-  kept-new-versions 3
-  kept-old-versions 2
-  version-control t)
-(setq-default create-lockfiles nil)
-
-(which-key-mode 1)
-(setq which-key-separator " ")
-(setq which-key-prefix-prefix "+")
-
-;; Delete selected area by yank or overwrite
-(delete-selection-mode 1)
-
-;; Delete trailing white spaces
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Set eshell key
-(global-set-key [f1] 'eshell)
-
-;; Save/Restore opened files and windows
-(desktop-save-mode 1)
-
-;; Setup custom word wrappings
-(wrap-region-global-mode t)
-(wrap-region-add-wrapper "`" "`" nil 'markdown-mode)
-(wrap-region-add-wrapper "~" "~" nil 'markdown-mode)
-(wrap-region-add-wrapper "*" "*" nil 'markdown-mode)
-(wrap-region-add-wrapper "+" "+" nil 'org-mode)
-
-;; Setup org-reveal root
-(require 'ox-reveal)
-(setq org-reveal-root "file:///home/anarcroth/reveal.js")
-
-;; Move lines up and down
-(defun move-line (n)
-  "Move the current line up or down by N lines."
-  (interactive "p")
-  (setq col (current-column))
-  (beginning-of-line) (setq start (point))
-  (end-of-line) (forward-char) (setq end (point))
-  (let ((line-text (delete-and-extract-region start end)))
-    (forward-line n)
-    (insert line-text)
-    ;; restore point to original column in moved line
-    (forward-line -1)
-    (forward-char col)))
-
-(defun move-line-up (n)
-  "Move the current line up by N lines."
-  (interactive "p")
-  (move-line (if (null n) -1 (- n))))
-
-(defun move-line-down (n)
-  "Move the current line down by N lines."
-  (interactive "p")
-  (move-line (if (null n) 1 n)))
-
-(global-set-key (kbd "C-s-t") 'move-line-up)
-(global-set-key (kbd "C-s-n") 'move-line-down)
-
-;; Dvorak keys mapping
-(keyboard-translate ?\C-t ?\C-x)
-(keyboard-translate ?\C-x ?\C-t)
-(global-set-key (kbd "C-h") 'backward-kill-word)
-(global-set-key [?\C-.] 'execute-extended-command)
-(global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
-(global-set-key [?\C-'] 'hippie-expand)
-
-(setq browse-url-generic-program
-      (executable-find "firefox"))
-(setq browse-url-browser-function 'browse-url-firefox)
-
-;; Copy line
-(defun copy-line()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank))
-(global-set-key (kbd "C-s-d") 'copy-line)
-
-(require 'sudo-save)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
