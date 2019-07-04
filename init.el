@@ -334,9 +334,8 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono Nerd Font:antialias=1"))
+             '(font . "GohuFont Nerd Font Mono-11"))
 (set-face-attribute 'default nil
-                    :height 121
                     :weight 'normal
                     :width 'normal)
 
