@@ -32,308 +32,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
-;; |  Window manipulation  | ;;
-;; +-----------------------+ ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Allows to scroll to end or beginning of buffer
-(setq scroll-error-top-bottom t)
-
-;; Set window numbering
-(setq winum-keymap
-      (let ((map (make-sparse-keymap)))
-        (define-key map (kbd "C-`") 'winum-select-window-by-number)
-        (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
-        (define-key map (kbd "M-1") 'winum-select-window-1)
-        (define-key map (kbd "M-2") 'winum-select-window-2)
-        (define-key map (kbd "M-3") 'winum-select-window-3)
-        (define-key map (kbd "M-4") 'winum-select-window-4)
-        (define-key map (kbd "M-5") 'winum-select-window-5)
-        (define-key map (kbd "M-6") 'winum-select-window-6)
-        (define-key map (kbd "M-7") 'winum-select-window-7)
-        (define-key map (kbd "M-8") 'winum-select-window-8)
-	(define-key map (kbd "M-9") 'winum-select-window-9)
-        map))
-(require 'winum)
-(winum-mode)
-
-;; Change window size
-(global-set-key (kbd "C-s-m") 'shrink-window-horizontally)
-(global-set-key (kbd "C-s-c") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-s-.") 'shrink-window)
-(global-set-key (kbd "C-s-q") 'enlarge-window)
-(global-set-key (kbd "C-s-g") 'balance-windows-area)
-
-(defun slide-buffer (dir)
-  "Move current buffer into window at direction DIR.
-DIR is handled as by `windmove-other-window-loc'."
-  (require 'windmove)
-  (let ((buffer (current-buffer))
-        (target (windmove-find-other-window dir)))
-    (if (null target)
-        (user-error "There is no window %s from here" dir)
-      (switch-to-buffer (window-buffer target) nil t)
-      (select-window target)
-      (switch-to-buffer buffer nil t))))
-
-(defun slide-buffer-up () (interactive) (slide-buffer 'up))
-(defun slide-buffer-down () (interactive) (slide-buffer 'down))
-(defun slide-buffer-left () (interactive) (slide-buffer 'left))
-(defun slide-buffer-right () (interactive) (slide-buffer 'right))
-
-(define-key global-map (kbd "C-S-<up>")    #'slide-buffer-up)
-(define-key global-map (kbd "C-S-<down>")  #'slide-buffer-down)
-(define-key global-map (kbd "C-S-<left>")  #'slide-buffer-left)
-(define-key global-map (kbd "C-S-<right>") #'slide-buffer-right)
-
-(global-set-key (kbd "S-C-h") 'windmove-left)
-(global-set-key (kbd "S-C-n") 'windmove-right)
-(global-set-key (kbd "S-C-c") 'windmove-up)
-(global-set-key (kbd "S-C-t") 'windmove-down)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; +-----------------------+ ;;
-;; | Setup how emacs looks | ;;
-;; +-----------------------+ ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Minimal UI
-(scroll-bar-mode -1)
-(tool-bar-mode   -1)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
-
-;; Load atom one dark theme
-(load-theme 'atom-one-dark t)
-
-;; Highlight occurrences under the cursor
-(require 'highlight-thing)
-(add-hook 'prog-mode-hook 'highlight-thing-mode)
-(setq highlight-thing-delay-seconds 1.0)
-(setq highlight-thing-limit-to-region-in-large-buffers-p nil
-      highlight-thing-narrow-region-lines 15
-      highlight-thing-large-buffer-limit 5000)
-
-;; Set default font
-(add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono Nerd Font:antialias=1"))
-(set-face-attribute 'default nil
-                    :height 121
-                    :weight 'normal
-                    :width 'normal)
-
-;; Set cursor type
-(setq sentence-end-double-space nil)
-(setq-default cursor-type '(bar . 2))
-
-;; Have color brackets on programming modes
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
-;; Set line highlighting
-(global-hl-line-mode 1)
-
-;; Set transperancy in emacs (currently not needed)
-;;(defun toggle-transparency ()
-;;  (interactive)
-;;  (let ((alpha (frame-parameter nil 'alpha)))
-;;    (set-frame-parameter
-;;     nil 'alpha
-;;     (if (eql (cond ((numberp alpha) alpha)
-;;                    ((numberp (cdr alpha)) (cdr alpha))
-;;                    ;; Also handle undocumented (<active> <inactive>) form.
-;;                    ((numberp (cadr alpha)) (cadr alpha)))
-;;              100)
-;;         '(90 . 50) '(100 . 100)))))
-;;(global-set-key (kbd "C-c t") 'toggle-transparency)
-
-;; Set line numbers
-(global-linum-mode t)
-
-;; Set neotree window width
-(require 'neotree)
-(setq neo-window-width 33)
-
-(global-visual-line-mode t)
-
-;; Unique names of buffers for files with identical names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-separator "  ")
-(setq uniquify-after-kill-buffer-p t)
-(setq uniquify-ignore-buffers-re "^\\*")
-
-;; Start nyan-cat mode
-(nyan-mode t)
-(nyan-toggle-wavy-trail)
-(setq nyan-bar-length 18)
-
-;; Set telephone-line
-(require 'telephone-line)
-(setq telephone-line-primary-left-separator 'telephone-line-abs-left
-      telephone-line-primary-right-separator 'telephone-line-abs-right)
-(defface atom-red '((t (:foreground "#E06C75" :weight bold :background "#3E4451"))) "")
-(defface atom-orange '((t (:foreground "#D19A66" :weight bold :background "#3E4451"))) "")
-(defface atom-green '((t (:foreground "#98C379" :weight bold :background "#282C34"))) "")
-(defface atom-cyan '((t (:foreground "#56B6C2" :weight bold :background "#282C34"))) "")
-(defface atom-blue '((t (:foreground "#61AFEF" :weight bold :background "#3E4451"))) "")
-(defface atom-purple '((t (:foreground "#C678DD" :weight bold :background "#3E4451"))) "")
-(setq telephone-line-faces
-      '((red    . (atom-red . atom-red))
-        (orange . (atom-orange . atom-orange))
-        (green  . (atom-green . atom-green))
-        (cyan   . (atom-cyan . atom-cyan))
-        (blue   . (atom-blue . atom-blue))
-        (purple . (atom-purple . atom-purple))
-        (accent . (telephone-line-accent-inactive . telephone-line-accent-inactive))
-        (nil    . (mode-line . mode-line-inactive))))
-(setq telephone-line-lhs
-      '((red    . (telephone-line-window-number-segment))
-        (green  . (telephone-line-vc-segment
-                   telephone-line-erc-modified-channels-segment
-                   telephone-line-process-segment))
-        (blue   . (telephone-line-buffer-segment))
-        (nil    . (telephone-line-nyan-segment))))
-(setq telephone-line-rhs
-      '((nil    . (telephone-line-misc-info-segment))
-        (cyan   . (telephone-line-major-mode-segment))
-        (purple . (telephone-line-airline-position-segment))))
-(telephone-line-mode 1)
-
-;; Xah's take on highlighting hex values with interactive call
-(defun xah-syntax-color-hex ()
-  (interactive)
-  "Syntax color text of the form [#ff1100] and [#abc] in current buffer.
-URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
-  (interactive)
-  (font-lock-add-keywords
-   nil
-   '(("#[[:xdigit:]]\\{3\\}"
-      (0 (put-text-property
-          (match-beginning 0)
-          (match-end 0)
-          'face (list
-		 :background
-                 (let* (
-                        (ms (match-string-no-properties 0))
-                        (r (substring ms 1 2))
-                        (g (substring ms 2 3))
-                        (b (substring ms 3 4)))
-                   (concat "#" r r g g b b))))))
-     ("#[[:xdigit:]]\\{6\\}"
-      (0 (put-text-property
-          (match-beginning 0)
-          (match-end 0)
-          'face (list
-		 :background (match-string-no-properties 0)))))))
-  (font-lock-flush))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; +-----------------------+ ;;
-;; |   Dev environment     | ;;
-;; +-----------------------+ ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Setup magit
-(require 'magit)
-(magit-mode)
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
-;; Shows side diff changes
-(require 'diff-hl)
-(add-hook 'prog-mode-hook 'diff-hl-mode)
-(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-
-;; Start Python dev environment
-(elpy-enable)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-;; Set python interpreter environment
-(setq python-shell-interpreter "python"
-      python-shell-interpreter-args "-i")
-
-;; Set Lisp dev environment
-(require 'slime)
-;; package.el compiles the contrib subdir, but the compilation order
-;; causes problems, so we remove the .elc files there.
-(mapc #'delete-file
-      (file-expand-wildcards (concat user-emacs-directory "elpa/slime-2*/contrib/*.elc")))
-(setq inferior-lisp-program "/usr/bin/sbcl --noinform")
-(setq slime-contribs '(slime-fancy))
-(setq slime-protocol-version 'ignore)
-(setq slime-net-coding-system 'utf-8-unix)
-(setq slime-complete-symbol*-fancy t)
-(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
-(add-to-list 'slime-contribs 'slime-repl)
-(slime-setup (append '(slime-repl slime-fuzzy)))
-(define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
-(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-(global-set-key (kbd "C-c r e") 'eval-region)
-
-;; Multiple cursors
-;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-(setq-default grep-highlight-matches t
-	      grep-scroll-output t)
-
-;; Bracket completion
-(electric-pair-mode 1)
-(setq electric-pair-pairs
-      '((?\` . ?\`)))
-
-;; Bracket highlight
-(show-paren-mode 1)
-(setq show-paren-style 'mixed)
-
-;; Vimlike code folding
-(vimish-fold-global-mode 1)
-
-;; C/C++ environment setup
-(require 'pop-c-cpp-dev)
-
-;; Compile and Recompile global keys
-(global-set-key (kbd "C-x C-m") 'compile)
-(global-set-key (kbd "C-x C-v") 'recompile)
-
-;; Set company globally
-(global-company-mode t)
-(global-set-key (kbd "M-p") 'company-select-next)
-(global-set-key (kbd "M-n") 'company-select-previous)
-(setq company-idle-delay 0)
-
-;; Set spellcheck
-(add-hook 'text-mode-hook 'flyspell-mode)
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
-;; LaTeX and AUCtex setup
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq TeX-save-query nil)
-(setq TeX-PDF-mode t)
-(add-hook 'LaTeX-mode-hook 'visual-line-mode)
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-(setq reftex-plug-into-AUCTeX t)
-(defun latex-count-words ()
-  (interactive)
-  (shell-command (concat "/usr/local/bin/texcount.pl"
-                         (buffer-file-name))))
-
-;; Add js2 mode
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(setq js2-highlight-level 3)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; +-----------------------+ ;;
 ;; |   General utilities   | ;;
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -442,7 +140,309 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
   (yank))
 (global-set-key (kbd "C-s-d") 'copy-line)
 
+;; Save files needing root privileges
 (require 'sudo-save)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |   Dev environment     | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Setup magit
+(require 'magit)
+(magit-mode)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+;; Shows side diff changes
+(require 'diff-hl)
+(add-hook 'prog-mode-hook 'diff-hl-mode)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
+;; Start Python dev environment
+(elpy-enable)
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+;; Set python interpreter environment
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "-i")
+
+;; Set Lisp dev environment
+(require 'slime)
+;; package.el compiles the contrib subdir, but the compilation order
+;; causes problems, so we remove the .elc files there.
+(mapc #'delete-file
+      (file-expand-wildcards (concat user-emacs-directory "elpa/slime-2*/contrib/*.elc")))
+(setq inferior-lisp-program "/usr/bin/sbcl --noinform")
+(setq slime-contribs '(slime-fancy))
+(setq slime-protocol-version 'ignore)
+(setq slime-net-coding-system 'utf-8-unix)
+(setq slime-complete-symbol*-fancy t)
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+(add-to-list 'slime-contribs 'slime-repl)
+(slime-setup (append '(slime-repl slime-fuzzy)))
+(define-key slime-repl-mode-map (kbd "TAB") 'indent-for-tab-command)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(add-hook 'lisp-mode-hook (lambda () (lispy-mode 1)))
+(add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+(global-set-key (kbd "C-c r e") 'eval-region)
+
+;; Multiple cursors
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+(setq-default grep-highlight-matches t
+	      grep-scroll-output t)
+
+;; Bracket completion
+(electric-pair-mode 1)
+(setq electric-pair-pairs
+      '((?\` . ?\`)))
+
+;; Bracket highlight
+(show-paren-mode 1)
+(setq show-paren-style 'mixed)
+
+;; Vimlike code folding
+(vimish-fold-global-mode 1)
+
+;; C/C++ environment setup
+(require 'pop-c-cpp-dev)
+
+;; Compile and Recompile global keys
+(global-set-key (kbd "C-x C-m") 'compile)
+(global-set-key (kbd "C-x C-v") 'recompile)
+
+;; Set company globally
+(global-company-mode t)
+(global-set-key (kbd "M-p") 'company-select-next)
+(global-set-key (kbd "M-n") 'company-select-previous)
+(setq company-idle-delay 0)
+
+;; Set spellcheck
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+;; LaTeX and AUCtex setup
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq TeX-save-query nil)
+(setq TeX-PDF-mode t)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+(defun latex-count-words ()
+  (interactive)
+  (shell-command (concat "/usr/local/bin/texcount.pl"
+                         (buffer-file-name))))
+
+;; Add js2 mode
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+(setq js2-highlight-level 3)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; |  Window manipulation  | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Allows to scroll to end or beginning of buffer
+(setq scroll-error-top-bottom t)
+
+;; Set window numbering
+(setq winum-keymap
+      (let ((map (make-sparse-keymap)))
+        (define-key map (kbd "C-`") 'winum-select-window-by-number)
+        (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
+        (define-key map (kbd "M-1") 'winum-select-window-1)
+        (define-key map (kbd "M-2") 'winum-select-window-2)
+        (define-key map (kbd "M-3") 'winum-select-window-3)
+        (define-key map (kbd "M-4") 'winum-select-window-4)
+        (define-key map (kbd "M-5") 'winum-select-window-5)
+        (define-key map (kbd "M-6") 'winum-select-window-6)
+        (define-key map (kbd "M-7") 'winum-select-window-7)
+        (define-key map (kbd "M-8") 'winum-select-window-8)
+	(define-key map (kbd "M-9") 'winum-select-window-9)
+        map))
+(require 'winum)
+(winum-mode)
+
+;; Change window size
+(global-set-key (kbd "C-s-m") 'shrink-window-horizontally)
+(global-set-key (kbd "C-s-c") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-s-.") 'shrink-window)
+(global-set-key (kbd "C-s-q") 'enlarge-window)
+(global-set-key (kbd "C-s-g") 'balance-windows-area)
+
+(defun slide-buffer (dir)
+  "Move current buffer into window at direction DIR.
+DIR is handled as by `windmove-other-window-loc'."
+  (require 'windmove)
+  (let ((buffer (current-buffer))
+        (target (windmove-find-other-window dir)))
+    (if (null target)
+        (user-error "There is no window %s from here" dir)
+      (switch-to-buffer (window-buffer target) nil t)
+      (select-window target)
+      (switch-to-buffer buffer nil t))))
+
+(defun slide-buffer-up () (interactive) (slide-buffer 'up))
+(defun slide-buffer-down () (interactive) (slide-buffer 'down))
+(defun slide-buffer-left () (interactive) (slide-buffer 'left))
+(defun slide-buffer-right () (interactive) (slide-buffer 'right))
+
+(define-key global-map (kbd "C-S-<up>")    #'slide-buffer-up)
+(define-key global-map (kbd "C-S-<down>")  #'slide-buffer-down)
+(define-key global-map (kbd "C-S-<left>")  #'slide-buffer-left)
+(define-key global-map (kbd "C-S-<right>") #'slide-buffer-right)
+
+(global-set-key (kbd "S-C-h") 'windmove-left)
+(global-set-key (kbd "S-C-n") 'windmove-right)
+(global-set-key (kbd "S-C-c") 'windmove-up)
+(global-set-key (kbd "S-C-t") 'windmove-down)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; +-----------------------+ ;;
+;; | Setup how emacs looks | ;;
+;; +-----------------------+ ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Minimal UI
+(scroll-bar-mode -1)
+(tool-bar-mode   -1)
+(tooltip-mode    -1)
+(menu-bar-mode   -1)
+
+;; Load atom one dark theme
+(load-theme 'atom-one-dark t)
+
+;; Highlight occurrences under the cursor
+(require 'highlight-thing)
+(add-hook 'prog-mode-hook 'highlight-thing-mode)
+(setq highlight-thing-delay-seconds 1.0)
+(setq highlight-thing-limit-to-region-in-large-buffers-p nil
+      highlight-thing-narrow-region-lines 15
+      highlight-thing-large-buffer-limit 5000)
+
+;; Set default font
+(add-to-list 'default-frame-alist
+             '(font . "GohuFont Nerd Font Mono-11"))
+(set-face-attribute 'default nil
+                    :weight 'normal
+                    :width 'normal)
+
+;; Set cursor type
+(setq sentence-end-double-space nil)
+(setq-default cursor-type '(bar . 2))
+
+;; Have color brackets on programming modes
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;; Set line highlighting
+(global-hl-line-mode 1)
+
+;; Set transperancy in emacs (currently not needed)
+;;(defun toggle-transparency ()
+;;  (interactive)
+;;  (let ((alpha (frame-parameter nil 'alpha)))
+;;    (set-frame-parameter
+;;     nil 'alpha
+;;     (if (eql (cond ((numberp alpha) alpha)
+;;                    ((numberp (cdr alpha)) (cdr alpha))
+;;                    ;; Also handle undocumented (<active> <inactive>) form.
+;;                    ((numberp (cadr alpha)) (cadr alpha)))
+;;              100)
+;;         '(90 . 50) '(100 . 100)))))
+;;(global-set-key (kbd "C-c t") 'toggle-transparency)
+
+;; Set line numbers
+(global-linum-mode t)
+
+;; Set neotree window width
+(require 'neotree)
+(setq neo-window-width 33)
+
+(global-visual-line-mode t)
+
+;; Unique names of buffers for files with identical names
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "  ")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+
+;; Start nyan-cat mode
+(nyan-mode t)
+(nyan-toggle-wavy-trail)
+(setq nyan-bar-length 18)
+
+;; Set telephone-line
+(require 'telephone-line)
+(setq telephone-line-primary-left-separator 'telephone-line-abs-left
+      telephone-line-primary-right-separator 'telephone-line-abs-right)
+(defface atom-red '((t (:foreground "#E06C75" :weight bold :background "#3E4451"))) "")
+(defface atom-orange '((t (:foreground "#D19A66" :weight bold :background "#3E4451"))) "")
+(defface atom-green '((t (:foreground "#98C379" :weight bold :background "#282C34"))) "")
+(defface atom-cyan '((t (:foreground "#56B6C2" :weight bold :background "#282C34"))) "")
+(defface atom-blue '((t (:foreground "#61AFEF" :weight bold :background "#3E4451"))) "")
+(defface atom-purple '((t (:foreground "#C678DD" :weight bold :background "#3E4451"))) "")
+(setq telephone-line-faces
+      '((red    . (atom-red . atom-red))
+        (orange . (atom-orange . atom-orange))
+        (green  . (atom-green . atom-green))
+        (cyan   . (atom-cyan . atom-cyan))
+        (blue   . (atom-blue . atom-blue))
+        (purple . (atom-purple . atom-purple))
+        (accent . (telephone-line-accent-inactive . telephone-line-accent-inactive))
+        (nil    . (mode-line . mode-line-inactive))))
+(setq telephone-line-lhs
+      '((red    . (telephone-line-window-number-segment))
+        (green  . (telephone-line-vc-segment
+                   telephone-line-erc-modified-channels-segment
+                   telephone-line-process-segment))
+        (blue   . (telephone-line-buffer-segment))
+        (nil    . (telephone-line-nyan-segment))))
+(setq telephone-line-rhs
+      '((nil    . (telephone-line-misc-info-segment))
+        (cyan   . (telephone-line-major-mode-segment))
+        (purple . (telephone-line-airline-position-segment))))
+(telephone-line-mode 1)
+
+;; Xah's take on highlighting hex values with interactive call
+(defun xah-syntax-color-hex ()
+  (interactive)
+  "Syntax color text of the form [#ff1100] and [#abc] in current buffer.
+URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
+  (interactive)
+  (font-lock-add-keywords
+   nil
+   '(("#[[:xdigit:]]\\{3\\}"
+      (0 (put-text-property
+          (match-beginning 0)
+          (match-end 0)
+          'face (list
+		 :background
+                 (let* (
+                        (ms (match-string-no-properties 0))
+                        (r (substring ms 1 2))
+                        (g (substring ms 2 3))
+                        (b (substring ms 3 4)))
+                   (concat "#" r r g g b b))))))
+     ("#[[:xdigit:]]\\{6\\}"
+      (0 (put-text-property
+          (match-beginning 0)
+          (match-end 0)
+          'face (list
+		 :background (match-string-no-properties 0)))))))
+  (font-lock-flush))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
