@@ -15,7 +15,7 @@
   (add-hook 'emacs-startup-hook
             (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
-(add-to-list 'load-path (expand-file-name "pills" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "local-pkgs" user-emacs-directory))
 (require 'start-packages)
 
 ;; Define custom variables
