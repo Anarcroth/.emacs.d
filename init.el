@@ -244,8 +244,26 @@
                          (buffer-file-name))))
 
 ;; Add js2 mode
+(require 'js2-mode)
+(require 'js2-refactor)
+(require 'xref-js2)
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
+
+(js2r-add-keybindings-with-prefix "C-c C-r")
+(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
+
+;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
+;; unbind it.
+(define-key js-mode-map (kbd "M-.") nil)
+
+(add-hook 'js2-mode-hook (lambda ()
+			   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+
 (setq js2-highlight-level 3)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -334,7 +352,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "GohuFont Nerd Font Mono-11"))
+             '(font . "GohuFont Nerd Font Mono-12:antialias=0"))
 (set-face-attribute 'default nil
                     :weight 'normal
                     :width 'normal)
