@@ -248,6 +248,17 @@
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 (setq js2-highlight-level 3)
 
+(require 'diminish)
+(eval-after-load "ivy" '(diminish 'ivy-mode))
+(eval-after-load "hi-lock" '(diminish 'hi-lock-mode))
+(eval-after-load "flyspell" '(diminish 'flyspell-mode))
+(eval-after-load "which-key" '(diminish 'which-key-mode))
+(eval-after-load "simple" '(diminish 'visual-line-mode))
+(eval-after-load "wrap-region" '(diminish 'wrap-region-mode))
+(eval-after-load "autorevert" '(diminish 'auto-revert-mode))
+(eval-after-load "highlight-thing" '(diminish 'highlight-thing-mode))
+(eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |  Window manipulation  | ;;
@@ -380,15 +391,29 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
-;; Start nyan-cat mode
-(nyan-mode t)
-(nyan-toggle-wavy-trail)
-(setq nyan-bar-length 18)
+(require 'all-the-icons)
+(telephone-line-defsegment* my-vc-info ()
+  (when vc-mode
+    (cond
+      ((string-match "Git[:-]" vc-mode)
+        (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
+          (concat "" (format " %s" branch))))
+      (t (format "%s" vc-mode)))))
+
+(telephone-line-defsegment* my-airline-position-segment (&optional lines columns)
+  (let* ((l (number-to-string (if lines lines 1)))
+         (c (number-to-string (if columns columns 2))))
+    (if (eq major-mode 'paradox-menu-mode)
+        (telephone-line-raw mode-line-front-space t)
+      `((-3 "%p") ,(concat "  " "%" l "l:%" c "c")))))
+
 
 ;; Set telephone-line
 (require 'telephone-line)
-(setq telephone-line-primary-left-separator 'telephone-line-abs-left
-      telephone-line-primary-right-separator 'telephone-line-abs-right)
+(setq telephone-line-primary-left-separator 'telephone-line-identity-left
+      telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
+      telephone-line-primary-right-separator 'telephone-line-identity-right
+      telephone-line-secondary-right-separator 'telephone-line-identity-hollow-right)
 (defface atom-red '((t (:foreground "#E06C75" :weight bold :background "#3E4451"))) "")
 (defface atom-orange '((t (:foreground "#D19A66" :weight bold :background "#3E4451"))) "")
 (defface atom-green '((t (:foreground "#98C379" :weight bold :background "#282C34"))) "")
@@ -406,11 +431,12 @@ DIR is handled as by `windmove-other-window-loc'."
         (nil    . (mode-line . mode-line-inactive))))
 (setq telephone-line-lhs
       '((red    . (telephone-line-window-number-segment))
-        (green  . (telephone-line-vc-segment
+        (green  . (my-vc-info
                    telephone-line-erc-modified-channels-segment
                    telephone-line-process-segment))
-        (blue   . (telephone-line-buffer-segment))
-        (nil    . (telephone-line-nyan-segment))))
+        (blue   . (telephone-line-buffer-segment
+		   telephone-line-minor-mode-segment))
+	(nil    . (telephone-line-atom-encoding-segment))))
 (setq telephone-line-rhs
       '((nil    . (telephone-line-misc-info-segment))
         (cyan   . (telephone-line-major-mode-segment))
