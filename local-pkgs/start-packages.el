@@ -20,7 +20,6 @@
 	gitignore-mode
 	highlight-escape-sequences
 	highlight-thing
-	js2-mode
 	magit
 	markdown-mode
 	multiple-cursors
@@ -36,7 +35,8 @@
 	whitespace-cleanup-mode
 	winum
 	wrap-region
-	ivy-historian))
+	ivy-historian
+	lispy))
 
 ;; Load all the packages
 (package-initialize)

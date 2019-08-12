@@ -143,6 +143,38 @@
 ;; Save files needing root privileges
 (require 'sudo-save)
 
+;; Use spaces instead of tabs
+(setq-default indent-tabs-mode nil)
+
+;; Enable smooth scrolling
+(require 'smooth-scrolling)
+(smooth-scrolling-mode 1)
+
+;; Disable dired to open dirs in another buffer when clicked on
+(require 'dired )
+(defun dired-mouse-find-file (event)
+  "In Dired, visit the file or directory name you click on."
+  (interactive "e")
+  (let (window pos file)
+    (save-excursion
+      (setq window (posn-window (event-end event))
+            pos (posn-point (event-end event)))
+      (if (not (windowp window))
+          (error "No file chosen"))
+      (set-buffer (window-buffer window))
+      (goto-char pos)
+      (setq file (dired-get-file-for-visit)))
+    (if (file-directory-p file)
+        (or (and (cdr dired-subdir-alist)
+                 (dired-goto-subdir file))
+            (progn
+              (select-window window)
+              (dired file)))
+      (select-window window)
+      (find-file-other-window (file-name-sans-versions file t)))))
+
+(define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |   Dev environment     | ;;
@@ -252,7 +284,7 @@
 (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
 (add-hook 'js2-mode-hook #'js2-refactor-mode)
 (add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
+;; (add-hook 'js2-mode-hook 'ac-js2-mode)
 
 (js2r-add-keybindings-with-prefix "C-c C-r")
 (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
@@ -352,7 +384,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "GohuFont Nerd Font Mono-12:antialias=0"))
+             '(font . "GohuFont Nerd Font Mono-11:antialias=1"))
 (set-face-attribute 'default nil
                     :weight 'normal
                     :width 'normal)
