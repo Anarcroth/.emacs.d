@@ -402,57 +402,13 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
-(require 'all-the-icons)
-(telephone-line-defsegment* my-vc-info ()
-  (when vc-mode
-    (cond
-      ((string-match "Git[:-]" vc-mode)
-        (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
-          (concat "" (format " %s" branch))))
-      (t (format "%s" vc-mode)))))
-
-(telephone-line-defsegment* my-airline-position-segment (&optional lines columns)
-  (let* ((l (number-to-string (if lines lines 1)))
-         (c (number-to-string (if columns columns 2))))
-    (if (eq major-mode 'paradox-menu-mode)
-        (telephone-line-raw mode-line-front-space t)
-      `((-3 "%p") ,(concat "  " "%" l "l:%" c "c")))))
-
-
-;; Set telephone-line
-(require 'telephone-line)
-(setq telephone-line-primary-left-separator 'telephone-line-identity-left
-      telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
-      telephone-line-primary-right-separator 'telephone-line-identity-right
-      telephone-line-secondary-right-separator 'telephone-line-identity-hollow-right)
-(defface atom-red '((t (:foreground "#E06C75" :weight bold :background "#3E4451"))) "")
-(defface atom-orange '((t (:foreground "#D19A66" :weight bold :background "#3E4451"))) "")
-(defface atom-green '((t (:foreground "#98C379" :weight bold :background "#282C34"))) "")
-(defface atom-cyan '((t (:foreground "#56B6C2" :weight bold :background "#282C34"))) "")
-(defface atom-blue '((t (:foreground "#61AFEF" :weight bold :background "#3E4451"))) "")
-(defface atom-purple '((t (:foreground "#C678DD" :weight bold :background "#3E4451"))) "")
-(setq telephone-line-faces
-      '((red    . (atom-red . atom-red))
-        (orange . (atom-orange . atom-orange))
-        (green  . (atom-green . atom-green))
-        (cyan   . (atom-cyan . atom-cyan))
-        (blue   . (atom-blue . atom-blue))
-        (purple . (atom-purple . atom-purple))
-        (accent . (telephone-line-accent-inactive . telephone-line-accent-inactive))
-        (nil    . (mode-line . mode-line-inactive))))
-(setq telephone-line-lhs
-      '((red    . (telephone-line-window-number-segment))
-        (green  . (my-vc-info
-                   telephone-line-erc-modified-channels-segment
-                   telephone-line-process-segment))
-        (blue   . (telephone-line-buffer-segment
-		   telephone-line-minor-mode-segment))
-	(nil    . (telephone-line-atom-encoding-segment))))
-(setq telephone-line-rhs
-      '((nil    . (telephone-line-misc-info-segment))
-        (cyan   . (telephone-line-major-mode-segment))
-        (purple . (telephone-line-airline-position-segment))))
-(telephone-line-mode 1)
+(require 'spaceline-config)
+(spaceline-emacs-theme)
+(setq powerline-default-separator 'slant)
+(setq spaceline-workspace-numbers-unicode t)
+(setq spaceline-separator-dir-right '(left . left))
+(setq spaceline-separator-dir-left '(right . right))
+(spaceline-compile)
 
 ;; Xah's take on highlighting hex values with interactive call
 (defun xah-syntax-color-hex ()
