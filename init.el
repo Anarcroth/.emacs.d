@@ -257,12 +257,16 @@
 
 (require 'diminish)
 (eval-after-load "ivy" '(diminish 'ivy-mode))
+(eval-after-load "elpy" '(diminish 'elpy-mode))
+(eval-after-load "flymake" '(diminish 'flymake-mode))
 (eval-after-load "hi-lock" '(diminish 'hi-lock-mode))
 (eval-after-load "flyspell" '(diminish 'flyspell-mode))
-(eval-after-load "which-key" '(diminish 'which-key-mode))
+(eval-after-load "flycheck" '(diminish 'flycheck-mode))
 (eval-after-load "simple" '(diminish 'visual-line-mode))
-(eval-after-load "wrap-region" '(diminish 'wrap-region-mode))
+(eval-after-load "which-key" '(diminish 'which-key-mode))
+(eval-after-load "anaconda-mode" '(diminish 'anaconda-mode))
 (eval-after-load "autorevert" '(diminish 'auto-revert-mode))
+(eval-after-load "wrap-region" '(diminish 'wrap-region-mode))
 (eval-after-load "highlight-thing" '(diminish 'highlight-thing-mode))
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
 
