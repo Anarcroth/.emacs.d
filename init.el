@@ -159,6 +159,9 @@
 (add-hook 'prog-mode-hook 'diff-hl-mode)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
+;; Enable flycheck syntax checker
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;; Start Python dev environment
 (elpy-enable)
 (add-hook 'python-mode-hook 'anaconda-mode)
@@ -166,6 +169,10 @@
 ;; Set python interpreter environment
 (setq python-shell-interpreter "python"
       python-shell-interpreter-args "-i")
+(setq python-check-command (expand-file-name "flake8"))
+(when (load "flycheck" t t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; Set Lisp dev environment
 (require 'slime)
