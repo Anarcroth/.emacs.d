@@ -143,6 +143,12 @@
 ;; Save files needing root privileges
 (require 'sudo-save)
 
+;; Configure org-pomodoro
+(setq org-pomodoro-length 30)
+(setq org-pomodoro-short-break-length 5)
+(setq org-pomodoro-long-break-length 20)
+(setq org-pomodoro-clock-break 4)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |   Dev environment     | ;;
@@ -356,9 +362,8 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono Nerd Font:antialias=1"))
+             '(font . "DejaVu Sans Mono Nerd Font-10:antialias=1"))
 (set-face-attribute 'default nil
-                    :height 120
                     :weight 'normal
                     :width 'normal)
 
