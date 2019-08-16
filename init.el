@@ -396,10 +396,11 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "DejaVu Sans Mono Nerd Font-10:antialias=1"))
+             '(font . "Iosevka-10:antialias=1"))
 (set-face-attribute 'default nil
                     :weight 'normal
-                    :width 'normal)
+                    :width 'condensed)
+(require 'setup-iosevka-ligatures)
 
 ;; Set cursor type
 (setq sentence-end-double-space nil)
