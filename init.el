@@ -180,37 +180,8 @@
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
-(defun python-peek-definition ()
-  "Peek at definition at point using anaconda."
-  (interactive)
-  (let ((func (lambda ()
-                (anaconda-mode-find-definitions))))
-    (make-peek-frame func)))
-
-(defun make-peek-frame (find-definition-function &rest args)
-  "Make a new frame for peeking definition."
-  (let (summary
-	doc-frame
-	x y
-	(abs-pixel-pos (save-excursion
-			 (beginning-of-thing 'symbol)
-			 (window-absolute-pixel-position))))
-    (setq x (car abs-pixel-pos))
-    (setq y (+ (cdr abs-pixel-pos) (frame-char-height)))
-    (setq doc-frame (make-frame '((minibuffer . nil)
-				  (name . "*Emacs Peek*")
-				  (width . 120)
-				  (visibility . nil)
-				  (height . 20))))
-    (set-frame-position doc-frame x y)
-    (with-selected-frame doc-frame
-      (apply find-definition-function args)
-      (read-only-mode)
-      (recenter-top-bottom 0))
-    (make-frame-visible doc-frame)))
-
-(global-set-key (kbd "C-c .") 'python-peek-definition)
-(global-set-key (kbd "<f12>") 'delete-frame)
+;; Set peek frame mode
+(require 'peek-frame-mode)
 
 ;; Set Lisp dev environment
 (require 'slime)
