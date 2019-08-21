@@ -17,11 +17,9 @@
                                     (minibuffer . nil)
                                     (name . "*Emacs Peek*")
                                     (width . 80)
-                                    (height . ,(if (frame-parent)
-						   (frame-height)
-                                                 (round (* (frame-height) 0.75))))
+                                    (height . 20)
                                     (visibility . nil)
-                                    (internal-border-width . 1)
+                                    (internal-border-width . 5)
                                     (left-fringe . 10)
                                     (right-fringe . 10)
                                     (skip-taskbar . t)
@@ -35,20 +33,22 @@
                                     (desktop-dont-save . t))))
 	       (window (frame-root-window frame)))
           (prog1 frame
-            (set-window-parameter window 'mode-line-format
-                                  'none)
-            (set-window-parameter window 'header-line-format
-                                  'none)
+            (set-window-parameter window 'header-line-format 'none)
             (unless (frame-parent)
-              ;; center on current frame
-              (set-frame-position
-               frame
-               (- (/ (frame-pixel-width) 2)
-                  (/ (frame-pixel-width frame) 2))
-               (round (* 0.1 (frame-pixel-height)))))
+	      (let (x y
+		      (abs-pixel-pos (save-excursion
+				       (beginning-of-thing 'symbol)
+				       (window-absolute-pixel-position))))
+		(setq x (car abs-pixel-pos))
+		(setq y (cdr abs-pixel-pos))
+		(set-frame-position
+		 frame
+		 x
+		 y)))
             (peek-frame-mode 1)))))
 
 (defun peek-frame-quit (&optional frame)
+  "Remove the peeked FRAME."
   (interactive (list (selected-frame)))
   (peek-frame-mode -1)
   (while (frame-parameter nil 'parent-frame)
