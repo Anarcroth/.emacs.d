@@ -465,9 +465,9 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (setq org-lowest-priority ?C)
 (setq org-default-priority ?A)
 
-(setq org-priority-faces '((?A . (:foreground "#D39276" :weight bold))
-                           (?B . (:foreground "#1164AF" :weight bold))
-                           (?C . (:foreground "#525E6D" :weight bold))))
+(setq org-priority-faces '((?A . (:foreground "#E06C75" :weight bold))
+                           (?B . (:foreground "#61AFEF" :weight bold))
+                           (?C . (:foreground "#56B6C2" :weight bold))))
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")
@@ -480,13 +480,13 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
       '(("t" "todo" entry (file+headline "~/org/todo.org" "What kind of a day do I want to have?")
-         "* TODO [#A] %?")
+         "** TODO [#A] %?")
         ("a" "appointment" entry (file+headline "~/org/todo.org" "Appointments")
          "* APPOINTMENT [#B] %?")
         ("i" "idea" entry (file+headline "~/org/ideas.org" "Ideas")
          "* IDEA [#C] %?")
         ("u" "uni" entry (file+headline "~/org/todo.org" "Uni")
-         "* TODO [#A] %?")))
+         "** TODO [#A] %?")))
 
 ;; Add timestamps to done elements
 (setq org-log-done t)
