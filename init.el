@@ -1,4 +1,10 @@
+;;; package --- Summary
+;; init.el
 ;; -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
@@ -134,6 +140,7 @@
 
 ;; Copy line
 (defun copy-line()
+  "Copy the whole line on which the cursor is currently on."
   (interactive)
   (move-beginning-of-line 1)
   (kill-line)
@@ -255,6 +262,7 @@
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
 (defun latex-count-words ()
+  "Call external Perl script to count the words in current latex file."
   (interactive)
   (shell-command (concat "/usr/local/bin/texcount.pl"
                          (buffer-file-name))))
@@ -327,10 +335,10 @@ DIR is handled as by `windmove-other-window-loc'."
       (select-window target)
       (switch-to-buffer buffer nil t))))
 
-(defun slide-buffer-up () (interactive) (slide-buffer 'up))
-(defun slide-buffer-down () (interactive) (slide-buffer 'down))
-(defun slide-buffer-left () (interactive) (slide-buffer 'left))
-(defun slide-buffer-right () (interactive) (slide-buffer 'right))
+(defun slide-buffer-up () "Slide buffer up." (interactive) (slide-buffer 'up))
+(defun slide-buffer-down () "Slide buffer down." (interactive) (slide-buffer 'down))
+(defun slide-buffer-left () "Slide buffer left." (interactive) (slide-buffer 'left))
+(defun slide-buffer-right () "Slide buffer right." (interactive) (slide-buffer 'right))
 
 (define-key global-map (kbd "C-S-<up>")    #'slide-buffer-up)
 (define-key global-map (kbd "C-S-<down>")  #'slide-buffer-down)
@@ -420,8 +428,8 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq spaceline-separator-dir-left '(right . right))
 (spaceline-compile)
 
-;; Xah's take on highlighting hex values with interactive call
 (defun xah-syntax-color-hex ()
+  "Xah's take on highlighting hex values with interactive call."
   (interactive)
   "Syntax color text of the form [#ff1100] and [#abc] in current buffer.
 URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
@@ -494,10 +502,10 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 ;; Expand org files globally
 (setq org-startup-folded nil)
 
-;; Pops a reminder every 3 minutes, 30 minutes before each appointment
-;; This is also refreshed when the todo.org file is saved
 (defun aj/appt-notify (until time msg)
-  "Use `alert' to for appointment notifications."
+  "Pop a reminder every TIME(3) minutes, 30 minutes UNTIL each appointment.
+This is also refreshed when the todo.org file is saved.
+Use `alert' to for appointment notifications."
   (if (listp msg)
       (dolist (i (number-sequence 0 (1- (length until))))
         (alert (nth i msg) :title "Reminder" :category 'calendar))
@@ -535,3 +543,4 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (setq org-emphasis-alist
       (cons '("+" '(:strike-through t :foreground "#61AFEF"))
             (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
+;;; init.el ends here
