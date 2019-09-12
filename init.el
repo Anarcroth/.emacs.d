@@ -228,7 +228,7 @@
 (vimish-fold-global-mode 1)
 
 ;; C/C++ environment setup
-(require 'pop-c-cpp-dev)
+(require 'c-cpp-dev-env)
 
 ;; Compile and Recompile global keys
 (global-set-key (kbd "C-x C-m") 'compile)
