@@ -386,6 +386,9 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq sentence-end-double-space nil)
 (setq-default cursor-type '(bar . 2))
 
+;; Fancy battery mode
+(add-hook 'after-init-hook #'fancy-battery-mode)
+
 ;; Have color brackets on programming modes
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
