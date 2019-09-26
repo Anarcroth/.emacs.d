@@ -36,4 +36,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(hi-yellow ((t (:background "#3E4451"))))
- '(spaceline-highlight-face ((t (:foreground "#282C34" :background "#528BFF")))))
+ '(spaceline-all-the-icons-sunrise-face ((t (:foreground "#f6c175"))))
+ '(spaceline-all-the-icons-sunset-face ((t (:foreground "#fe7714"))))
+ '(spaceline-highlight-face ((t (:foreground "#282C34" :background "#528BFF"))))
+ '(spaceline-python-venv ((t (:foreground "#528BFF"))))
+ '(whitespace-tab ((t (:foreground "#4B5363"))))
+ '(whitespace-space ((t (:foreground "#4B5363")))))
