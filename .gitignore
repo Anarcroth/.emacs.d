@@ -38,3 +38,4 @@ site-lisp/package/
 bookmarks
 /transient
 /ENV
+/elpy
