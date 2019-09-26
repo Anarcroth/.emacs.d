@@ -376,8 +376,9 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka Nerd Font-10:antialias=1:otf=1"))
+             '(font . "Iosevka-11:antialias=1"))
 (set-face-attribute 'default nil
+		    :height '100
                     :weight 'normal
                     :width 'condensed)
 
