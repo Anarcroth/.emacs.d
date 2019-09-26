@@ -418,6 +418,15 @@ DIR is handled as by `windmove-other-window-loc'."
 
 (global-visual-line-mode t)
 
+(global-whitespace-mode)
+(setq whitespace-style '(spaces face tabs tab-mark space-mark trailing))
+;; God help you if these ascii characters don't work for you and you have to find new chars
+(setq whitespace-display-mappings
+      ;; this is a mapping for the '|' character
+      '((tab-mark 9 [124 9] [92 9])
+	;; this is a mapping for the '·' character
+	(space-mark 32 [183] [46])))
+
 ;; Unique names of buffers for files with identical names
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
@@ -425,13 +434,13 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
-(require 'spaceline-config)
-(spaceline-emacs-theme)
-(setq powerline-default-separator 'slant)
-(setq spaceline-workspace-numbers-unicode t)
-(setq spaceline-separator-dir-right '(left . left))
-(setq spaceline-separator-dir-left '(right . right))
-(spaceline-compile)
+(require 'all-the-icons)
+(require 'spaceline-all-the-icons) 	;; this depends on the spaceline package
+(spaceline-all-the-icons-theme)
+(setq spaceline-all-the-icons-bookmark-p 't)
+(setq spaceline-all-the-icons-projectile-p 'nil)
+(setq spaceline-all-the-icons-buffer-path-p 'nil)
+(setq spaceline-all-the-icons-separator-type 'arrow)
 
 (defun xah-syntax-color-hex ()
   "Xah's take on highlighting hex values with interactive call."
@@ -483,8 +492,8 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
                            (?C . (:foreground "#56B6C2" :weight bold))))
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)")
-        (sequence "IDEA(i)" "RE-THINK(t)" "LATER(l)" "APPOINTMENT(a)" "|")))
+      '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
+        (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|")))
 
 ;;Open agenda in current window
 (setq org-agenda-window-setup (quote current-window))
