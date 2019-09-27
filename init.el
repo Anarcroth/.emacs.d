@@ -557,4 +557,41 @@ Use `alert' to for appointment notifications."
 (setq org-emphasis-alist
       (cons '("+" '(:strike-through t :foreground "#61AFEF"))
             (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
+
+;; Set icons for the priorities in org mode (eye candy)
+(require 'org-fancy-priorities)
+(add-hook 'org-mode-hook 'org-fancy-priorities-mode)
+(setq org-fancy-priorities-list '((?A . "❗")
+                                  (?B . "❗")
+                                  (?C . "❗")
+                                  (?D . "☕")
+                                  (?1 . "⚡")
+                                  (?2 . "⚡")
+                                  (?3 . "⚡")
+                                  (?4 . "☕")
+                                  (?I . "Important")))
+
+;; Set org bullet points to look nice (eye candy)
+(require 'org-bullets)
+(add-hook 'org-mode-hook 'org-bullets-mode)
+
+;; Change the font color of the completed sub-tasks in an Org TODO list
+(defface org-checkbox-todo-text
+  '((t (:inherit org-todo)))
+  "Face for the text part of an unchecked org-mode checkbox.")
+
+(font-lock-add-keywords
+ 'org-mode
+ `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?: \\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)" 1 'org-checkbox-todo-text prepend))
+ 'append)
+
+(defface org-checkbox-done-text
+    '((t (:inherit org-done)))
+    "Face for the text part of a checked org-mode checkbox.")
+
+(font-lock-add-keywords
+ 'org-mode
+ `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)" 1 'org-checkbox-done-text prepend))
+ 'append)
+
 ;;; init.el ends here
