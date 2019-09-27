@@ -485,11 +485,11 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 
 (setq org-highest-priority ?A)
 (setq org-lowest-priority ?C)
-(setq org-default-priority ?A)
+(setq org-default-priority ?B)
 
 (setq org-priority-faces '((?A . (:foreground "#E06C75" :weight bold))
                            (?B . (:foreground "#61AFEF" :weight bold))
-                           (?C . (:foreground "#56B6C2" :weight bold))))
+                           (?C . (:foreground "#98C379" :weight bold))))
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
