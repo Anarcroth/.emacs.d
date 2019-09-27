@@ -507,7 +507,7 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
          "* APPOINTMENT [#B] %?")
         ("i" "idea" entry (file+headline "~/org/ideas.org" "Ideas")
          "* IDEA [#C] %?")
-        ("u" "uni" entry (file+headline "~/org/todo.org" "Uni")
+        ("s" "stud" entry (file+headline "~/org/todo.org" "Study")
          "** TODO [#A] %?")))
 
 ;; Add timestamps to done elements
