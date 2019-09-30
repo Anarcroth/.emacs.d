@@ -448,13 +448,10 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
-(require 'all-the-icons)
-(require 'spaceline-all-the-icons) 	;; this depends on the spaceline package
-(spaceline-all-the-icons-theme)
-(setq spaceline-all-the-icons-bookmark-p 't)
-(setq spaceline-all-the-icons-projectile-p 'nil)
-(setq spaceline-all-the-icons-buffer-path-p 'nil)
-(setq spaceline-all-the-icons-separator-type 'arrow)
+;; Setup doom modeline
+(require 'doom-modeline)
+(column-number-mode 1)			;; an addition to have column numbers as well
+(doom-modeline-mode 1)
 
 (defun xah-syntax-color-hex ()
   "Xah's take on highlighting hex values with interactive call."
