@@ -20,7 +20,7 @@
      (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|"))))
  '(package-selected-packages
    (quote
-    (org-bullets org-fancy-priorities fancy-battery paradox spaceline-all-the-icons all-the-icons ac-js2 org-pomodoro diminish smooth-scrolling xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony irony historian latex-math-preview flycheck-rtags rtags company-rtags htmlize rainbow-delimiters ac-slime slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements anaconda-mode whitespace-cleanup-mode highlight-escape-sequences flycheck-pos-tip flycheck multiple-cursors pdf-tools markdown-mode wrap-region winum vimish-fold ox-reveal nyan-mode neotree magit flyspell-correct elpy auctex-latexmk atom-one-dark-theme)))
+    (undo-tree org-bullets org-fancy-priorities fancy-battery paradox spaceline-all-the-icons all-the-icons ac-js2 org-pomodoro diminish smooth-scrolling xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony irony historian latex-math-preview flycheck-rtags rtags company-rtags htmlize rainbow-delimiters ac-slime slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements anaconda-mode whitespace-cleanup-mode highlight-escape-sequences flycheck-pos-tip flycheck multiple-cursors pdf-tools markdown-mode wrap-region winum vimish-fold ox-reveal nyan-mode neotree magit flyspell-correct elpy auctex-latexmk atom-one-dark-theme)))
  '(sh-basic-offset 2)
  '(sh-indentation 2)
  '(smie-indent-basic 2)
