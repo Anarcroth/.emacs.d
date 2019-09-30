@@ -351,6 +351,11 @@ DIR is handled as by `windmove-other-window-loc'."
 (global-set-key (kbd "S-C-c") 'windmove-up)
 (global-set-key (kbd "S-C-t") 'windmove-down)
 
+;; Setup somewhat smooth scrolling + scroll margins
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
+(setq scroll-margin 5)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; | Setup how emacs looks | ;;
@@ -418,6 +423,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 (global-visual-line-mode t)
 
+;; Setup whitespaces to be depicted with dots
 (global-whitespace-mode)
 (setq whitespace-style '(spaces face tabs tab-mark space-mark trailing))
 ;; God help you if these ascii characters don't work for you and you have to find new chars
