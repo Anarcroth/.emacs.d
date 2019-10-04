@@ -97,7 +97,7 @@
 (wrap-region-add-wrapper "+" "+" nil 'org-mode)
 
 ;; Setup org-reveal root
-(require 'ox-reveal)
+(paradox-require 'ox-reveal)
 (setq org-reveal-root "file:///home/anarcroth/reveal.js")
 
 ;; Move lines up and down
@@ -149,7 +149,7 @@
 (global-set-key (kbd "C-s-d") 'copy-line)
 
 ;; Save files needing root privileges
-(require 'sudo-save)
+(paradox-require 'sudo-save)
 
 ;; Configure org-pomodoro
 (setq org-pomodoro-length 30)
@@ -158,7 +158,7 @@
 (setq org-pomodoro-clock-break 4)
 
 ;; Setup undo tree mode
-(require 'undo-tree)
+(paradox-require 'undo-tree)
 (global-undo-tree-mode 1)
 (global-set-key (kbd "C-z") 'undo)
 (defalias 'redo 'undo-tree-redo)
@@ -171,12 +171,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Setup magit
-(require 'magit)
+(paradox-require 'magit)
 (magit-mode)
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 ;; Shows side diff changes
-(require 'diff-hl)
+(paradox-require 'diff-hl)
 (add-hook 'prog-mode-hook 'diff-hl-mode)
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
@@ -196,10 +196,10 @@
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; Set peek frame mode
-(require 'peek-frame-mode)
+(paradox-require 'peek-frame-mode)
 
 ;; Set Lisp dev environment
-(require 'slime)
+(paradox-require 'slime)
 ;; package.el compiles the contrib subdir, but the compilation order
 ;; causes problems, so we remove the .elc files there.
 (mapc #'delete-file
@@ -222,7 +222,7 @@
 (global-set-key (kbd "C-c r e") 'eval-region)
 
 ;; Multiple cursors
-(require 'multiple-cursors)
+(paradox-require 'multiple-cursors)
 (global-set-key (kbd "C-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -244,7 +244,7 @@
 (vimish-fold-global-mode 1)
 
 ;; C/C++ environment setup
-(require 'c-cpp-dev-env)
+(paradox-require 'c-cpp-dev-env)
 
 ;; Compile and Recompile global keys
 (global-set-key (kbd "C-x C-m") 'compile)
@@ -277,13 +277,13 @@
                          (buffer-file-name))))
 
 ;; Add js2 mode
-(require 'js2-mode)
+(paradox-require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 (setq js2-highlight-level 3)
 
-(require 'diminish)
+(paradox-require 'diminish)
 (eval-after-load "ivy" '(diminish 'ivy-mode))
 (eval-after-load "elpy" '(diminish 'elpy-mode))
 (eval-after-load "flymake" '(diminish 'flymake-mode))
@@ -322,7 +322,7 @@
         (define-key map (kbd "M-8") 'winum-select-window-8)
 	(define-key map (kbd "M-9") 'winum-select-window-9)
         map))
-(require 'winum)
+(paradox-require 'winum)
 (winum-mode)
 
 ;; Change window size
@@ -335,7 +335,7 @@
 (defun slide-buffer (dir)
   "Move current buffer into window at direction DIR.
 DIR is handled as by `windmove-other-window-loc'."
-  (require 'windmove)
+  (paradox-require 'windmove)
   (let ((buffer (current-buffer))
         (target (windmove-find-other-window dir)))
     (if (null target)
@@ -380,7 +380,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (load-theme 'atom-one-dark t)
 
 ;; Highlight occurrences under the cursor
-(require 'highlight-thing)
+(paradox-require 'highlight-thing)
 (add-hook 'prog-mode-hook 'highlight-thing-mode)
 (setq highlight-thing-delay-seconds 1.0)
 (setq highlight-thing-limit-to-region-in-large-buffers-p nil
@@ -426,7 +426,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (global-linum-mode t)
 
 ;; Set neotree window width
-(require 'neotree)
+(paradox-require 'neotree)
 (setq neo-window-width 33)
 
 (global-visual-line-mode t)
@@ -442,14 +442,14 @@ DIR is handled as by `windmove-other-window-loc'."
 	(space-mark 32 [183] [46])))
 
 ;; Unique names of buffers for files with identical names
-(require 'uniquify)
+(paradox-require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "  ")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
 ;; Setup doom modeline
-(require 'doom-modeline)
+(paradox-require 'doom-modeline)
 (column-number-mode 1)			;; an addition to have column numbers as well
 (doom-modeline-mode 1)
 
@@ -564,13 +564,13 @@ Use `alert' to for appointment notifications."
 (add-hook 'after-save-hook 'anarcroth/after-org-save)
 
 ;; Define org-strike-through color
-(require 'cl)   ; for delete*
+(paradox-require 'cl)   ; for delete*
 (setq org-emphasis-alist
       (cons '("+" '(:strike-through t :foreground "#61AFEF"))
             (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
 
 ;; Set icons for the priorities in org mode (eye candy)
-(require 'org-fancy-priorities)
+(paradox-require 'org-fancy-priorities)
 (add-hook 'org-mode-hook 'org-fancy-priorities-mode)
 (setq org-fancy-priorities-list '((?A . "❗")
                                   (?B . "❗")
@@ -583,7 +583,7 @@ Use `alert' to for appointment notifications."
                                   (?I . "Important")))
 
 ;; Set org bullet points to look nice (eye candy)
-(require 'org-bullets)
+(paradox-require 'org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
 
 ;; Change the font color of the completed sub-tasks in an Org TODO list
