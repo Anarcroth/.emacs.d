@@ -298,6 +298,10 @@
 (eval-after-load "highlight-thing" '(diminish 'highlight-thing-mode))
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
 
+;; Setup clojure mode
+(paradox-require 'clojure-mode)
+(paradox-require 'cider-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |  Window manipulation  | ;;
