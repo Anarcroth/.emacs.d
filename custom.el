@@ -12,9 +12,13 @@
      (java-mode . "java")
      (awk-mode . "awk")
      (other . "gnu"))))
- '(doom-modeline-bar-width 6)
- '(doom-modeline-buffer-file-name-style (quote relative-to-project))
+ '(doom-modeline-bar-width 10)
+ '(doom-modeline-buffer-encoding t)
+ '(doom-modeline-buffer-file-name-style (quote buffer-name))
+ '(doom-modeline-env-enable-python nil)
+ '(doom-modeline-env-version t)
  '(doom-modeline-height 25)
+ '(doom-modeline-persp-name t)
  '(elpy-modules
    (quote
     (elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults)))
@@ -25,8 +29,8 @@
      (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|"))))
  '(package-selected-packages
    (quote
-    (doom-modeline undo-tree org-bullets org-fancy-priorities fancy-battery paradox spaceline-all-the-icons all-the-icons ac-js2 org-pomodoro diminish smooth-scrolling xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony irony historian latex-math-preview flycheck-rtags rtags company-rtags htmlize rainbow-delimiters ac-slime slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements anaconda-mode whitespace-cleanup-mode highlight-escape-sequences flycheck-pos-tip flycheck multiple-cursors pdf-tools markdown-mode wrap-region winum vimish-fold ox-reveal neotree magit flyspell-correct elpy auctex-latexmk atom-one-dark-theme)))
- '(sh-basic-offset 2)
+    (cider clojure-mode doom-modeline undo-tree org-bullets org-fancy-priorities fancy-battery paradox spaceline-all-the-icons all-the-icons ac-js2 org-pomodoro diminish smooth-scrolling xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony historian latex-math-preview flycheck-rtags rtags company-rtags htmlize rainbow-delimiters ac-slime slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements anaconda-mode whitespace-cleanup-mode highlight-escape-sequences flycheck-pos-tip flycheck multiple-cursors pdf-tools markdown-mode wrap-region winum vimish-fold ox-reveal neotree magit flyspell-correct elpy auctex-latexmk atom-one-dark-theme)))
+ '(sh-basic-offset 4)
  '(sh-indentation 2)
  '(smie-indent-basic 2)
  '(spaceline-all-the-icons-flycheck-alternate nil)
