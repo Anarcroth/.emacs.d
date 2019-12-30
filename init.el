@@ -301,6 +301,15 @@
 ;; Setup clojure mode
 (paradox-require 'clojure-mode)
 (paradox-require 'cider-mode)
+;; Clojure refactor setup
+(paradox-require 'clj-refactor)
+(add-hook 'clojure-mode-hook
+	  (lambda ()
+            (clj-refactor-mode 1)
+	    (yas-minor-mode 1) ; for adding require/use/import statements
+	    ;; insert keybinding setup here
+	    (cljr-add-keybindings-with-prefix "C-c C-m")
+            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
