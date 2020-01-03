@@ -516,7 +516,7 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
                            (?C . (:foreground "#98C379" :weight bold))))
 
 (setq org-todo-keywords
-      '((sequence "TODO_WORK(w)" "TODO_PERSONAL(o)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
+      '((sequence "TODO(w)" "TODO(o)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
         (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|")))
 
 ;;Open agenda in current window
@@ -526,9 +526,9 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
       '(("w" "todo" entry (file+headline "~/org/todo.org" "Work")
-         "* TODO [#A] %?")
+         "** TODO [#A] %?")
 	("o" "todo" entry (file+headline "~/org/todo.org" "Personal")
-         "* TODO [#A] %?")
+         "** TODO [#A] %?")
         ("a" "appointment" entry (file+headline "~/org/todo.org" "Appointments")
          "* APPOINTMENT [#B] %?")
         ("i" "idea" entry (file+headline "~/org/ideas.org" "Ideas")
