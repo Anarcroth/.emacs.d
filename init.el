@@ -446,11 +446,14 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Setup whitespaces to be depicted with dots
 (global-whitespace-mode)
-(setq whitespace-style '(spaces face tabs tab-mark space-mark trailing))
+(setq whitespace-style '(spaces face tabs newline tab-mark space-mark newline-mark trailing))
 ;; God help you if these ascii characters don't work for you and you have to find new chars
 (setq whitespace-display-mappings
-      ;; this is a mapping for the '|' character
-      '((tab-mark 9 [124 9] [92 9])
+      '(
+	;; this is a mapping for the '|▷' characters
+	(tab-mark 9 [124 9655 9] [92 9])
+	;; this is a mapping for the '↵' character
+	(newline-mark 10 [8629 10])
 	;; this is a mapping for the '·' character
 	(space-mark 32 [183] [46])))
 

@@ -73,4 +73,5 @@
  '(spaceline-highlight-face ((t (:foreground "#282C34" :background "#528BFF"))))
  '(spaceline-python-venv ((t (:foreground "#528BFF"))))
  '(whitespace-space ((t (:foreground "#4B5363"))))
- '(whitespace-tab ((t (:foreground "#4B5363")))))
+ '(whitespace-tab ((t (:foreground "#4B5363"))))
+ '(whitespace-newline ((t (:foreground "#4B5363")))))
