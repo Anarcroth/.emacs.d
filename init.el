@@ -63,7 +63,7 @@
   (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
 (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
-(add-hook 'after-init-hook 'ivy-historian-mode)
+;; (add-hook 'after-init-hook 'ivy-historian-mode)
 
 ;; Disable backup files
 (setq backup-directory-alist '(("." . "~/.backups")))
@@ -163,6 +163,9 @@
 (global-set-key (kbd "C-z") 'undo)
 (defalias 'redo 'undo-tree-redo)
 (global-set-key (kbd "C-S-z") 'redo)
+
+;; Setup very-large-file mode
+(paradox-require 'vlf-setup)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;

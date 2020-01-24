@@ -29,7 +29,7 @@
      (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|"))))
  '(package-selected-packages
    (quote
-    (clj-refactor-mode clj-refactor cider clojure-mode doom-modeline undo-tree org-bullets org-fancy-priorities fancy-battery paradox spaceline-all-the-icons all-the-icons ac-js2 org-pomodoro diminish smooth-scrolling xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony historian latex-math-preview flycheck-rtags company-rtags htmlize rainbow-delimiters ac-slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements anaconda-mode whitespace-cleanup-mode highlight-escape-sequences flycheck-pos-tip multiple-cursors markdown-mode wrap-region winum vimish-fold ox-reveal neotree flyspell-correct auctex-latexmk atom-one-dark-theme)))
+    (vlf clj-refactor-mode clj-refactor cider clojure-mode doom-modeline undo-tree org-bullets org-fancy-priorities fancy-battery paradox spaceline-all-the-icons all-the-icons ac-js2 org-pomodoro diminish smooth-scrolling xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony historian latex-math-preview flycheck-rtags company-rtags htmlize rainbow-delimiters ac-slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements anaconda-mode whitespace-cleanup-mode highlight-escape-sequences flycheck-pos-tip multiple-cursors markdown-mode wrap-region winum vimish-fold ox-reveal neotree flyspell-correct auctex-latexmk atom-one-dark-theme)))
  '(sh-basic-offset 4)
  '(sh-indentation 2)
  '(smie-indent-basic 2)
@@ -72,6 +72,6 @@
  '(spaceline-all-the-icons-sunset-face ((t (:foreground "#fe7714"))))
  '(spaceline-highlight-face ((t (:foreground "#282C34" :background "#528BFF"))))
  '(spaceline-python-venv ((t (:foreground "#528BFF"))))
+ '(whitespace-newline ((t (:foreground "#4B5363"))))
  '(whitespace-space ((t (:foreground "#4B5363"))))
- '(whitespace-tab ((t (:foreground "#4B5363"))))
- '(whitespace-newline ((t (:foreground "#4B5363")))))
+ '(whitespace-tab ((t (:foreground "#4B5363")))))
