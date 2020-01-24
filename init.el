@@ -167,6 +167,11 @@
 ;; Setup very-large-file mode
 (paradox-require 'vlf-setup)
 
+;; Bindings for jumping to beginning and end of any buffer
+;; helpful when working on very large files
+(global-set-key (kbd "C-s-b") 'beginning-of-buffer)
+(global-set-key (kbd "C-s-k") 'end-of-buffer)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |   Dev environment     | ;;
