@@ -547,9 +547,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
         ("s" "stud" entry (file+headline "~/org/todo.org" "Study")
          "** TODO [#A] %?")))
 
-;; Add timestamps to done elements
-(setq org-log-done t)
-
 ;; Expand org files globally
 (setq org-startup-folded nil)
 
