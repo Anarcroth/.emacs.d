@@ -192,7 +192,8 @@
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 ;; Enable flycheck syntax checker
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
 
 ;; Start Python dev environment
 (elpy-enable)
@@ -202,7 +203,7 @@
 (setq python-shell-interpreter "python"
       python-shell-interpreter-args "-i")
 (setq python-check-command (expand-file-name "flake8"))
-(when (load "flycheck" t t)
+(with-eval-after-load 'flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
@@ -330,13 +331,15 @@
 (paradox-require 'flycheck-rust)
 (add-hook 'rust-mode-hook
           (lambda () (setq indent-tabs-mode nil)))
-;; Format rust code on each file save
-(setq rust-format-on-save t)
 (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+;; Format rust code on each file save
+(setq rust-format-on-save t)
 (setq company-tooltip-align-annotations t)
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
