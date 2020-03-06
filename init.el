@@ -416,6 +416,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 (setq scroll-margin 5)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; | Setup how emacs looks | ;;
@@ -505,7 +506,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Setup doom modeline
 (paradox-require 'doom-modeline)
-(column-number-mode 1)			;; an addition to have column numbers as well
+(column-number-mode 1) ;; an addition to have column numbers as well
 (doom-modeline-mode 1)
 
 (defun xah-syntax-color-hex ()
@@ -535,6 +536,18 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
           'face (list
 		 :background (match-string-no-properties 0)))))))
   (font-lock-flush))
+
+(defun pretty-lambda ()
+  "Make some word or string show as pretty Unicode symbols."
+  (setq prettify-symbols-alist
+        '(
+          ("lambda" . 955) ; λ
+          )))
+
+(add-hook 'lisp-mode-hook 'pretty-lambda)
+(add-hook 'scheme-mode-hook 'pretty-lambda)
+(add-hook 'emacs-lisp-mode-hook 'pretty-lambda)
+(global-prettify-symbols-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
