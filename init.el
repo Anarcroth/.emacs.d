@@ -192,8 +192,9 @@
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 ;; Enable flycheck syntax checker
+(add-hook 'after-init-hook #'global-flycheck-mode)
 (with-eval-after-load 'flycheck
-  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+  (flycheck-pos-tip-mode))
 
 ;; Start Python dev environment
 (elpy-enable)
@@ -311,17 +312,25 @@
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
 
 ;; Setup clojure mode
-(paradox-require 'clojure-mode)
 (paradox-require 'cider-mode)
-;; Clojure refactor setup
+(paradox-require 'clojure-mode)
 (paradox-require 'clj-refactor)
+(paradox-require 'flycheck-clojure)
+;; Clojure refactor setup
 (add-hook 'clojure-mode-hook
 	  (lambda ()
             (clj-refactor-mode 1)
 	    (yas-minor-mode 1) ; for adding require/use/import statements
 	    ;; insert keybinding setup here
-	    (cljr-add-keybindings-with-prefix "C-c C-m")
-            ))
+	    (cljr-add-keybindings-with-prefix "C-c C-m")))
+(add-hook 'cider-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+(add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+(eval-after-load 'flycheck '(flycheck-clojure-setup))
+(eval-after-load 'flycheck
+  '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
+(add-hook 'cider-mode-hook
+  (lambda () (setq next-error-function #'flycheck-next-error-function)))
 
 ;; Setup Rust mode
 (paradox-require 'racer)
