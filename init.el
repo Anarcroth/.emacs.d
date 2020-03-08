@@ -44,12 +44,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Ivy setup
+(paradox-require 'ivy)
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "%d/%d ")
 (setq ivy-virtual-abbreviate 'fullpath)
 (setq enable-recursive-minibuffers t)
 (setq counsel-mode-override-describe-bindings t)
-(global-set-key "\C-s" 'swiper)
+(global-set-key "\C-s" 'swiper-isearch)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
@@ -57,13 +59,13 @@
 (global-set-key (kbd "<f2> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
 (global-set-key (kbd "C-c g") 'counsel-git)
+(global-set-key (kbd "C-c j") 'counsel-git-grep)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
 (dolist (k '("C-j" "C-RET"))
   (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
 (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
-;; (add-hook 'after-init-hook 'ivy-historian-mode)
 
 ;; Disable backup files
 (setq backup-directory-alist '(("." . "~/.backups")))
@@ -172,8 +174,16 @@
 (global-set-key (kbd "C-s-b") 'beginning-of-buffer)
 (global-set-key (kbd "C-s-k") 'end-of-buffer)
 
-;; Refresh buffer after file change on  disk
+;; Refresh buffer after file change on disk
 (global-auto-revert-mode t)
+
+;; Set company globally
+(add-hook 'after-init-hook 'global-company-mode)
+(global-set-key (kbd "M-p") 'company-select-next)
+(global-set-key (kbd "M-n") 'company-select-previous)
+(setq company-idle-delay 0)
+(setq company-tooltip-limit 20)
+(setq company-selection-wrap-around t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
@@ -263,12 +273,6 @@
 (global-set-key (kbd "C-x C-m") 'compile)
 (global-set-key (kbd "C-x C-v") 'recompile)
 
-;; Set company globally
-(global-company-mode t)
-(global-set-key (kbd "M-p") 'company-select-next)
-(global-set-key (kbd "M-n") 'company-select-previous)
-(setq company-idle-delay 0)
-
 ;; Set spellcheck
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
@@ -356,7 +360,7 @@
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Allows to scroll to end or beginning of buffer
+;; Allows to scroll to end or beginning of buffer without producing an error
 (setq scroll-error-top-bottom t)
 
 ;; Set window numbering
