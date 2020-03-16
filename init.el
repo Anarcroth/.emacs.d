@@ -450,11 +450,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka-11:antialias=1"))
-(set-face-attribute 'default nil
-		    :height '100
-                    :weight 'normal
-                    :width 'condensed)
+             '(font . "Iosevka-11:spacing=m:width=condensed:antialias=1"))
 
 ;; Set cursor type
 (setq sentence-end-double-space nil)
