@@ -330,6 +330,10 @@
 (add-hook 'cider-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+;; I don't know what to do with this. It's too slow currently to be practical.
+;; (add-hook 'cider-mode-hook
+;;           (lambda ()
+;;              (add-hook 'after-save-hook 'cider-format-buffer nil 'make-it-local)))
 (eval-after-load 'flycheck '(flycheck-clojure-setup))
 (eval-after-load 'flycheck
   '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
