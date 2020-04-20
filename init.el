@@ -204,6 +204,11 @@ Else go to the opening parenthesis one level up."
 			 (backward-char 1)))))))))
 (global-set-key (kbd "C-M-g") 'goto-match-paren)
 
+;; Optimize working on a large line with Emacs
+;; (bidi-inhibit-bpa t)
+(setq bidi-display-reordering 'nil)
+(setq bidi-paragraph-direction 'left-to-right)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |   Dev environment     | ;;
