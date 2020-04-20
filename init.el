@@ -395,6 +395,21 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 (setq initial-major-mode 'text-mode)
 (global-set-key (kbd "C-c b u") 'new-empty-buffer)
 
+;; Setup XML folding
+(paradox-require 'hideshow)
+(paradox-require 'sgml-mode)
+(paradox-require 'nxml-mode)
+(add-to-list 'hs-special-modes-alist
+             '(nxml-mode
+               "<!--\\|<[^/>]*[^/]>"
+               "-->\\|</[^/>]*[^/]>"
+
+               "<!--"
+               sgml-skip-tag-forward
+               nil))
+(add-hook 'nxml-mode-hook 'hs-minor-mode)
+;; optional key bindings, easier than hs defaults
+(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |  Window manipulation  | ;;
