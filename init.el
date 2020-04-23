@@ -3,6 +3,22 @@
 ;; -*- lexical-binding: t -*-
 
 ;;; Commentary:
+;;
+;;  ____
+;; /\  _`\
+;; \ \ \L\_\    ___ ___      __      ___    ____
+;;  \ \  _\L  /' __` __`\  /'__`\   /'___\ /',__\
+;;   \ \ \L\ \/\ \/\ \/\ \/\ \L\.\_/\ \__//\__, `\
+;;    \ \____/\ \_\ \_\ \_\ \__/.\_\ \____\/\____/
+;;     \/___/  \/_/\/_/\/_/\/__/\/_/\/____/\/___/
+;;        ___
+;;       /\_ \
+;;   _ __\//\ \    ____
+;;  /\`'__\\ \ \  /\_ ,`\
+;;  \ \ \/  \_\ \_\/_/  /_
+;;   \ \_\  /\____\ /\____\
+;;    \/_/  \/____/ \/____/
+;;
 
 ;;; Code:
 
@@ -36,6 +52,8 @@
             (require 'server)
             (unless (server-running-p)
               (server-start))))
+
+;; end-initialization-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
@@ -208,6 +226,8 @@ Else go to the opening parenthesis one level up."
 ;; (bidi-inhibit-bpa t)
 (setq bidi-display-reordering 'nil)
 (setq bidi-paragraph-direction 'left-to-right)
+
+;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
@@ -410,6 +430,9 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 (add-hook 'nxml-mode-hook 'hs-minor-mode)
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+
+;; end-dev-environment-section ;;
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
 ;; |  Window manipulation  | ;;
@@ -476,6 +499,8 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 (setq scroll-margin 5)
+
+;; end-window-manipulation-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
@@ -604,6 +629,8 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 (add-hook 'scheme-mode-hook 'pretty-lambda)
 (add-hook 'emacs-lisp-mode-hook 'pretty-lambda)
 (global-prettify-symbols-mode 1)
+
+;; end-emacs-looks-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; +-----------------------+ ;;
