@@ -227,6 +227,32 @@ Else go to the opening parenthesis one level up."
 (setq bidi-display-reordering 'nil)
 (setq bidi-paragraph-direction 'left-to-right)
 
+;; Update packages automatically when it's monday
+(defun filter-installed-packages ()
+  (dolist (package package-activated-list
+		   (when (and (package-installed-p package)
+			      (cadr (assq package package-archive-contents)))
+		     (let* ((newest-desc (cadr (assq package package-archive-contents)))
+			    (installed-desc (cadr (or (assq package package-alist)
+						      (assq package package--builtins))))
+			    (newest-version  (package-desc-version newest-desc))
+			    (installed-version (package-desc-version installed-desc)))
+		       (version-list-<= newest-version installed-version))))))
+
+(defun is-monday ()
+  (if (string-match "Mon" (current-time-string))
+      1))
+
+(defun update-package ()
+  (dolist (package (filter-installed-packages))
+      (condition-case ex
+	  (progn
+	    (package-install-from-archive (cadr (assoc package package-archive-contents)))))))
+
+(defun update-packages ()
+  (when is-monday
+    (update-package)))
+
 ;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -527,7 +553,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka-11:spacing=m:width=condensed:antialias=1"))
+             '(font . "Iosevka-12:spacing=m:width=condensed:antialias=1"))
 
 ;; Set cursor type
 (setq sentence-end-double-space nil)
