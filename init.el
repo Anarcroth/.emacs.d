@@ -438,6 +438,10 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 ;; optional key bindings, easier than hs defaults
 (define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
 
+;; Start projectile
+(paradox-require 'projectile)
+(projectile-mode t)
+
 ;; end-dev-environment-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
