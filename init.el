@@ -110,11 +110,12 @@
 (desktop-save-mode 1)
 
 ;; Setup custom word wrappings
-(wrap-region-global-mode t)
-(wrap-region-add-wrapper "`" "`" nil 'markdown-mode)
-(wrap-region-add-wrapper "~" "~" nil 'markdown-mode)
-(wrap-region-add-wrapper "*" "*" nil 'markdown-mode)
+(wrap-region-mode t)
+(wrap-region-add-wrapper "`" "`" nil '(markdown-mode, text-mode, org-mode))
+(wrap-region-add-wrapper "~" "~" nil '(markdown-mode, text-mode, org-mode))
+(wrap-region-add-wrapper "*" "*" nil '(markdown-mode, text-mode, org-mode))
 (wrap-region-add-wrapper "+" "+" nil 'org-mode)
+(wrap-region-add-wrapper "#+BEGIN_SRC\n" "#+END_SRC" "#" 'org-mode)
 
 ;; Setup org-reveal root
 (paradox-require 'ox-reveal)
