@@ -228,13 +228,6 @@ Else go to the opening parenthesis one level up."
 (setq bidi-display-reordering 'nil)
 (setq bidi-paragraph-direction 'left-to-right)
 
-;; Update packages automatically every 14 days
-(paradox-require 'auto-package-update)
-(auto-package-update-maybe)
-(setq auto-package-update-interval 14)
-(setq auto-package-update-prompt-before-update t)
-(setq auto-package-update-delete-old-versions t)
-
 ;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
