@@ -86,12 +86,10 @@
 (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
 
 ;; Disable backup files
-(setq backup-directory-alist '(("." . "~/.backups")))
-(setq delete-old-versions t
-  kept-new-versions 3
-  kept-old-versions 2
-  version-control t)
-(setq-default create-lockfiles nil)
+(paradox-require 'idle-auto-save)
+(idle-auto-save-mode t)
+(setq ias/save-all-buffers t)
+(setq ias/inhibit-default-emacs-auto-save t)
 
 (which-key-mode 1)
 (setq which-key-separator " ")
