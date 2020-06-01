@@ -89,7 +89,15 @@
 (paradox-require 'idle-auto-save)
 (idle-auto-save-mode t)
 (setq ias/save-all-buffers t)
-(setq ias/inhibit-default-emacs-auto-save t)
+;; Inhibit default Emacs auto-save, lock-file, backup shenanigans
+(setq create-lockfiles nil)
+(setq auto-save-default nil)
+(setq backup-directory-alist '(("." . "~/.emacs.d/.backups"))
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 3
+      kept-old-versions 2)
 
 (which-key-mode 1)
 (setq which-key-separator " ")

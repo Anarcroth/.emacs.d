@@ -37,12 +37,6 @@ Defaults to nil."
   :group 'idle-auto-save
   :type 'boolean)
 
-(defcustom ias/inhibit-default-emacs-auto-save nil
-  "Stop default auto-save behavior of Emacs.
-Defaults to nil"
-  :group 'idle-auto-save
-  :type 'boolean)
-
 (defvar idle-auto-save-timer)
 
 (defun save-buffer-command ()
@@ -64,20 +58,8 @@ Defaults to nil"
   (when idle-auto-save-timer
     (cancel-timer idle-auto-save-timer)))
 
-(defun inhibit-emacs-auto-save ()
-  "Stop Emacs shenanigans with it's auto-save mode."
-  (setq-default create-lockfiles nil)
-  (setq-default auto-save-default nil)
-  (setq backup-directory-alist '(("." . "~/.emacs.d/.backups")))
-  (setq delete-old-versions t
-	kept-new-versions 3
-	kept-old-versions 2
-	version-control t))
-
 (defun idle-auto-save-start ()
   "Start idle-auto-save mode."
-  (if ias/inhibit-default-emacs-auto-save
-      (inhibit-emacs-auto-save))
   (idle-auto-save-initialize-timer))
 
 (defun idle-auto-save-stop ()
