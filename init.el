@@ -685,9 +685,9 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 ;;Capture todo items using C-c c t
 (define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
-      '(("w" "todo" entry (file+headline "~/org/todo.org" "Work")
+      '(("w" "todo" entry (file+headline "~/org/todo.org" "Work Today")
          "** TODO [#A] %?")
-	("o" "todo" entry (file+headline "~/org/todo.org" "Personal")
+	("o" "todo" entry (file+headline "~/org/todo.org" "Personal Today")
          "** TODO [#A] %?")
         ("a" "appointment" entry (file+headline "~/org/todo.org" "Appointments")
          "* APPOINTMENT [#B] %?")
