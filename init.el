@@ -120,6 +120,7 @@
 (wrap-region-add-wrapper "`" "`" nil '(markdown-mode, text-mode, org-mode))
 (wrap-region-add-wrapper "~" "~" nil '(markdown-mode, text-mode, org-mode))
 (wrap-region-add-wrapper "*" "*" nil '(markdown-mode, text-mode, org-mode))
+(wrap-region-add-wrapper "_" "_" nil '(markdown-mode, text-mode, org-mode))
 (wrap-region-add-wrapper "+" "+" nil 'org-mode)
 (wrap-region-add-wrapper "#+BEGIN_SRC\n" "#+END_SRC" "#" 'org-mode)
 
