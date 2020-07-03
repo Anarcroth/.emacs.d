@@ -116,7 +116,7 @@
 (desktop-save-mode 1)
 
 ;; Setup custom word wrappings
-(wrap-region-mode t)
+(wrap-region-global-mode t)
 (wrap-region-add-wrapper "`" "`" nil '(markdown-mode, text-mode, org-mode))
 (wrap-region-add-wrapper "~" "~" nil '(markdown-mode, text-mode, org-mode))
 (wrap-region-add-wrapper "*" "*" nil '(markdown-mode, text-mode, org-mode))
