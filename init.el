@@ -243,6 +243,16 @@ Else go to the opening parenthesis one level up."
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; If you want to change prefix for lsp-mode keybindings.
+(setq lsp-keymap-prefix "C-c l")
+;; Setup lsp-mode
+(paradox-require 'lsp-mode)
+(setq lsp-enable-indentation nil)
+(setq lsp-enable-completion-at-point nil)
+(add-hook 'clojure-mode-hook #'lsp)
+(add-hook 'clojurec-mode-hook #'lsp)
+(add-hook 'clojurescript-mode-hook #'lsp)
+
 ;; Setup magit
 (paradox-require 'magit)
 (magit-mode)
