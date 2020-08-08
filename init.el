@@ -258,14 +258,16 @@ Else go to the opening parenthesis one level up."
 (with-eval-after-load 'flycheck
   (flycheck-pos-tip-mode))
 
-;; Start Python dev environment
+;; Setup Python dev environment
+;; 1. Make sure that elpy is installed and enabled
+(paradox-require 'elpy)
 (elpy-enable)
-(add-hook 'python-mode-hook 'anaconda-mode)
-(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
-;; Set python interpreter environment
-(setq python-shell-interpreter "python"
-      python-shell-interpreter-args "-i")
+;; 2. Active the appropriate (in this case, default) pyvenv directory
+(pyvenv-activate "~/.emacs.d/ENV")
+;; 3. Use this RPC python command (set's the appropriate RPC virtualenv path
+(setq elpy-rpc-python-command "python")
 (setq python-check-command (expand-file-name "flake8"))
+;; 4. Flycheck setup for working with elpy
 (with-eval-after-load 'flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
