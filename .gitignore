@@ -39,4 +39,7 @@ bookmarks
 /transient
 /ENV
 /elpy
+# Ignore projecitel, lsp, ac generated files
 projectile-bookmarks.eld
+.lsp-session-v1
+ac-comphist.dat
