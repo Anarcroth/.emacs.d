@@ -402,7 +402,14 @@ Else go to the opening parenthesis one level up."
 (eval-after-load 'flycheck
   '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
 (add-hook 'cider-mode-hook
-  (lambda () (setq next-error-function #'flycheck-next-error-function)))
+	  (lambda () (setq next-error-function #'flycheck-next-error-function)))
+(setenv "PATH" (concat
+		"/usr/local/bin" path-separator
+		(getenv "PATH")))
+(dolist (m '(clojure-mode
+	     clojurec-mode
+	     clojurescript-mode))
+  (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
 
 ;; Setup Rust mode
 (paradox-require 'racer)
