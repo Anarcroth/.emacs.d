@@ -4,9 +4,52 @@
 ;; definition frame.
 
 ;;; Commentary:
-;; This package is courtesy of https://github.com/clemera
+;; This package is largely written by https://github.com/clemera
+
+;; TODO:
+;; 1. Peek frame for documentation
+;; 2. Peek frame for assignments/references
+;; 3. Peek frame option to either stack the frames or to replace them.
+;; 4. C-mouse1 to go to definition option
+;; 5. Option to create peek frame or to directly go to definition/reference/assignment
 
 ;;; Code:
+
+(defgroup peek-frame-mode nil
+  "Peek definitions in separate Emacs frame."
+  :group 'tools
+  :group 'convenience)
+
+(defcustom pf/frame-width 80
+  "Width of the peeked framed.
+Defaults to 80."
+  :group 'peek-frame-mode
+  :type 'integer)
+
+(defcustom pf/frame-heigth 20
+  "Height of the peeked frame.
+Defaults to 20."
+  :group 'peek-frame-mode
+  :type 'integer)
+
+(defcustom pf/frame-name "*Emacs Peek*"
+  "Name of the peeked frame.
+Defaults to *Emacs Peek*."
+  :group 'peek-frame-mode
+  :type 'string)
+
+(defcustom pf/vertical-scroll nil
+  "Enable vertical scrolling in the peeked frame.
+Defaults to nil."
+  :group 'peek-frame-mode
+  :type 'boolean)
+
+(defcustom pf/horizontal-scroll nil
+  "Enable horizontal scrolling in the peeked frame.
+Defaults to nil."
+  :group 'peek-frame-mode
+  :type 'boolean)
+
 (advice-add 'xref--pop-to-location
             :filter-args (lambda (args)
                            (list (car args) 'frame)))
@@ -15,9 +58,9 @@
       (defun peek-frame-pop-up-frame+ ()
         (let* ((frame (make-frame `((parent-frame . ,(selected-frame))
                                     (minibuffer . nil)
-                                    (name . "*Emacs Peek*")
-                                    (width . 80)
-                                    (height . 20)
+                                    (name . pf/frame-name)
+                                    (width . pf/frame-width)
+                                    (height . pf/frame-height)
                                     (visibility . nil)
                                     (internal-border-width . 5)
                                     (left-fringe . 10)
@@ -28,8 +71,8 @@
                                     (no-special-glyphs . t)
                                     (undecorated . t)
                                     (unsplittable . t)
-                                    (vertical-scroll-bars . nil)
-                                    (horizontal-scroll-bars . nil)
+                                    (vertical-scroll-bars . pf/vertical-scroll)
+                                    (horizontal-scroll-bars . pf/horizontal-scroll)
                                     (desktop-dont-save . t))))
 	       (window (frame-root-window frame)))
           (prog1 frame
@@ -59,9 +102,9 @@
 (defvar peek-frame-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map
-      (kbd "C-g") 'peek-frame-quit)
-    (define-key map
       (kbd "q") 'peek-frame-quit)
+    (define-key map
+      (kbd "C-g") 'peek-frame-quit)
     (define-key map
       (kbd "M-,") (lambda ()
                     (interactive)
@@ -70,17 +113,21 @@
                       (select-frame-set-input-focus p))))
     map))
 
+;;;###autoload
 (define-minor-mode peek-frame-mode
   "Minor mode for peek frame buffers."
+  :group 'peek-frame-mode
+  :global t
   :lighter ""
-  (cond (peek-frame-mode
-         (setq-local frame-auto-hide-function 'peek-frame-quit)
-         ;; FIXME: the message blocks immediate display of internal border...
-         (let ((view-inhibit-help-message t))
-           (read-only-mode 1)))
-        (t
-         (kill-local-variable #'frame-auto-hide-function)
-         (read-only-mode -1))))
+  (cond
+   (peek-frame-mode
+    (setq-local frame-auto-hide-function 'peek-frame-quit)
+    ;; FIXME: the message blocks immediate display of internal border...
+    (let ((view-inhibit-help-message t))
+      (read-only-mode 1)))
+   (t
+    (kill-local-variable #'frame-auto-hide-function)
+    (read-only-mode -1))))
 
 (provide 'peek-frame-mode)
 ;;; peek-frame-mode.el ends here

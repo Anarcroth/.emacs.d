@@ -283,7 +283,7 @@ Else go to the opening parenthesis one level up."
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
 ;; Set peek frame mode
-(paradox-require 'peek-frame-mode)
+(require 'peek-frame-mode)
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
