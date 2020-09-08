@@ -247,11 +247,18 @@ Else go to the opening parenthesis one level up."
 (setq lsp-keymap-prefix "C-c l")
 ;; Setup lsp-mode
 (paradox-require 'lsp-mode)
+;; Setup lsp-ui
+(paradox-require 'lsp-ui)
 (setq lsp-enable-indentation nil)
 (setq lsp-enable-completion-at-point nil)
 (add-hook 'clojure-mode-hook #'lsp)
 (add-hook 'clojurec-mode-hook #'lsp)
 (add-hook 'clojurescript-mode-hook #'lsp)
+;; Remap xref to use
+(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+(setq lsp-ui-peek-enable t)
+(setq lsp-ui-peek-show-directory t)
 
 ;; Setup magit
 (paradox-require 'magit)
