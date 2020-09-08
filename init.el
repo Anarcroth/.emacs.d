@@ -282,9 +282,6 @@ Else go to the opening parenthesis one level up."
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
 
-;; Set peek frame mode
-(require 'peek-frame-mode)
-
 ;; Set Lisp dev environment
 (paradox-require 'slime)
 ;; package.el compiles the contrib subdir, but the compilation order
