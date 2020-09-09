@@ -254,11 +254,18 @@ Else go to the opening parenthesis one level up."
 (add-hook 'clojure-mode-hook #'lsp)
 (add-hook 'clojurec-mode-hook #'lsp)
 (add-hook 'clojurescript-mode-hook #'lsp)
-;; Remap xref to use
-(define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-(define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 (setq lsp-ui-peek-enable t)
 (setq lsp-ui-peek-show-directory t)
+(setq lsp-ui-sideline-show-hover nil)
+(setq lsp-ui-sideline-show-diagnostics nil)
+(setq lsp-ui-sideline-show-code-actions nil)
+(setq lsp-ui-doc-enable nil)
+;; Map lsp-ui key bindings
+(global-set-key [mouse-1] 'lsp-ui-doc-hide)
+(global-set-key (kbd "C-q") 'lsp-ui-doc-glance)
+(global-set-key (kbd "M-a") 'lsp-ui-peek-find-references)
+(global-set-key (kbd "M-o") 'lsp-ui-peek-find-definitions)
+(global-set-key (kbd "M-e") 'lsp-ui-peek-find-implementation)
 
 ;; Setup magit
 (paradox-require 'magit)
