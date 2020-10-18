@@ -263,9 +263,9 @@ Else go to the opening parenthesis one level up."
 ;; Map lsp-ui key bindings
 (global-set-key [mouse-1] 'lsp-ui-doc-hide)
 (global-set-key (kbd "C-q") 'lsp-ui-doc-glance)
-(global-set-key (kbd "M-a") 'lsp-ui-peek-find-references)
-(global-set-key (kbd "M-o") 'lsp-ui-peek-find-definitions)
-(global-set-key (kbd "M-e") 'lsp-ui-peek-find-implementation)
+(global-set-key (kbd "C-M-.") 'lsp-ui-peek-find-references)
+(global-set-key (kbd "C-M-,") 'lsp-ui-peek-find-definitions)
+(global-set-key (kbd "C-M-'") 'lsp-ui-peek-find-implementation)
 
 ;; Setup magit
 (paradox-require 'magit)
