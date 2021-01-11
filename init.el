@@ -89,6 +89,9 @@
   (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
 (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
+(setq ivy-re-builders-alist
+      '((swiper . ivy--regex-plus)
+        (t      . ivy--regex-fuzzy)))
 
 ;; Disable backup files
 (paradox-require 'idle-auto-save)
