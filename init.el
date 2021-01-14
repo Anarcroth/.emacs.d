@@ -61,6 +61,11 @@
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Rebind beginning/end -of-buffer functions since 'M-<' or 'M->' is not convenient
+;; due to keyboard language mapping and peeking/finding method definitions
+(global-set-key (kbd "C-x M-;") 'beginning-of-buffer)
+(global-set-key (kbd "C-x M-z") 'beginning-of-buffer)
+
 ;; Setup fasd integration with Emacs (currently, terminal use is on 'autojump' while in Emacs I use `fasd`)
 (paradox-require 'fasd)
 (global-set-key (kbd "C-x C-f") 'fasd-find-file)
