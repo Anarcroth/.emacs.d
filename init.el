@@ -83,6 +83,7 @@
 (global-set-key "\C-s" 'swiper-isearch)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-g") 'counsel-find-file)
 (global-set-key (kbd "<f2> f") 'counsel-describe-function)
 (global-set-key (kbd "<f2> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
