@@ -66,11 +66,8 @@
 (global-set-key (kbd "C-x M-;") 'beginning-of-buffer)
 (global-set-key (kbd "C-x M-z") 'beginning-of-buffer)
 
-;; Setup fasd integration with Emacs (currently, terminal use is on 'autojump' while in Emacs I use `fasd`)
-(paradox-require 'fasd)
-(global-set-key (kbd "C-x C-f") 'fasd-find-file)
-(global-fasd-mode 1)
-(setq fasd-enable-initial-prompt nil)
+;; Setup recentf-mode with minibuffer dialog box
+(paradox-require 'recentf-minibuffer)
 
 ;; Ivy setup
 (paradox-require 'ivy)
