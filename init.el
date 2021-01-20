@@ -262,15 +262,20 @@ Else go to the opening parenthesis one level up."
 (paradox-require 'lsp-ui)
 (setq lsp-enable-indentation nil)
 (setq lsp-enable-completion-at-point nil)
-(add-hook 'clojure-mode-hook #'lsp)
-(add-hook 'clojurec-mode-hook #'lsp)
-(add-hook 'clojurescript-mode-hook #'lsp)
 (setq lsp-ui-peek-enable t)
 (setq lsp-ui-peek-show-directory t)
 (setq lsp-ui-sideline-show-hover nil)
 (setq lsp-ui-sideline-show-diagnostics nil)
 (setq lsp-ui-sideline-show-code-actions nil)
 (setq lsp-ui-doc-enable nil)
+;; Setup lsp for different languages
+;; Clojure
+(add-hook 'clojure-mode-hook #'lsp)
+(add-hook 'clojurec-mode-hook #'lsp)
+(add-hook 'clojurescript-mode-hook #'lsp)
+;; Python
+(add-hook 'python-mode-hook #'lsp)
+(add-hook 'elpy-mode-hook #'lsp)
 ;; Map lsp-ui key bindings
 (global-set-key [mouse-1] 'lsp-ui-doc-hide)
 (global-set-key (kbd "C-q") 'lsp-ui-doc-glance)
@@ -295,8 +300,11 @@ Else go to the opening parenthesis one level up."
 
 ;; Setup Python dev environment
 ;; This is a quick explanation on how to setup elpy to work
-;; 1. Make sure that elpy is installed and enabled
+;; 1. Make sure that elpy and lsp-jedi are installed and enabled
+;; We need lsp-jedi for the language server integration with jedi
+;; We need elpy for the IDE features
 (paradox-require 'elpy)
+(paradox-require 'lsp-jedi)
 (elpy-enable)
 ;; 2. Create a default local python virtual environment to install need packages
 ;; 3. Install necessary python packages in order for elpy to be magical
@@ -313,6 +321,10 @@ Else go to the opening parenthesis one level up."
 (with-eval-after-load 'flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; 9. Enable lsp-mode for jedi
+(with-eval-after-load "lsp-mode"
+  (add-to-list 'lsp-disabled-clients 'pyls)
+  (add-to-list 'lsp-enabled-clients 'jedi))
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
