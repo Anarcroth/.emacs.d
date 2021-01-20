@@ -294,15 +294,22 @@ Else go to the opening parenthesis one level up."
   (flycheck-pos-tip-mode))
 
 ;; Setup Python dev environment
+;; This is a quick explanation on how to setup elpy to work
 ;; 1. Make sure that elpy is installed and enabled
 (paradox-require 'elpy)
 (elpy-enable)
-;; 2. Active the appropriate (in this case, default) pyvenv directory
+;; 2. Create a default local python virtual environment to install need packages
+;; 3. Install necessary python packages in order for elpy to be magical
+;; This includes flake8, black, jedi, rope, autopep8, yapf
+;; 4. Active the appropriate (in this case, default) pyvenv directory
 (pyvenv-activate "~/.emacs.d/ENV")
-;; 3. Use this RPC python command (set's the appropriate RPC virtualenv path
+;; 5. Also setup the RPC to work with the current virtual environment
+(setq elpy-rpc-virtualenv-path 'current)
+;; 6. Use this RPC python command to run RPC processes
 (setq elpy-rpc-python-command "python")
+;; 7. Setup the check command to be flake8
 (setq python-check-command (expand-file-name "flake8"))
-;; 4. Flycheck setup for working with elpy
+;; 8. Setup flycheck for working with elpy
 (with-eval-after-load 'flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
