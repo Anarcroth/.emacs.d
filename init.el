@@ -63,10 +63,11 @@
 
 ;; Rebind beginning/end -of-buffer functions since 'M-<' or 'M->' is not convenient
 ;; due to keyboard language mapping and peeking/finding method definitions
+(global-set-key (kbd "C-x M-z") 'end-of-buffer)
 (global-set-key (kbd "C-x M-;") 'beginning-of-buffer)
-(global-set-key (kbd "C-x M-z") 'beginning-of-buffer)
 
 ;; Setup recentf-mode with minibuffer dialog box
+;; This allows to find recently opened files more easily
 (paradox-require 'recentf-minibuffer)
 
 ;; Ivy setup
@@ -88,6 +89,8 @@
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 (define-key ivy-minibuffer-map (kbd "RET") #'ivy-alt-done)
+;; IMPORTANT: this is for when you catch a match and want to end it at that point
+;; Useful for when renaming longer files to shorter ones
 (dolist (k '("C-j" "C-RET"))
   (define-key ivy-minibuffer-map (kbd k) #'ivy-immediate-done))
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
@@ -95,6 +98,11 @@
 (setq ivy-re-builders-alist
       '((swiper . ivy--regex-plus)
         (t      . ivy--regex-fuzzy)))
+;; Do a normal word search through isearch, when in need to
+;; exactly match a word in a buffer. This relates to the above
+;; swiper search functionality.
+(global-set-key (kbd "C-c C-s") 'isearch-forward)
+
 
 ;; Disable backup files
 (paradox-require 'idle-auto-save)
@@ -661,7 +669,7 @@ DIR is handled as by `windmove-other-window-loc'."
 ;; Unique names of buffers for files with identical names
 (paradox-require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-separator "  ")
+(setq uniquify-separator " @ ")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
