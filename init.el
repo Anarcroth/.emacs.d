@@ -406,6 +406,27 @@ Else go to the opening parenthesis one level up."
   (shell-command (concat "/usr/local/bin/texcount.pl"
                          (buffer-file-name))))
 
+;; Beamer setup
+(paradox-require 'ox-beamer)
+(paradox-require 'ox-latex)
+(setq org-export-allow-bind-keywords t)
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+;; (org-babel-do-load-languages 'org-babel-load-languages '((sh . t) (python . t) (C . t) (js . t)))
+(setq org-latex-pdf-process
+      '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
+;; Un-comment the following block of code in order to highlight code snippets in org mode in the editor
+;; (font-lock-add-keywords 'org-mode
+;; 			'(("\\(src_\\)\\([^[{]+\\)\\(\\[:.*\\]\\){\\([^}]*\\)}"
+;; 			   (1 '(:foreground "black" :weight 'normal :height 10)) ; src_ part
+;; 			   (2 '(:foreground "cyan" :weight 'bold :height 75 :underline "red")) ; "lang" part.
+;; 			   (3 '(:foreground "#555555" :height 70)) ; [:header arguments] part.
+;; 			   (4 'org-code) ; "code..." part.
+;; 			   )))
+
 ;; Add js2 mode
 (paradox-require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
