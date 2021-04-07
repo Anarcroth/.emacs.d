@@ -43,3 +43,5 @@ bookmarks
 projectile-bookmarks.eld
 .lsp-session-v1
 ac-comphist.dat
+# Ignore vimish-fold, part of emacs package for folding code snippets
+/vimish-fold
