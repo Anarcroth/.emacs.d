@@ -522,6 +522,9 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 (define-key hl-todo-mode-map (kbd "C-c C-n") 'hl-todo-next)
 (define-key hl-todo-mode-map (kbd "C-c C-o") 'hl-todo-occur)
 
+;; Open .rasi files with css-mode
+(add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))
+
 ;; end-dev-environment-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
