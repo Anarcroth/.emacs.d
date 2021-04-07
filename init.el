@@ -538,6 +538,7 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
       '(("TODO"  . "#61AFEF")
         ("FIXME" . "#E5C07B")
         ("DEBUG" . "#E06C75")
+        ("BUG" . "#E06C75")
         ("STUB"  . "#98C379")))
 (define-key hl-todo-mode-map (kbd "C-c C-p") 'hl-todo-previous)
 (define-key hl-todo-mode-map (kbd "C-c C-n") 'hl-todo-next)
