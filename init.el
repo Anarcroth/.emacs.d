@@ -251,8 +251,9 @@ Else go to the opening parenthesis one level up."
 
 ;; Optimize working on a large line with Emacs
 ;; (bidi-inhibit-bpa t)
-(setq bidi-display-reordering 'nil)
-(setq bidi-paragraph-direction 'left-to-right)
+;; (setq-default bidi-inhibit-bpa t)
+(setq-default bidi-display-reordering 'nil)
+(setq-default bidi-paragraph-direction 'left-to-right)
 
 ;; end-general-utilities-section ;;
 
