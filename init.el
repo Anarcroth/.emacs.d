@@ -571,6 +571,12 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
      (define-key prog-mode-map (kbd "C-s-8") 'fold-dwim-toggle)
      (define-key prog-mode-map (kbd "C-s-9") 'fold-dwim-hide-all)
      (define-key prog-mode-map (kbd "C-s-0") 'fold-dwim-show-all)))
+(eval-after-load 'nxml-mode
+  '(progn
+     (define-key nxml-mode-map [mouse-3] 'fold-dwim-toggle)
+     (define-key nxml-mode-map (kbd "C-s-8") 'fold-dwim-toggle)
+     (define-key nxml-mode-map (kbd "C-s-9") 'fold-dwim-hide-all)
+     (define-key nxml-mode-map (kbd "C-s-0") 'fold-dwim-show-all)))
 
 ;; Load hideshowvis for adding symbols to the fringe for code folding
 (autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
