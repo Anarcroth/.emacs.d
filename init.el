@@ -720,19 +720,19 @@ DIR is handled as by `windmove-other-window-loc'."
 ;; Set line highlighting
 (global-hl-line-mode 1)
 
-;; Set transperancy in emacs (currently not needed)
-;;(defun toggle-transparency ()
-;;  (interactive)
-;;  (let ((alpha (frame-parameter nil 'alpha)))
-;;    (set-frame-parameter
-;;     nil 'alpha
-;;     (if (eql (cond ((numberp alpha) alpha)
-;;                    ((numberp (cdr alpha)) (cdr alpha))
-;;                    ;; Also handle undocumented (<active> <inactive>) form.
-;;                    ((numberp (cadr alpha)) (cadr alpha)))
-;;              100)
-;;         '(90 . 50) '(100 . 100)))))
-;;(global-set-key (kbd "C-c t") 'toggle-transparency)
+;;Toggle transparency in Emacs
+(defun toggle-transparency ()
+  "Toggle the background of Emacs to be transparent or not."
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+                    ((numberp (cdr alpha)) (cdr alpha))
+                    ;; Also handle undocumented (<active> <inactive>) form.
+                    ((numberp (cadr alpha)) (cadr alpha)))
+              100)
+         '(90 . 50) '(100 . 100)))))
 
 ;; Set line numbers
 (global-linum-mode t)
