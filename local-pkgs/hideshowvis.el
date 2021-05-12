@@ -83,12 +83,13 @@
 (require 'hideshow)
 
 (when (fboundp 'define-fringe-bitmap)
-  (define-fringe-bitmap 'hideshowvis-hideable-marker [0 0 0 127 0 0 0 0]))
+  ;; This bitmap defines two downward pointing arrows
+  (define-fringe-bitmap 'hideshowvis-hideable-marker [0 129 66 165 90 36 24 0]))
 
 (defconst hideshowvis-version "v0.5" "Version of hideshowvis minor mode.")
 
 (defface hideshowvis-hidable-face
-  '((t (:foreground "#ABB2BF" :box t :inherit default)))
+  '((t (:foreground "#828997" :box t :inherit default)))
   "Face to highlight foldable regions"
   :group 'hideshow)
 
@@ -193,7 +194,8 @@ lines at the end of the line for hidden regions."
   (interactive)
 
   (when (fboundp 'define-fringe-bitmap)
-    (define-fringe-bitmap 'hs-marker [0 127 0 127 0 127 0 0]))
+    ;; This bitmap defines two right pointing arrows
+    (define-fringe-bitmap 'hs-marker [80 40 20 10 10 20 40 80]))
 
   (defcustom hs-fringe-face 'hs-fringe-face
     "*Specify face used to highlight the fringe on hidden regions."
@@ -201,7 +203,7 @@ lines at the end of the line for hidden regions."
     :group 'hideshow)
 
   (defface hs-fringe-face
-    '((t (:foreground "#ABB2BF" :box (:line-width 1 :color "#282C34" :style released-button))))
+    '((t (:foreground "#828997" :box (:line-width 1 :color "#282C34" :style released-button))))
     "Face used to highlight the fringe on folded regions"
     :group 'hideshow)
 
