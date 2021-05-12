@@ -512,21 +512,78 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 (setq initial-major-mode 'text-mode)
 (global-set-key (kbd "C-c b u") 'new-empty-buffer)
 
-;; Setup XML folding
-(paradox-require 'hideshow)
+;; This is some Custom HTML mode that I have no idea if I need
 (paradox-require 'sgml-mode)
+
+;; Setup XML mode with code folding below
+(paradox-require 'hideshow)
 (paradox-require 'nxml-mode)
+
+;; Specifies which files should be opened with nxml-mode
+(add-to-list 'auto-mode-alist
+             (cons (concat "\\." (regexp-opt
+                                  '("xml" "xsd" "sch" "xslt" "svg" "rss") t)
+                           "\\'") 'nxml-mode))
+(setq magic-mode-alist (cons '("<\\?xml " . nxml-mode) magic-mode-alist))
+(fset 'xml-mode 'nxml-mode)
+(fset 'html-mode 'nxml-mode)
+(require 'rng-loc nil t)
+
+(add-hook 'nxml-mode-hook (lambda () (hs-minor-mode 1)))
+
+;; Defines what are the starting and ending regex expression for code folding
 (add-to-list 'hs-special-modes-alist
              '(nxml-mode
-               "<!--\\|<[^/>]*[^/]>"
-               "-->\\|</[^/>]*[^/]>"
-
+               "<!--\\|<[^/>]*[^/]>" ;; regexp for start block
+               "-->\\|</[^/>]*[^/]>" ;; regexp for end block
                "<!--"
-               sgml-skip-tag-forward
+               nxml-forward-element
                nil))
-(add-hook 'nxml-mode-hook 'hs-minor-mode)
-;; optional key bindings, easier than hs defaults
-(define-key nxml-mode-map (kbd "C-c h") 'hs-toggle-hiding)
+
+(defun nxml-show-path ()
+  "Display the hierarchy of XML elements the point is on as a path.
+Taken from http://www.emacswiki.org/emacs/NxmlMode"
+  (interactive)
+  (let ((path nil))
+    (save-excursion
+      (save-restriction
+        (widen)
+        (while
+            (and (< (point-min) (point)) ;; Doesn't error if point is at
+                 ;; Beginning of buffer
+                 (condition-case nil
+                     (progn
+                       (nxml-backward-up-element) ;; Always returns nil
+                       t)
+                   (error nil)))
+          (setq path (cons (xmltok-start-tag-local-name) path)))
+        (if (called-interactively-p t)
+            (message "/%s" (mapconcat 'identity path "/"))
+          (format "/%s" (mapconcat 'identity path "/")))))))
+
+;; Import local fold-diwm package that provides a unified
+;; interface for code folding
+(require 'fold-dwim)
+(eval-after-load 'prog-mode
+  '(progn
+     (define-key prog-mode-map [mouse-3] 'fold-dwim-toggle)
+     (define-key prog-mode-map (kbd "C-s-8") 'fold-dwim-toggle)
+     (define-key prog-mode-map (kbd "C-s-9") 'fold-dwim-hide-all)
+     (define-key prog-mode-map (kbd "C-s-0") 'fold-dwim-show-all)))
+
+;; Load hideshowvis for adding symbols to the fringe for code folding
+(autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
+(autoload 'hideshowvis-minor-mode
+  "hideshowvis"
+  "Will indicate regions foldable with hideshow in the fringe."
+  'interactive)
+;; Define modes which should also be accompanied with hideshowvis
+(dolist (hook (list 'nxml-mode-hook
+		    'js-mode-hook
+		    'python-mode-hook
+		    'clojure-mode-hook
+		    'html-mode-hook))
+  (add-hook hook 'hideshowvis-enable))
 
 ;; Start projectile
 (paradox-require 'projectile)
