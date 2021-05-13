@@ -894,11 +894,10 @@ Use `alert' to for appointment notifications."
       (org-agenda-redo)))
 (add-hook 'after-save-hook 'anarcroth/after-org-save)
 
-;; Define org-strike-through color
-(paradox-require 'cl)   ; for delete*
-(setq org-emphasis-alist
-      (cons '("+" '(:strike-through t :foreground "#61AFEF"))
-            (delete* "+" org-emphasis-alist :key 'car :test 'equal)))
+;; Define custom org strike-through color since none is present yet
+(defface org-custom-strike-through '((t (:strike-through t :foreground "#56B6C2")))
+  "Face for struck-through text."
+  :group 'org-faces)
 
 ;; Set icons for the priorities in org mode (eye candy)
 (paradox-require 'org-fancy-priorities)
