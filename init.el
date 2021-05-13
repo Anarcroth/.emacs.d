@@ -674,16 +674,6 @@ DIR is handled as by `windmove-other-window-loc'."
 (global-set-key (kbd "S-C-c") 'windmove-up)
 (global-set-key (kbd "S-C-t") 'windmove-down)
 
-;; Setup somewhat smooth scrolling + scroll margins
-(setq redisplay-dont-pause t
-      scroll-margin 5
-      scroll-conservatively 10000
-      scroll-preserve-screen-position 1
-      fast-but-imprecise-scrolling nil
-      jit-lock-defer-time 0
-      mouse-wheel-scroll-amount '(3 ((shift) . 1))
-      mouse-wheel-progressive-speed nil)
-
 ;; end-window-manipulation-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
