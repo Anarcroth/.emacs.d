@@ -308,32 +308,39 @@ Else go to the opening parenthesis one level up."
   (flycheck-pos-tip-mode))
 
 ;; Setup Python dev environment
-;; This is a quick explanation on how to setup elpy to work
-;; 1. Make sure that elpy and lsp-jedi are installed and enabled
-;; We need lsp-jedi for the language server integration with jedi
-;; We need elpy for the IDE features
+;; This is a quick explanation on how to setup elpy
+;; 1. Make sure that elpy and lsp-pylsp are installed and enabled
+;; We need lsp-pylsp for the language server integration with jedi
+;; We need elpy for the IDE features and also jedi integration
 (paradox-require 'elpy)
-(paradox-require 'lsp-jedi)
+;; 0. Enable elpy (for the most part, this would be enough)
 (elpy-enable)
-;; 2. Create a default local python virtual environment to install need packages
+;; 1. If elpy doesn't create a local environment by default, you can make one yourself and use it instead
+;; Here, the necessary packages for the elpy integration shall be installed
+;; Example: `python -m venv ENV`
 ;; 3. Install necessary python packages in order for elpy to be magical
 ;; This includes flake8, black, jedi, rope, autopep8, yapf
+;; Example: `pip install black jedi rope autopep8 yapf`
+;; NOTE: as of elpy=1.35.0, elpy seems like it has a broken integration with jedi=0.18, so you MUST use jedi=0.17.2
 ;; 4. Active the appropriate (in this case, default) pyvenv directory
 (pyvenv-activate "~/.emacs.d/ENV")
-;; 5. Also setup the RPC to work with the current virtual environment
+;; 5. elpy-rpc will use the above environment for all of its integrations
 (setq elpy-rpc-virtualenv-path 'current)
-;; 6. Use this RPC python command to run RPC processes
-(setq elpy-rpc-python-command "python")
+;; 6. Set python-shell interpreter
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i --simple-prompt")
 ;; 7. Setup the check command to be flake8
 (setq python-check-command (expand-file-name "flake8"))
 ;; 8. Setup flycheck for working with elpy
 (with-eval-after-load 'flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
-;; 9. Enable lsp-mode for jedi
-(with-eval-after-load "lsp-mode"
+;; 9. To active lsp for python as well, you need to install lsp pylsp in the same virtual environment
+;; Example: `pip install 'python-lsp-server[all]'`
+;; And now we load it instead of using pyls
+(with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-disabled-clients 'pyls)
-  (add-to-list 'lsp-enabled-clients 'jedi))
+  (add-to-list 'lsp-enabled-clients 'pylsp))
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
