@@ -448,10 +448,8 @@ Else go to the opening parenthesis one level up."
 (eval-after-load "flycheck" '(diminish 'flycheck-mode))
 (eval-after-load "simple" '(diminish 'visual-line-mode))
 (eval-after-load "which-key" '(diminish 'which-key-mode))
-(eval-after-load "anaconda-mode" '(diminish 'anaconda-mode))
 (eval-after-load "autorevert" '(diminish 'auto-revert-mode))
 (eval-after-load "wrap-region" '(diminish 'wrap-region-mode))
-(eval-after-load "highlight-thing" '(diminish 'highlight-thing-mode))
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
 
 ;; Setup clojure mode
@@ -694,14 +692,6 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Load atom one dark theme
 (load-theme 'atom-one-dark t)
-
-;; Highlight occurrences under the cursor
-(paradox-require 'highlight-thing)
-(add-hook 'prog-mode-hook 'highlight-thing-mode)
-(setq highlight-thing-delay-seconds 1.0)
-(setq highlight-thing-limit-to-region-in-large-buffers-p nil
-      highlight-thing-narrow-region-lines 15
-      highlight-thing-large-buffer-limit 5000)
 
 ;; Set default font
 (add-to-list 'default-frame-alist

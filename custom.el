@@ -13,6 +13,9 @@
  ;; If there is more than one, they won't work right.
  '(all-the-icons-default-adjust 0.0)
  '(all-the-icons-scale-factor 1)
+ '(auto-compression-mode nil)
+ '(auto-encryption-mode nil)
+ '(blink-cursor-mode nil)
  '(c-default-style
    '((other . "stroustrup")
      (java-mode . "java")
@@ -40,7 +43,7 @@
    '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
      (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|")))
  '(package-selected-packages
-   '(epresent lsp-ui lsp-mode hl-todo projectile which-key with-editor tablist swiper scratch pyvenv lispy pdf-tools iedit highlight-indentation counsel ace-window transient elpy magit ivy flycheck-clojure flycheck-inline-mode flycheck-mode racer toml-mode cargo flycheck-rust rust-mode vlf clj-refactor-mode clj-refactor cider clojure-mode doom-modeline undo-tree org-bullets org-fancy-priorities paradox all-the-icons ac-js2 org-pomodoro diminish xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony latex-math-preview flycheck-rtags company-rtags htmlize rainbow-delimiters ac-slime highlight-thing diff-hl gitconfig-mode gitignore-mode pip-requirements highlight-escape-sequences flycheck-pos-tip multiple-cursors markdown-mode wrap-region winum ox-reveal neotree flyspell-correct auctex-latexmk atom-one-dark-theme))
+   '(epresent lsp-ui lsp-mode hl-todo projectile which-key with-editor tablist swiper scratch pyvenv lispy pdf-tools iedit highlight-indentation counsel ace-window transient elpy magit ivy flycheck-clojure flycheck-inline-mode flycheck-mode racer toml-mode cargo flycheck-rust rust-mode vlf clj-refactor-mode clj-refactor cider clojure-mode doom-modeline undo-tree org-bullets org-fancy-priorities paradox all-the-icons ac-js2 org-pomodoro diminish xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony latex-math-preview flycheck-rtags company-rtags htmlize rainbow-delimiters ac-slime diff-hl gitconfig-mode gitignore-mode pip-requirements flycheck-pos-tip multiple-cursors markdown-mode wrap-region winum ox-reveal neotree flyspell-correct auctex-latexmk atom-one-dark-theme))
  '(sh-basic-offset 4)
  '(sh-indentation 2)
  '(smie-indent-basic 2)
