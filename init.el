@@ -747,7 +747,6 @@ DIR is handled as by `windmove-other-window-loc'."
 (global-visual-line-mode t)
 
 ;; Setup whitespaces to be depicted with dots
-(global-whitespace-mode)
 (setq whitespace-style '(face spaces space-mark face tab tab-mark trailing))
 (setq whitespace-display-mappings
       '(

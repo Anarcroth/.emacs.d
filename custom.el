@@ -27,6 +27,7 @@
  '(doom-modeline-persp-name t)
  '(elpy-modules
    '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
+ '(global-whitespace-mode nil)
  '(js2-basic-offset 4)
  '(org-emphasis-alist
    '(("*" bold)
