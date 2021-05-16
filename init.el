@@ -384,9 +384,6 @@ Else go to the opening parenthesis one level up."
 (show-paren-mode 1)
 (setq show-paren-style 'mixed)
 
-;; Vimlike code folding
-(vimish-fold-global-mode 1)
-
 ;; C/C++ environment setup
 (paradox-require 'c-cpp-dev-env)
 
@@ -714,9 +711,6 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq sentence-end-double-space nil)
 (setq-default cursor-type '(bar . 2))
 
-;; Fancy battery mode
-(add-hook 'after-init-hook #'fancy-battery-mode)
-
 ;; Have color brackets on programming modes
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
@@ -747,6 +741,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (global-visual-line-mode t)
 
 ;; Setup whitespaces to be depicted with dots
+;; Then start `whitespace-mode` in order to see the spaces/tabs
 (setq whitespace-style '(face spaces space-mark face tab tab-mark trailing))
 (setq whitespace-display-mappings
       '(
@@ -767,6 +762,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (column-number-mode 1) ;; an addition to have column numbers as well
 (doom-modeline-mode 1)
 
+;; Interactive command to show color values in text
 (defun xah-syntax-color-hex ()
   "Xah's take on highlighting hex values with interactive call."
   (interactive)
