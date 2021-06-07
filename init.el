@@ -447,7 +447,7 @@ Else go to the opening parenthesis one level up."
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
 
 ;; Setup clojure mode
-(paradox-require 'cider-mode)
+(paradox-require 'cider)
 (paradox-require 'clojure-mode)
 (paradox-require 'clj-refactor)
 (paradox-require 'flycheck-clojure)
@@ -461,10 +461,8 @@ Else go to the opening parenthesis one level up."
 (add-hook 'cider-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
 (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
-;; I don't know what to do with this. It's too slow currently to be practical.
-;; (add-hook 'cider-mode-hook
-;;           (lambda ()
-;;              (add-hook 'after-save-hook 'cider-format-buffer nil 'make-it-local)))
+(add-hook 'cider-mode-hook
+          (lambda () (add-hook 'after-save-hook 'cider-format-buffer nil 'make-it-local)))
 (eval-after-load 'flycheck '(flycheck-clojure-setup))
 (eval-after-load 'flycheck
   '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages))
@@ -477,6 +475,10 @@ Else go to the opening parenthesis one level up."
 	     clojurec-mode
 	     clojurescript-mode))
   (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+;; Add lispy mode for clojure work
+(add-hook 'clojure-mode-hook (lambda () (lispy-mode 1)))
+;; Lispy supports compatibility with cider (shouldn't cause conflicts in key bindings)
+(setq lispy-compat '(cider))
 
 ;; Setup Rust mode
 (paradox-require 'racer)
