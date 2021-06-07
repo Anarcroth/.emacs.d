@@ -334,8 +334,7 @@ Else go to the opening parenthesis one level up."
 ;; Example: `pip install 'python-lsp-server[all]'`
 ;; And now we load it instead of using pyls
 (with-eval-after-load 'lsp-mode
-  (add-to-list 'lsp-disabled-clients 'pyls)
-  (add-to-list 'lsp-enabled-clients 'pylsp))
+  (add-to-list 'lsp-disabled-clients 'pyls))
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
