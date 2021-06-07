@@ -32,6 +32,10 @@
    '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
  '(global-whitespace-mode nil)
  '(js2-basic-offset 4)
+ '(lsp-ui-doc-header t)
+ '(lsp-ui-doc-include-signature t)
+ '(lsp-ui-doc-position 'at-point)
+ '(lsp-ui-doc-show-with-cursor t)
  '(org-emphasis-alist
    '(("*" bold)
      ("/" italic)
@@ -77,6 +81,7 @@
  '(ediff-odd-diff-B ((t (:background "#121417"))))
  '(ediff-odd-diff-C ((t (:background "#121417"))))
  '(hi-yellow ((t (:background "#3E4451"))))
+ '(lsp-ui-doc-header ((t (:background "#4B5363" :foreground "#ABB2BF"))))
  '(org-agenda-date ((t (:foreground "#61AFEF"))))
  '(org-agenda-date-today ((t (:background "#121417" :foreground "#528BFF" :slant italic :weight bold))))
  '(org-agenda-done ((t (:foreground "#98C379" :strike-through t))))
