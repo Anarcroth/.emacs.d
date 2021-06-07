@@ -96,7 +96,7 @@
 (define-key ivy-minibuffer-map (kbd "<up>") #'ivy-previous-line-or-history)
 (define-key ivy-occur-mode-map (kbd "C-c C-q") #'ivy-wgrep-change-to-wgrep-mode)
 (setq ivy-re-builders-alist
-      '((swiper . ivy--regex-plus)
+      '((swiper . regexp-quote)
         (t      . ivy--regex-fuzzy)))
 ;; Do a normal word search through isearch, when in need to
 ;; exactly match a word in a buffer. This relates to the above
