@@ -175,8 +175,18 @@
 (global-set-key (kbd "C-s-n") 'move-line-down)
 
 ;; Dvorak keys mapping
-(keyboard-translate ?\C-t ?\C-x)
-(keyboard-translate ?\C-x ?\C-t)
+(defun dvorak-translation ()
+  "Remap keys for Dvorak layout in the current FRAME."
+  (keyboard-translate ?\C-t ?\C-x)
+  (keyboard-translate ?\C-x ?\C-t))
+(defun setup-frame-keyboard (frame)
+  "Call the dvorak mapping on the FRAME."
+  (with-selected-frame frame
+    (dvorak-translation)))
+(dvorak-translation)
+(add-hook 'after-make-frame-functions #'setup-frame-keyboard)
+(add-hook 'server-visit-hook #'setup-frame-keyboard)
+
 (global-set-key (kbd "C-h") 'backward-kill-word)
 (global-set-key [?\C-.] 'execute-extended-command)
 (global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
