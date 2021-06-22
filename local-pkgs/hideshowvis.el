@@ -184,7 +184,8 @@ Set this to nil if enabling the minor mode is slow on your machine"
 (defun hideshowvis-enable ()
   "Will enable hideshowvis minor mode."
   (interactive)
-  (hideshowvis-minor-mode 1))
+  (hideshowvis-minor-mode 1)
+  (hideshowvis-symbols))
 
 ;;;###autoload
 (defun hideshowvis-symbols ()
