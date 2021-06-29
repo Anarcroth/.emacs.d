@@ -21,6 +21,8 @@ site-lisp/package/
 /.smex-items
 /image-dired/
 /eshell
+!/eshell/aliases
+/eshell-git-prompt
 /.cask/
 /.sx/
 /org-clock-save.el
