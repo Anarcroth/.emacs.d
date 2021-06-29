@@ -800,7 +800,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
         '(("lambda" . ?λ)
           ("->" . ?→)
           ("=>" . ?⇒)
-          ("map" . ?↦)
           ("/=" . ?≠)
           ("!=" . ?≠)
           ("==" . ?≡)
