@@ -191,7 +191,6 @@
     (dvorak-translation)))
 (dvorak-translation)
 (add-hook 'after-make-frame-functions #'setup-frame-keyboard)
-(add-hook 'server-visit-hook #'setup-frame-keyboard)
 
 (global-set-key (kbd "C-h") 'backward-kill-word)
 (global-set-key [?\C-.] 'execute-extended-command)
