@@ -102,6 +102,11 @@
 ;; exactly match a word in a buffer. This relates to the above
 ;; swiper search functionality.
 (global-set-key (kbd "C-c C-s") 'isearch-forward)
+;; Info - Ivy/Swiper allow for two really cool features
+;; 1. Rotate the built-in regexp builders in ivy through the mapping <C-o M>
+;; This would require the package 'ivy-hydra' to be installed. Hence...
+(paradox-require 'ivy-hydra)
+;; 2. Turn-off the regexp completely and use a normal search through <M-r>
 
 
 ;; Disable backup files
