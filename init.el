@@ -797,32 +797,6 @@ URL `http://ergoemacs.org/emacs/emacs_CSS_olors.html'"
 		 :background (match-string-no-properties 0)))))))
   (font-lock-flush))
 
-;; Define mapping between operations and pretty symbols
-(defun custom-prettify-symbols ()
-  "Make some word or string show as pretty Unicode symbols."
-  (setq prettify-symbols-alist
-        '(("lambda" . ?λ)
-          ("->" . ?→)
-          ("=>" . ?⇒)
-          ("/=" . ?≠)
-          ("!=" . ?≠)
-          ("==" . ?≡)
-          ("<=" . ?≤)
-          (">=" . ?≥)
-	  ("&&" . ?∧)
-	  ("and" . ?∧)
-          ("||" . ?∨)
-	  ("or" . ?∨)
-          ("not" . ?¬))))
-(add-hook 'emacs-lisp-mode-hook 'custom-prettify-symbols)
-(add-hook 'clojure-mode-hook 'custom-prettify-symbols)
-(add-hook 'scheme-mode-hook 'custom-prettify-symbols)
-(add-hook 'python-mode-hook 'custom-prettify-symbols)
-(add-hook 'shell-mode-hook 'custom-prettify-symbols)
-(add-hook 'rust-mode-hook 'custom-prettify-symbols)
-(add-hook 'lisp-mode-hook 'custom-prettify-symbols)
-(global-prettify-symbols-mode 1)
-
 ;; end-emacs-looks-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
