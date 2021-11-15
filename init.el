@@ -630,6 +630,9 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
 ;; Open .rasi files with css-mode
 (add-to-list 'auto-mode-alist '("\\.rasi\\'" . css-mode))
 
+;; Setup pomidor package (pomodoro technique package)
+(global-set-key (kbd "<f12>") #'pomidor)
+
 ;; end-dev-environment-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
