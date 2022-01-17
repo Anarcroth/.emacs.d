@@ -632,6 +632,8 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
 
 ;; Setup pomidor package (pomodoro technique package)
 (global-set-key (kbd "<f12>") #'pomidor)
+(setq pomidor-sound-tick nil
+      pomidor-sound-tack nil)
 
 ;; Setup yasnippet
 ;; Use popup for popup yasnippet choices
