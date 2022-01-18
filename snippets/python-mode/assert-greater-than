@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: assert greater than
+# key: agt
+# group: Testing
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+assert ${1:case} > ${2:against}
+$0

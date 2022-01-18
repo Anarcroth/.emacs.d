@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: assert
+# key: ass
+# group: Header
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+assert $0
