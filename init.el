@@ -665,7 +665,7 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
      :isearch t
      )))
 
-(setq yas/prompt-functions '(yas/popup-isearch-prompt yas/no-prompt))
+(setq yas-prompt-functions '(yas/popup-isearch-prompt yas-no-prompt))
 
 ;; end-dev-environment-section ;;
 

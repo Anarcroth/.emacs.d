@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: ife
+# key: ife
+# group : Basics
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+if ${1: cond}:
+    ${2: do}
+${3: else:
+    ${4: else_do}}
+    $0

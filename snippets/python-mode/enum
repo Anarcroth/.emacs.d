@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: enum
+# key: enum
+# group: Definitions
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+class ${1:class}(Enum):
+    """${2: $1 docstring}."""
+
+    ${3:enum_type} = $3

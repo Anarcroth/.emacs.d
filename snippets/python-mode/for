@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: for loop
+# key: for
+# group : Basics
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+for ${1: var} in ${2: collection}:
+    $0

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: def function with docstring
+# key: dfd
+# group: Definitions
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+def ${1:name}(self):
+ \"\"\"$3
+ ${2:$(python-args-to-docstring)}
+ \"\"\"
+ $0

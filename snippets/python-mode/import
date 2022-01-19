@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: import MOD
+# key: im
+# group: Header
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+import ${1:module}${2: as ${3:alias}}
+$0

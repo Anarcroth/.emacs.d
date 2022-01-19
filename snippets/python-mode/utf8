@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: utf-8 encoding
+# key: utf8
+# --
+`(progn (goto-char (point-min)) nil)`
+# -*- coding: utf-8 -*-

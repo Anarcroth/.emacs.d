@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: def test
+# key: dft
+# group: Testing
+# contributor: anarcroth (Martin Nestorov) <mnestorov@protonmail.com>
+# --
+def test_${1:func}(self):
+    $0
