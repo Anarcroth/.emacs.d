@@ -271,6 +271,9 @@ Else go to the opening parenthesis one level up."
 (setq-default bidi-display-reordering 'nil)
 (setq-default bidi-paragraph-direction 'left-to-right)
 
+;; Bind (u)rl (a)t (p)oint globally
+(global-set-key (kbd "C-c u a p") 'browse-url-at-point)
+
 ;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
