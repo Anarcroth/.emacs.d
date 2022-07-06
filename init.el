@@ -232,6 +232,11 @@
 (global-set-key (kbd "C-z") 'undo)
 (defalias 'redo 'undo-tree-redo)
 (global-set-key (kbd "C-S-z") 'redo)
+;; Create the auto-save-undo-tree directory if it doesn't exist so that it can be populated with undo-tree files
+(let ((dir (file-name-directory "~/.emacs.d/auto-save-undo-tree")))
+  (unless (file-exists-p dir)
+    (make-directory dir t)))
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/auto-save-undo-tree")))
 
 ;; Setup very-large-file mode
 (paradox-require 'vlf-setup)

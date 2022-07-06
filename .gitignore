@@ -48,3 +48,5 @@ projectile-bookmarks.eld
 ac-comphist.dat
 # Ignore vimish-fold, part of emacs package for folding code snippets
 /vimish-fold
+# Ignore the undo-tree specific dir
+/auto-save-undo-tree
