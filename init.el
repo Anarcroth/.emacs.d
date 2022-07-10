@@ -198,6 +198,9 @@
     (dvorak-translation)))
 (dvorak-translation)
 (add-hook 'after-make-frame-functions #'setup-frame-keyboard)
+;; Disable transposing characters (C-t),
+;; since sometimes it's called by accident when working with the C-x (t) binding
+(global-unset-key (kbd "C-t"))
 
 (global-set-key (kbd "C-h") 'backward-kill-word)
 (global-set-key [?\C-.] 'execute-extended-command)
