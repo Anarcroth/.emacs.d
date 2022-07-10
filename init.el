@@ -769,7 +769,7 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Set default font
 (add-to-list 'default-frame-alist
-             '(font . "Iosevka-12:spacing=m:width=condensed:antialias=1"))
+             '(font . "Iosevka Nerd Font Mono-12:spacing=m:width=condensed:antialias=1"))
 
 ;; Set cursor type
 (setq sentence-end-double-space nil)
