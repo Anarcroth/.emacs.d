@@ -283,6 +283,14 @@ Else go to the opening parenthesis one level up."
 ;; Bind (u)rl (a)t (p)oint globally
 (global-set-key (kbd "C-c u a p") 'browse-url-at-point)
 
+;; Create missing directory if missing while opening a file
+(defadvice find-file (before make-directory-maybe (filename &optional wildcards) activate)
+  "Create parent directory if not exists while visiting file."
+  (unless (file-exists-p filename)
+    (let ((dir (file-name-directory filename)))
+      (unless (file-exists-p dir)
+        (make-directory dir t)))))
+
 ;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
