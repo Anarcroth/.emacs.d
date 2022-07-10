@@ -631,9 +631,11 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
 		    'html-mode-hook))
   (add-hook hook 'hideshowvis-enable))
 
-;; Start projectile
+;; Setup projectile
 (paradox-require 'projectile)
 (projectile-mode t)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(setq projectile-sort-order 'recently-active)
 
 (paradox-require 'hl-todo)
 (global-hl-todo-mode t)
