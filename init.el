@@ -303,6 +303,10 @@ Else go to the opening parenthesis one level up."
       (unless (file-exists-p dir)
         (make-directory dir t)))))
 
+;; Format JSON objects on the fly
+(global-set-key (kbd "C-c u j") 'json-pretty-print)
+(global-set-key (kbd "C-c u b") 'json-pretty-print-buffer)
+
 ;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
