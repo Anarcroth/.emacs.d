@@ -254,7 +254,7 @@
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/auto-save-undo-tree")))
 
 ;; Setup very-large-file mode
-(paradox-require 'vlf-setup)
+(paradox-require 'vlf)
 
 ;; Refresh buffer after file change on disk
 (global-auto-revert-mode t)
