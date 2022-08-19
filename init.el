@@ -207,9 +207,21 @@
 (global-set-key [?\C-,] (lookup-key global-map [?\C-x]))
 (global-set-key [?\C-'] 'hippie-expand)
 
-(setq browse-url-generic-program
-      (executable-find "firefox"))
-(setq browse-url-browser-function 'browse-url-firefox)
+(defun set-browser-open-func (browser-open-func)
+  "Set the generic BROWSER-OPEN-FUNC used for opening URLs from within Emacs."
+  (setq browser-url-generic-program
+	(executable-find browser-open-func)))
+
+(cond
+ ((string-equal system-type "windows-nt")
+  (progn
+    (message "Not supported opening URLs")))
+ ((string-equal system-type "darwin")
+  (progn
+    (set-browser-open-func "open -a Firefox")))
+ ((string-equal system-type "gnu/linux")
+  (progn
+    (set-browser-open-func "firefox"))))
 
 ;; Copy line
 (defun copy-line()
