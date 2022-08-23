@@ -315,6 +315,11 @@ Else go to the opening parenthesis one level up."
 ;; +-----------------------+ ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; Make sure ag is installed. Currently it's needed only in one place,
+;; but more packages might require it in the future, so install it more at the top...
+;; This also requires the actual OS package to be installed, so make sure that 'ag' the package is also present on your system
+(paradox-require 'ag)
+
 ;; If you want to change prefix for lsp-mode keybindings.
 (setq lsp-keymap-prefix "C-c l")
 ;; Setup lsp-mode
@@ -485,11 +490,36 @@ Else go to the opening parenthesis one level up."
 
 ;; Add js2 mode
 (paradox-require 'js2-mode)
+(paradox-require 'js2-refactor)
+(paradox-require 'xref-js2)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-hook 'js-mode-hook 'js2-minor-mode)
 (add-hook 'js2-mode-hook 'ac-js2-mode)
-(setq js2-highlight-level 3)
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(add-hook 'js2-mode-hook (lambda () (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 
+(js2r-add-keybindings-with-prefix "C-c C-r")
+(define-key js2-mode-map (kbd "C-k") #'js2r-kill)
+;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
+;; unbind it.
+(define-key js-mode-map (kbd "M-.") nil)
+
+;; (global-set-key (kbd "C-M-.") 'lsp-ui-peek-find-references)
+;; (global-set-key (kbd "C-M-,") 'lsp-ui-peek-find-definitions)
+
+(setq js2-include-node-externs t)
+(setq js2-global-externs '("customElements"))
+(setq js2-highlight-level 3)
+(setq js2r-prefer-let-over-var t)
+(setq js2r-prefered-quote-type 2)
+(setq js-indent-align-list-continuation t)
+(setq global-auto-highlight-symbol-mode t)
+(setq js-indent-level 2)
+(advice-add #'js2-identifier-start-p
+            :after-until
+            (lambda (c) (eq c ?#)))
+
+;; Setup diminish - shortens (or hides) minor modes on the mode line
 (paradox-require 'diminish)
 (eval-after-load "ivy" '(diminish 'ivy-mode))
 (eval-after-load "elpy" '(diminish 'elpy-mode))
