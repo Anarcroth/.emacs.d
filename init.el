@@ -612,7 +612,11 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
                            "\\'") 'nxml-mode))
 (setq magic-mode-alist (cons '("<\\?xml " . nxml-mode) magic-mode-alist))
 (fset 'xml-mode 'nxml-mode)
-(fset 'html-mode 'nxml-mode)
+
+;; Open all HTML file in web-mode.
+(paradox-require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+
 (require 'rng-loc nil t)
 
 (add-hook 'nxml-mode-hook (lambda () (hs-minor-mode 1)))
