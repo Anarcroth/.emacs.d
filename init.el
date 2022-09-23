@@ -370,14 +370,17 @@ Else go to the opening parenthesis one level up."
 ;; We need lsp-pylsp for the language server integration with jedi
 ;; We need elpy for the IDE features and also jedi integration
 (paradox-require 'elpy)
+(paradox-require 'lsp-jedi)
 ;; 0. Enable elpy (for the most part, this would be enough)
 (elpy-enable)
 ;; 1. If elpy doesn't create a local environment by default, you can make one yourself and use it instead
 ;; Here, the necessary packages for the elpy integration shall be installed
 ;; Example: `python -m venv ENV`
+;; 2. If using jedi language server, you have to install it in the Emacs local virtual environment:
+;; Example: `pip install -U jedi-language-server`
 ;; 3. Install necessary python packages in order for elpy to be magical
-;; This includes flake8, black, jedi, rope, autopep8, yapf
-;; Example: `pip install black jedi rope autopep8 yapf`
+;; This includes flake8, black, jedi, autopep8, yapf
+;; Example: `pip install black jedi autopep8 yapf`
 ;; NOTE: as of elpy=1.35.0, elpy seems like it has a broken integration with jedi=0.18, so you MUST use jedi=0.17.2
 ;; 4. Active the appropriate (in this case, default) pyvenv directory
 (pyvenv-activate "~/.emacs.d/ENV")
@@ -396,7 +399,8 @@ Else go to the opening parenthesis one level up."
 ;; Example: `pip install 'python-lsp-server[all]'`
 ;; And now we load it instead of using pyls
 (with-eval-after-load 'lsp-mode
-  (add-to-list 'lsp-disabled-clients 'pyls))
+  (add-to-list 'lsp-disabled-clients 'pyls)
+  (add-to-list 'lsp-enabled-clients 'jedi))
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
