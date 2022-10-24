@@ -109,6 +109,14 @@
 (paradox-require 'ivy-hydra)
 ;; 2. Turn-off the regexp completely and use a normal search through <M-r>
 
+;; Setup ivy posframe for fancy M-x things
+(paradox-require 'ivy-posframe)
+(setq ivy-posframe-display-functions-alist
+      '((swiper          . ivy-display-function-fallback)
+        (complete-symbol . ivy-posframe-display-at-window-center)
+        (counsel-M-x     . ivy-posframe-display-at-window-bottom-left)
+        (t               . ivy-posframe-display)))
+(ivy-posframe-mode 1)
 
 ;; Disable backup files
 (paradox-require 'idle-auto-save)
