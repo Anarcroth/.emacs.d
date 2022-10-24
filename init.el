@@ -884,9 +884,21 @@ DIR is handled as by `windmove-other-window-loc'."
 ;; Set line numbers
 (global-linum-mode t)
 
-;; Set neotree window width
-(paradox-require 'neotree)
-(setq neo-window-width 33)
+;; Configure treemacs
+(paradox-require 'treemacs)
+(paradox-require 'treemacs-all-the-icons)
+(paradox-require 'treemacs-magit)
+(paradox-require 'treemacs-projectile)
+(treemacs-follow-mode t)
+(treemacs-filewatch-mode t)
+(treemacs-fringe-indicator-mode 'always)
+(define-key global-map (kbd "C-x t t") #'treemacs)
+(define-key global-map (kbd "C-x t d") #'treemacs-select-directory)
+(define-key global-map (kbd "C-x t B") #'treemacs-bookmark)
+(define-key global-map (kbd "C-x t C-t") #'treemacs-find-file)
+(define-key global-map (kbd "C-x t 1") #'treemacs-delete-other-windows)
+
+(treemacs-resize-icons 16)
 
 (global-visual-line-mode t)
 
