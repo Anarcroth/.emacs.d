@@ -79,7 +79,7 @@
 (setq ivy-virtual-abbreviate 'fullpath)
 (setq enable-recursive-minibuffers t)
 (setq counsel-mode-override-describe-bindings t)
-(global-set-key "\C-s" 'swiper-isearch)
+(global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-g") 'counsel-find-file)
@@ -111,11 +111,16 @@
 
 ;; Setup ivy posframe for fancy M-x things
 (paradox-require 'ivy-posframe)
+(setq ivy-posframe-height-alist '((swiper . 10)
+                                  (t      . 30)))
 (setq ivy-posframe-display-functions-alist
       '((swiper          . ivy-display-function-fallback)
         (complete-symbol . ivy-posframe-display-at-window-center)
-        (counsel-M-x     . ivy-posframe-display-at-window-bottom-left)
+        (counsel-M-x     . ivy-posframe-display-at-window-center)
         (t               . ivy-posframe-display)))
+(setq ivy-posframe-parameters
+      '((left-fringe . 8)
+        (right-fringe . 8)))
 (ivy-posframe-mode 1)
 
 ;; Disable backup files
@@ -906,7 +911,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (define-key global-map (kbd "C-x t C-t") #'treemacs-find-file)
 (define-key global-map (kbd "C-x t 1") #'treemacs-delete-other-windows)
 
-(treemacs-resize-icons 16)
+(treemacs-resize-icons 12)
 
 (global-visual-line-mode t)
 
