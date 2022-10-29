@@ -115,9 +115,9 @@
                                   (t      . 30)))
 (setq ivy-posframe-display-functions-alist
       '((swiper          . ivy-display-function-fallback)
-        (complete-symbol . ivy-posframe-display-at-window-center)
-        (counsel-M-x     . ivy-posframe-display-at-window-center)
-        (t               . ivy-posframe-display)))
+        (complete-symbol . ivy-posframe-display-at-frame-center)
+        (counsel-M-x     . ivy-posframe-display-at-frame-center)
+        (t               . ivy-posframe-display-at-frame-center)))
 (setq ivy-posframe-parameters
       '((left-fringe . 8)
         (right-fringe . 8)))
@@ -400,8 +400,8 @@ Else go to the opening parenthesis one level up."
 ;; 5. elpy-rpc will use the above environment for all of its integrations
 (setq elpy-rpc-virtualenv-path 'current)
 ;; 6. Set python-shell interpreter
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i --simple-prompt")
+(setq python-shell-interpreter "python3"
+      python-shell-interpreter-args "-i -c \"import readline\"")
 ;; 7. Setup the check command to be flake8
 (setq python-check-command (expand-file-name "flake8"))
 ;; 8. Setup flycheck for working with elpy
@@ -897,9 +897,17 @@ DIR is handled as by `windmove-other-window-loc'."
 ;; Set line numbers
 (global-linum-mode t)
 
+;; Configure all-the-icons package together with other complimentary packages
+;; Run the following command to setup fonts to work well
+;; M-x all-the-icons-install-fonts
+(when (display-graphic-p)
+  (paradox-require 'all-the-icons)
+  (paradox-require 'treemacs-all-the-icons)
+  (paradox-require 'all-the-icons-ivy-rich)
+  (paradox-require 'all-the-icons-completion))
+
 ;; Configure treemacs
 (paradox-require 'treemacs)
-(paradox-require 'treemacs-all-the-icons)
 (paradox-require 'treemacs-magit)
 (paradox-require 'treemacs-projectile)
 (treemacs-follow-mode t)
