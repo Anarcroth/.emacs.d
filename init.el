@@ -334,11 +334,11 @@ Else go to the opening parenthesis one level up."
 (paradox-require 'ag)
 
 ;; If you want to change prefix for lsp-mode keybindings.
+(paradox-require 'lsp-ui)
 (setq lsp-keymap-prefix "C-c l")
 ;; Setup lsp-mode
 (paradox-require 'lsp-mode)
 ;; Setup lsp-ui
-(paradox-require 'lsp-ui)
 (setq lsp-enable-indentation nil)
 (setq lsp-enable-completion-at-point nil)
 (setq lsp-ui-peek-enable t)
@@ -403,17 +403,29 @@ Else go to the opening parenthesis one level up."
 (setq python-shell-interpreter "python3"
       python-shell-interpreter-args "-i -c \"import readline\"")
 ;; 7. Setup the check command to be flake8
+;; If flake8 is not underlying elements, you might need to select it from flycheck
+;; Do: `M-x flycheck-verify-setup` and then select the checker you want
 (setq python-check-command (expand-file-name "flake8"))
 ;; 8. Setup flycheck for working with elpy
 (with-eval-after-load 'flycheck
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (add-hook 'elpy-mode-hook 'flycheck-mode))
+;; I have NO idea why I need this, but in order for flake8 to be used by default in flycheck
+;; instead of the default lsp check, I need to add this...
+;; I guess it removes the lsp checker in general and then flake8 is the next in line to be used...wtf
+;; relevant: https://github.com/emacs-lsp/lsp-mode/issues/1413
+(setq lsp-diagnostic-package :none)
 ;; 9. To active lsp for python as well, you need to install lsp pylsp in the same virtual environment
 ;; Example: `pip install 'python-lsp-server[all]'`
 ;; And now we load it instead of using pyls
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-disabled-clients 'pyls)
   (add-to-list 'lsp-enabled-clients 'jedi))
+;; 10. Activate automatic code formatting on save with the black package
+(define-key (python-mode-m))
+(add-hook 'elpy-mode-hook (lambda ()
+                            (add-hook 'before-save-hook
+                                      'elpy-black-fix-code nil t)))
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
