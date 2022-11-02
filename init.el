@@ -421,11 +421,12 @@ Else go to the opening parenthesis one level up."
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-disabled-clients 'pyls)
   (add-to-list 'lsp-enabled-clients 'jedi))
-;; 10. Activate automatic code formatting on save with the black package
-(define-key (python-mode-m))
-(add-hook 'elpy-mode-hook (lambda ()
-                            (add-hook 'before-save-hook
-                                      'elpy-black-fix-code nil t)))
+;; 10. Activate automatic code formatting on <C-c f>/save with the black package
+(define-key elpy-mode-map (kbd "C-c f") #'elpy-black-fix-code)
+;; If you want to format on each save, un-comment the following lines
+;; (add-hook 'elpy-mode-hook (lambda ()
+;;                             (add-hook 'before-save-hook
+;;                                       'elpy-black-fix-code nil t)))
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
