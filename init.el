@@ -799,6 +799,13 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
 
 (setq yas-prompt-functions '(yas/popup-isearch-prompt yas-no-prompt))
 
+;; Make sure uuid package is installed
+(paradox-require 'uuid)
+(defun uuid-insert ()
+  "Insert a UUIDv4 at point."
+  (interactive)
+  (insert (uuid-string)))
+
 ;; end-dev-environment-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
