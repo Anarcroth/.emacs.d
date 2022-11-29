@@ -273,6 +273,7 @@
 (global-auto-revert-mode t)
 
 ;; Set company globally
+(paradox-require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 (global-set-key (kbd "M-p") 'company-select-next)
 (global-set-key (kbd "M-n") 'company-select-previous)
@@ -373,6 +374,7 @@ Else go to the opening parenthesis one level up."
 (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
 
 ;; Enable flycheck syntax checker
+(paradox-require 'flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (with-eval-after-load 'flycheck
   (flycheck-pos-tip-mode))
@@ -395,6 +397,7 @@ Else go to the opening parenthesis one level up."
 ;; This includes flake8, black, jedi, autopep8, yapf
 ;; Example: `pip install black jedi autopep8 yapf`
 ;; NOTE: as of elpy=1.35.0, elpy seems like it has a broken integration with jedi=0.18, so you MUST use jedi=0.17.2
+;; Until this is fixed, downgrade. Otherwise, if fixed - use newest version
 ;; 4. Active the appropriate (in this case, default) pyvenv directory
 (pyvenv-activate "~/.emacs.d/ENV")
 ;; 5. elpy-rpc will use the above environment for all of its integrations
@@ -746,6 +749,7 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
 (projectile-mode t)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-sort-order 'recently-active)
+(add-to-list 'projectile-globally-ignored-directories "venv")
 
 (paradox-require 'hl-todo)
 (global-hl-todo-mode t)
@@ -938,7 +942,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (define-key global-map (kbd "C-x t B") #'treemacs-bookmark)
 (define-key global-map (kbd "C-x t C-t") #'treemacs-find-file)
 (define-key global-map (kbd "C-x t 1") #'treemacs-delete-other-windows)
-
+;; Have smaller icons
 (treemacs-resize-icons 12)
 
 (global-visual-line-mode t)
