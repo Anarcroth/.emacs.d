@@ -430,6 +430,8 @@ Else go to the opening parenthesis one level up."
 ;; (add-hook 'elpy-mode-hook (lambda ()
 ;;                             (add-hook 'before-save-hook
 ;;                                       'elpy-black-fix-code nil t)))
+;; Don't try to guess what the python indent is, let it default to 4
+(setq python-indent-guess-indent-offset nil)
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
