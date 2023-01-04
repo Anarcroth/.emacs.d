@@ -684,6 +684,11 @@ New buffer will be named “untitled” or “untitled<2>”, “untitled<3>”,
 ;; Open all HTML file in web-mode.
 (paradox-require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(setq css-indent-offset 2)
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-indent-style 2)
 
 (require 'rng-loc nil t)
 
