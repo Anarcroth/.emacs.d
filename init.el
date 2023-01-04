@@ -600,6 +600,7 @@ Else go to the opening parenthesis one level up."
 
 ;; Bash/Scripting setup
 (setq sh-basic-offset 2)
+(setq sh-indentation 2)
 
 ;; Setup clojure mode
 (paradox-require 'cider)
