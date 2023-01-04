@@ -598,6 +598,9 @@ Else go to the opening parenthesis one level up."
 (eval-after-load "wrap-region" '(diminish 'wrap-region-mode))
 (eval-after-load "highlight-indentation" '(diminish 'highlight-indentation-mode))
 
+;; Bash/Scripting setup
+(setq sh-basic-offset 2)
+
 ;; Setup clojure mode
 (paradox-require 'cider)
 (paradox-require 'clojure-mode)
