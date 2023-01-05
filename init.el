@@ -280,6 +280,7 @@
 (setq company-idle-delay 0)
 (setq company-tooltip-limit 20)
 (setq company-selection-wrap-around t)
+(setq company-tooltip-align-annotations t)
 
 (defun goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis.
@@ -356,6 +357,7 @@ Else go to the opening parenthesis one level up."
 ;; Python
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'elpy-mode-hook #'lsp)
+
 ;; Map lsp-ui key bindings
 (global-set-key [mouse-1] 'lsp-ui-doc-hide)
 (global-set-key (kbd "C-q") 'lsp-ui-doc-glance)
@@ -524,50 +526,63 @@ Else go to the opening parenthesis one level up."
 ;; 			   )))
 
 ;; Add js2 mode
+(paradox-require 'tide)
+(paradox-require 'web-mode)
 (paradox-require 'js2-mode)
 (paradox-require 'js2-refactor)
-(paradox-require 'xref-js2)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(add-hook 'js2-mode-hook #'js2-refactor-mode)
-(add-hook 'js2-mode-hook (lambda () (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+(paradox-require 'typescript-mode)
 
 (js2r-add-keybindings-with-prefix "C-c C-r")
 (define-key js2-mode-map (kbd "C-k") #'js2r-kill)
-;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
-;; unbind it.
-(define-key js-mode-map (kbd "M-.") nil)
 
-(paradox-require 'tide)
+;; Depending on the server you want to have, you have to run
+;; `(lsp-install-server t 'ts-lsp)` or any other server in order
+;; to install that and make sure lsp can see it
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-disabled-clients 'deno-ls)
+  (add-to-list 'lsp-enabled-clients 'ts-ls))
+
 (defun setup-tide-mode ()
+  "Setup tide mode for general purpose JS/TS usage."
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
   (company-mode +1))
 
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
+;; (add-hook 'before-save-hook 'tide-format-before-save)
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+(add-hook 'js2-mode-hook #'setup-tide-mode)
+(add-hook 'js2-mode #'lsp)
+(add-hook 'js2-mode-hook #'js2-refactor-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; (add-hook 'js-mode-hook 'js2-minor-mode)
+;; (add-hook 'js2-mode-hook #'lsp-completion-mode)
 
-(paradox-require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode))))
+;; (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+;; (add-hook 'web-mode-hook
+;;           (lambda ()
+;;             (when (string-equal "tsx" (file-name-extension buffer-file-name))
+;;               (setup-tide-mode))))
 ;; enable typescript-tslint checker
-(flycheck-add-mode 'typescript-tslint 'web-mode)
+;; (flycheck-add-mode 'typescript-tslint 'web-mode)
+
+;; This is taken from the doommacs configuration for JS/TS
+(setq js-chain-indent t
+      js2-basic-offset 2
+      ;; Don't mishighlight shebang lines
+      js2-skip-preprocessor-directives t
+      ;; let flycheck handle this
+      js2-mode-show-parse-errors nil
+      js2-mode-show-strict-warnings nil
+      ;; Flycheck provides these features, so disable them: conflicting with
+      ;; the eslint settings.
+      js2-strict-missing-semi-warning nil
+      ;; maximum fontification
+      js2-highlight-level 3
+      js2-idle-timer-delay 0.15)
 
 ;; (global-set-key (kbd "C-M-.") 'lsp-ui-peek-find-references)
 ;; (global-set-key (kbd "C-M-,") 'lsp-ui-peek-find-definitions)
@@ -650,7 +665,6 @@ Else go to the opening parenthesis one level up."
 (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
 ;; Format rust code on each file save
 (setq rust-format-on-save t)
-(setq company-tooltip-align-annotations t)
 (with-eval-after-load 'rust-mode
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
