@@ -21,6 +21,8 @@
      (java-mode . "java")
      (awk-mode . "awk")
      (other . "gnu")))
+ '(custom-safe-themes
+   '("171d1ae90e46978eb9c342be6658d937a83aaa45997b1d7af7657546cae5985b" default))
  '(doom-modeline-bar-width 10)
  '(doom-modeline-buffer-encoding t)
  '(doom-modeline-buffer-file-name-style 'buffer-name)
