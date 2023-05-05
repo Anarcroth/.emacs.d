@@ -38,6 +38,7 @@
 ;;   (add-hook 'emacs-startup-hook
 ;; 	    (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
+(require 'dash)
 (add-to-list 'load-path (expand-file-name "local-pkgs" user-emacs-directory))
 (require 'start-packages)
 
@@ -137,6 +138,7 @@
       kept-new-versions 3
       kept-old-versions 2)
 
+(paradox-require 'which-key)
 (which-key-mode 1)
 (setq which-key-separator " ")
 (setq which-key-prefix-prefix "+")
@@ -375,6 +377,7 @@ Else go to the opening parenthesis one level up."
 
 ;; Enable flycheck syntax checker
 (paradox-require 'flycheck)
+(paradox-require 'flycheck-pos-tip)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (with-eval-after-load 'flycheck
   (flycheck-pos-tip-mode))
@@ -435,6 +438,7 @@ Else go to the opening parenthesis one level up."
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
+(paradox-require 'lispy)
 ;; package.el compiles the contrib subdir, but the compilation order
 ;; causes problems, so we remove the .elc files there.
 (mapc #'delete-file
@@ -911,6 +915,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (menu-bar-mode   -1)
 
 ;; Load atom one dark theme
+(paradox-require 'atom-one-dark-theme)
 (load-theme 'atom-one-dark t)
 
 ;; Set default font
@@ -922,6 +927,7 @@ DIR is handled as by `windmove-other-window-loc'."
 (setq-default cursor-type '(bar . 2))
 
 ;; Have color brackets on programming modes
+(paradox-require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 ;; Set line highlighting
