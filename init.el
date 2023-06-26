@@ -323,6 +323,8 @@ Else go to the opening parenthesis one level up."
 (global-set-key (kbd "C-c u j") 'json-pretty-print)
 (global-set-key (kbd "C-c u b") 'json-pretty-print-buffer)
 
+(setq native-comp-async-report-warnings-errors nil)
+
 ;; end-general-utilities-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -949,7 +951,7 @@ DIR is handled as by `windmove-other-window-loc'."
          '(90 . 50) '(100 . 100)))))
 
 ;; Set line numbers
-(global-linum-mode t)
+(display-line-numbers-mode 1)
 
 ;; Configure all-the-icons package together with other complimentary packages
 ;; Run the following command to setup fonts to work well
