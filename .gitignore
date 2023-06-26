@@ -50,3 +50,7 @@ ac-comphist.dat
 /vimish-fold
 # Ignore the undo-tree specific dir
 /auto-save-undo-tree
+# Tree sitter lang install path
+tree-sitter/
+# eln-cache
+eln-cache/
