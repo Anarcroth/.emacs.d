@@ -281,6 +281,7 @@
 (setq company-tooltip-limit 20)
 (setq company-selection-wrap-around t)
 (setq company-tooltip-align-annotations t)
+(setq company-dabbrev-downcase nil)
 
 (defun goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis.
