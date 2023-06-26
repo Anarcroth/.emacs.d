@@ -840,6 +840,51 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
   (interactive)
   (insert (uuid-string)))
 
+(if (version< emacs-version "29.0")
+    (message "Version too old to setup tree-sitter")
+  ;; YAML setup with tree-sitter
+  (paradox-require 'yaml)
+  (paradox-require 'yaml-pro)
+  (paradox-require 'yaml-mode)
+
+  (paradox-require 'tree-sitter)
+  (paradox-require 'tree-sitter-langs)
+
+  ;; (lsp-install-server t 'yamlls)
+  ;; (add-hook 'yaml-mode-hook #'lsp)
+  (add-hook 'yaml-mode-hook #'yaml-pro-ts-mode)
+
+  (tree-sitter-require 'yaml)
+  (add-hook 'yaml-mode-hook #'tree-sitter-mode)
+
+  ;; To install a language grammar:
+  ;; `M-x treesit-install-language-grammar RET <lang>`
+  ;; To check that the lang is installed:
+  ;; `(treesit-language-available-p 'LANG)`
+  ;; `(treesit-ready-p 'LANG)'
+  (setq treesit-language-source-alist
+	'(
+	  (bash "https://github.com/tree-sitter/tree-sitter-bash")
+	  (cmake "https://github.com/uyha/tree-sitter-cmake")
+	  (css "https://github.com/tree-sitter/tree-sitter-css")
+	  (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	  (go "https://github.com/tree-sitter/tree-sitter-go")
+	  (html "https://github.com/tree-sitter/tree-sitter-html")
+	  (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+	  (json "https://github.com/tree-sitter/tree-sitter-json")
+	  (make "https://github.com/alemuller/tree-sitter-make")
+	  (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	  (python "https://github.com/tree-sitter/tree-sitter-python")
+	  (toml "https://github.com/tree-sitter/tree-sitter-toml")
+	  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+	  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	  (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+	  ))
+
+  (set-face-background 'highlight-indentation-current-column-face "#61AFEF")
+  (add-hook 'yaml-mode-hook #'highlight-indentation-current-column-mode)
+  )
+
 ;; end-dev-environment-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
