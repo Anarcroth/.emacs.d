@@ -17,9 +17,7 @@
  '(auto-encryption-mode nil)
  '(blink-cursor-mode nil)
  '(c-default-style
-   '((other . "stroustrup")
-     (java-mode . "java")
-     (awk-mode . "awk")
+   '((other . "stroustrup") (java-mode . "java") (awk-mode . "awk")
      (other . "gnu")))
  '(doom-modeline-bar-width 10)
  '(doom-modeline-buffer-encoding t)
@@ -29,24 +27,46 @@
  '(doom-modeline-height 25)
  '(doom-modeline-persp-name t)
  '(elpy-modules
-   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv elpy-module-highlight-indentation elpy-module-yasnippet elpy-module-django elpy-module-sane-defaults))
+   '(elpy-module-company elpy-module-eldoc elpy-module-pyvenv
+			 elpy-module-highlight-indentation
+			 elpy-module-yasnippet elpy-module-django
+			 elpy-module-sane-defaults))
  '(global-whitespace-mode nil)
  '(lsp-ui-doc-header t)
  '(lsp-ui-doc-include-signature t)
  '(lsp-ui-doc-position 'at-point)
  '(lsp-ui-doc-show-with-cursor t)
  '(org-emphasis-alist
-   '(("*" bold)
-     ("/" italic)
-     ("_" underline)
-     ("=" org-verbatim verbatim)
-     ("~" org-code verbatim)
-     ("+" org-custom-strike-through)))
+   '(("*" bold) ("/" italic) ("_" underline) ("=" org-verbatim verbatim)
+     ("~" org-code verbatim) ("+" org-custom-strike-through)))
  '(org-todo-keywords
-   '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|" "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
+   '((sequence "TODO(t)" "IN-PROGRESS(p)" "TESTING(e)" "WAITING(w)" "|"
+	       "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
      (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|")))
  '(package-selected-packages
-   '(uuid all-the-icons-completion all-the-icons-ivy-rich treemacs-all-the-icons ivy-posframe treemacs-magit treemacs-projectile tide lsp-jedi ag web-mode magit terraform-mode ivy-hydra epresent lsp-ui lsp-mode hl-todo projectile which-key with-editor tablist swiper scratch pyvenv lispy pdf-tools iedit highlight-indentation counsel ace-window transient elpy ivy flycheck-clojure flycheck-inline-mode flycheck-mode racer toml-mode cargo flycheck-rust rust-mode vlf clj-refactor-mode clj-refactor cider clojure-mode doom-modeline undo-tree org-bullets org-fancy-priorities paradox ac-js2 org-pomodoro diminish xref-js2 js2-refactor js2-mode yaml-mode flycheck-irony company-irony latex-math-preview flycheck-rtags company-rtags htmlize rainbow-delimiters ac-slime diff-hl gitconfig-mode gitignore-mode pip-requirements flycheck-pos-tip multiple-cursors markdown-mode wrap-region winum ox-reveal flyspell-correct auctex-latexmk atom-one-dark-theme))
+   '(helm-tree-sitter tree-sitter-langs yaml-pro yaml uuid
+		      all-the-icons-completion all-the-icons-ivy-rich
+		      treemacs-all-the-icons ivy-posframe
+		      treemacs-magit treemacs-projectile tide lsp-jedi
+		      ag web-mode magit terraform-mode ivy-hydra
+		      epresent lsp-ui lsp-mode hl-todo projectile
+		      which-key with-editor tablist swiper scratch
+		      pyvenv lispy pdf-tools iedit
+		      highlight-indentation counsel ace-window
+		      transient elpy ivy flycheck-clojure
+		      flycheck-inline-mode flycheck-mode racer
+		      toml-mode cargo flycheck-rust rust-mode vlf
+		      clj-refactor-mode clj-refactor cider
+		      clojure-mode doom-modeline undo-tree org-bullets
+		      org-fancy-priorities paradox ac-js2 org-pomodoro
+		      diminish xref-js2 js2-refactor js2-mode
+		      yaml-mode flycheck-irony company-irony
+		      latex-math-preview flycheck-rtags company-rtags
+		      htmlize rainbow-delimiters ac-slime diff-hl
+		      gitconfig-mode gitignore-mode pip-requirements
+		      flycheck-pos-tip multiple-cursors markdown-mode
+		      wrap-region winum ox-reveal flyspell-correct
+		      auctex-latexmk atom-one-dark-theme))
  '(smie-indent-basic 2)
  '(spaceline-all-the-icons-flycheck-alternate nil)
  '(spaceline-all-the-icons-hide-long-buffer-path t)
