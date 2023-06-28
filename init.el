@@ -39,6 +39,7 @@
 ;; 	    (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
 
 (require 'dash)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "local-pkgs" user-emacs-directory))
 (require 'start-packages)
 
@@ -885,6 +886,19 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
   (add-hook 'yaml-mode-hook #'highlight-indentation-current-column-mode)
   )
 
+(if (version< emacs-version "27.0")
+    (message "Version too old to setup tree-sitter")
+  ;; GitHub Copilot setup here
+  (paradox-require 's)
+  (paradox-require 'dash)
+  (paradox-require 'editorconfig)
+  (add-to-list 'load-path "./copilot.el")
+  (require 'copilot)
+
+  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+  (add-hook 'prog-mode-hook 'copilot-mode))
+
 ;; end-dev-environment-section ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -996,7 +1010,7 @@ DIR is handled as by `windmove-other-window-loc'."
          '(90 . 50) '(100 . 100)))))
 
 ;; Set line numbers
-(display-line-numbers-mode 1)
+(global-display-line-numbers-mode t)
 
 ;; Configure all-the-icons package together with other complimentary packages
 ;; Run the following command to setup fonts to work well
