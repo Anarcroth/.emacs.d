@@ -19,6 +19,9 @@
  '(c-default-style
    '((other . "stroustrup") (java-mode . "java") (awk-mode . "awk")
      (other . "gnu")))
+ '(custom-safe-themes
+   '("171d1ae90e46978eb9c342be6658d937a83aaa45997b1d7af7657546cae5985b"
+     default))
  '(doom-modeline-bar-width 10)
  '(doom-modeline-buffer-encoding t)
  '(doom-modeline-buffer-file-name-style 'buffer-name)
@@ -44,29 +47,26 @@
 	       "DONE(d)" "CANCELED(c)" "DIDN'T(n)")
      (sequence "IDEA(i)" "RE-THINK(r)" "LATER(l)" "APPOINTMENT(a)" "|")))
  '(package-selected-packages
-   '(helm-tree-sitter tree-sitter-langs yaml-pro yaml uuid
-		      all-the-icons-completion all-the-icons-ivy-rich
-		      treemacs-all-the-icons ivy-posframe
-		      treemacs-magit treemacs-projectile tide lsp-jedi
-		      ag web-mode magit terraform-mode ivy-hydra
-		      epresent lsp-ui lsp-mode hl-todo projectile
-		      which-key with-editor tablist swiper scratch
-		      pyvenv lispy pdf-tools iedit
-		      highlight-indentation counsel ace-window
-		      transient elpy ivy flycheck-clojure
-		      flycheck-inline-mode flycheck-mode racer
-		      toml-mode cargo flycheck-rust rust-mode vlf
-		      clj-refactor-mode clj-refactor cider
-		      clojure-mode doom-modeline undo-tree org-bullets
-		      org-fancy-priorities paradox ac-js2 org-pomodoro
-		      diminish xref-js2 js2-refactor js2-mode
-		      yaml-mode flycheck-irony company-irony
-		      latex-math-preview flycheck-rtags company-rtags
-		      htmlize rainbow-delimiters ac-slime diff-hl
-		      gitconfig-mode gitignore-mode pip-requirements
-		      flycheck-pos-tip multiple-cursors markdown-mode
-		      wrap-region winum ox-reveal flyspell-correct
-		      auctex-latexmk atom-one-dark-theme))
+   '(ac-js2 ac-slime ace-window ag all-the-icons-completion
+	    all-the-icons-ivy-rich atom-one-dark-theme auctex-latexmk
+	    cargo cider clj-refactor clj-refactor-mode clojure-mode
+	    company-irony company-rtags counsel diff-hl diminish
+	    doom-modeline editorconfig elpy epresent flycheck-clojure
+	    flycheck-inline-mode flycheck-irony flycheck-mode
+	    flycheck-pos-tip flycheck-rtags flycheck-rust
+	    flycheck-yamllint flymake-yamllint flyspell-correct
+	    gitconfig-mode gitignore-mode helm-tree-sitter
+	    highlight-indentation hl-todo htmlize iedit ivy ivy-hydra
+	    ivy-posframe js2-mode js2-refactor latex-math-preview
+	    lispy lsp-jedi lsp-mode lsp-ui magit markdown-mode
+	    multiple-cursors org-bullets org-fancy-priorities
+	    org-pomodoro ox-reveal paradox pdf-tools pip-requirements
+	    projectile pyvenv racer rainbow-delimiters rust-mode s
+	    scratch swiper tablist terraform-mode tide toml-mode
+	    transient tree-sitter-langs treemacs-all-the-icons
+	    treemacs-magit treemacs-projectile undo-tree uuid vlf
+	    web-mode which-key winum with-editor wrap-region xref-js2
+	    yaml yaml-mode yaml-pro yasnippet-snippets))
  '(smie-indent-basic 2)
  '(spaceline-all-the-icons-flycheck-alternate nil)
  '(spaceline-all-the-icons-hide-long-buffer-path t)
@@ -124,7 +124,5 @@
  '(spaceline-all-the-icons-sunrise-face ((t (:foreground "#f6c175"))))
  '(spaceline-all-the-icons-sunset-face ((t (:foreground "#fe7714"))))
  '(spaceline-highlight-face ((t (:foreground "#282C34" :background "#528BFF"))))
- '(spaceline-python-venv ((t (:foreground "#528BFF"))))
- '(whitespace-space ((t (:foreground "#4B5363"))))
- '(whitespace-tab ((t (:foreground "#4B5363")))))
+ '(spaceline-python-venv ((t (:foreground "#528BFF")))))
 ;;; custom.el ends here

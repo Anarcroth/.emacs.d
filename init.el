@@ -145,6 +145,7 @@
 (setq which-key-prefix-prefix "+")
 
 ;; Delete selected area by yank or overwrite
+;; basically - replace selected area with new text or copied text
 (delete-selection-mode 1)
 
 ;; Delete trailing white spaces
@@ -439,6 +440,7 @@ Else go to the opening parenthesis one level up."
 ;;                                       'elpy-black-fix-code nil t)))
 ;; Don't try to guess what the python indent is, let it default to 4
 (setq python-indent-guess-indent-offset nil)
+;; (add-hook 'elpy-mode-hook #'highlight-indentation-current-column-mode)
 
 ;; Set Lisp dev environment
 (paradox-require 'slime)
@@ -589,9 +591,6 @@ Else go to the opening parenthesis one level up."
       ;; maximum fontification
       js2-highlight-level 3
       js2-idle-timer-delay 0.15)
-
-;; (global-set-key (kbd "C-M-.") 'lsp-ui-peek-find-references)
-;; (global-set-key (kbd "C-M-,") 'lsp-ui-peek-find-definitions)
 
 (setq js2-include-node-externs t)
 (setq js2-global-externs '("customElements"))
@@ -780,7 +779,10 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
 (projectile-mode t)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-sort-order 'recently-active)
+(add-to-list 'projectile-globally-ignored-directories "ENV")
 (add-to-list 'projectile-globally-ignored-directories "venv")
+(add-to-list 'projectile-globally-ignored-directories "node_modules")
+;; (setq projectile-switch-project-action #'treemacs-switch-workspace)
 
 (paradox-require 'hl-todo)
 (global-hl-todo-mode t)
@@ -886,18 +888,19 @@ Taken from http://www.emacswiki.org/emacs/NxmlMode"
   (add-hook 'yaml-mode-hook #'highlight-indentation-current-column-mode)
   )
 
-(if (version< emacs-version "27.0")
-    (message "Version too old to setup tree-sitter")
-  ;; GitHub Copilot setup here
-  (paradox-require 's)
-  (paradox-require 'dash)
-  (paradox-require 'editorconfig)
-  (add-to-list 'load-path "./copilot.el")
-  (require 'copilot)
+;; (if (version< emacs-version "27.0")
+;;     (message "Version too old to setup github copilot for Emacs")
+;;   ;; GitHub Copilot setup here
+;;   (paradox-require 's)
+;;   (paradox-require 'dash)
+;;   (paradox-require 'editorconfig)
+;;   (add-to-list 'load-path (expand-file-name "copilot.el" user-emacs-directory))
+;;   (require 'copilot)
 
-  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-  (add-hook 'prog-mode-hook 'copilot-mode))
+;;   (global-copilot-mode t)
+;;   (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+;;   (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+;;   (add-hook 'prog-mode-hook 'copilot-mode))
 
 ;; end-dev-environment-section ;;
 
@@ -1040,43 +1043,43 @@ DIR is handled as by `windmove-other-window-loc'."
 
 ;; Setup whitespaces to be depicted with dots
 ;; Define the whitespace style.
-(setq-default whitespace-style
-              '(face spaces empty tabs newline trailing space-mark tab-mark newline-mark))
+;; (setq-default whitespace-style
+;;               '(face spaces empty tabs newline trailing space-mark tab-mark newline-mark))
 ;; Whitespace color corrections.
-(require 'color)
-(let* ((ws-lighten 30) ;; Amount in percentage to lighten up black.
-       (ws-color (color-lighten-name "#000000" ws-lighten)))
-  (custom-set-faces
-   `(whitespace-newline                ((t (:foreground ,ws-color))))
-   `(whitespace-missing-newline-at-eof ((t (:foreground ,ws-color))))
-   `(whitespace-space                  ((t (:foreground ,ws-color))))
-   `(whitespace-space-after-tab        ((t (:foreground ,ws-color))))
-   `(whitespace-space-before-tab       ((t (:foreground ,ws-color))))
-   `(whitespace-tab                    ((t (:foreground ,ws-color))))
-   `(whitespace-trailing               ((t (:foreground ,ws-color))))))
+;; (require 'color)
+;; (let* ((ws-lighten 30) ;; Amount in percentage to lighten up black.
+;;        (ws-color (color-lighten-name "#000000" ws-lighten)))
+;;   (custom-set-faces
+;;    `(whitespace-newline                ((t (:foreground ,ws-color))))
+;;    `(whitespace-missing-newline-at-eof ((t (:foreground ,ws-color))))
+;;    `(whitespace-space                  ((t (:foreground ,ws-color))))
+;;    `(whitespace-space-after-tab        ((t (:foreground ,ws-color))))
+;;    `(whitespace-space-before-tab       ((t (:foreground ,ws-color))))
+;;    `(whitespace-tab                    ((t (:foreground ,ws-color))))
+;;    `(whitespace-trailing               ((t (:foreground ,ws-color))))))
 ;; Make these characters represent whitespace.
-(setq-default whitespace-display-mappings
-	      '(
-		;; space -> · else .
-		(space-mark 32 [183] [46])
-		;; new line -> ¬ else $
-		(newline-mark ?\n [172 ?\n] [36 ?\n])
-		;; carriage return (Windows) -> ¶ else #
-		(newline-mark ?\r [182] [35])
-		;; tabs -> » else >
-		(tab-mark ?\t [187 ?\t] [62 ?\t])))
+;; (setq-default whitespace-display-mappings
+;; 	      '(
+;; 		;; space -> · else .
+;; 		(space-mark 32 [183] [46])
+;; 		;; new line -> ¬ else $
+;; 		(newline-mark ?\n [172 ?\n] [36 ?\n])
+;; 		;; carriage return (Windows) -> ¶ else #
+;; 		(newline-mark ?\r [182] [35])
+;; 		;; tabs -> » else >
+;; 		(tab-mark ?\t [187 ?\t] [62 ?\t])))
 ;; Don't enable whitespace for.
-(setq-default whitespace-global-modes
-              '(not shell-mode
-		    help-mode
-		    magit-mode
-		    magit-diff-mode
-		    ibuffer-mode
-		    dired-mode
-		    occur-mode
-		    lsp-ui-mode
-		    lsp-mode))
-(global-whitespace-mode 1)
+;; (setq-default whitespace-global-modes
+;;               '(not shell-mode
+;; 		    help-mode
+;; 		    magit-mode
+;; 		    magit-diff-mode
+;; 		    ibuffer-mode
+;; 		    dired-mode
+;; 		    occur-mode
+;; 		    lsp-ui-mode
+;; 		    lsp-mode))
+;; (global-whitespace-mode 1)
 
 ;; Unique names of buffers for files with identical names
 (paradox-require 'uniquify)
